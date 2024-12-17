@@ -12,6 +12,8 @@
                 height="100" 
                 class=""
             >
+
+            
                 <v-card-title class="text-subtitle-1">Além das Estrelas Caídas</v-card-title>
             </v-card>
         </swiper-slide>
