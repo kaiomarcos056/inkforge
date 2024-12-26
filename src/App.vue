@@ -1,26 +1,52 @@
 <template>
   <v-app id="inspire">
     <v-navigation-drawer v-model="drawer" class="pa-1">
-      
+
       <v-list-item class="mt-3">
         <v-avatar color="grey-darken-1" >M</v-avatar>
-        <v-list-item-title class="teste-h2">Marcos Kaio</v-list-item-title>
+        <v-list-item-title class="teste-h2 ma-0 pa-0">Marcos Kaio</v-list-item-title>
         <v-list-item-title class="teste-h3">@Jujubaferoz</v-list-item-title>
       </v-list-item>
+      
       <br>
-      <v-list-item class="item">
-        <img src="./assets/icons/book.svg" alt="">
-        <h5>Minha Biblioteca</h5>
+
+      <v-list-item link>
+        <div style="display: flex; gap: 8px;">
+          <img src="./assets/icons/book.svg" alt="">
+          <h4>Minha Biblioteca</h4>
+        </div>
       </v-list-item>
 
-      <v-list-item class="item">
-        <img src="./assets/icons/rewind.svg" alt="">
-        <h5>Histórico de Leitura</h5>
+
+      <v-list-item link>
+        <div style="display: flex; gap: 8px;">
+          <img src="./assets/icons/rewind.svg" alt="">
+          <h4>Histórico de Leitura</h4>
+        </div>
       </v-list-item>
 
-      <v-list-item class="item">
-        <img src="./assets/icons/textarrow.svg" alt="">
-        <h5>Continue de Onde Parou</h5>
+      <v-list-item link>
+        <div style="display: flex; gap: 8px;">
+          <img src="./assets/icons/textarrow.svg" alt="">
+          <h4>Continue de Onde Parou</h4>
+        </div>
+      </v-list-item>
+
+      <v-list-item>
+        <v-card variant="outlined" class="px-2 rounded-xl">
+          <v-list lines="one">
+            <v-list-item title="Um viciado nas estrelas" subtitle="Cap 2: Tomada de marte"></v-list-item>
+            <v-divider></v-divider>
+
+            <v-list-item title="No cair das árvores" subtitle="Cap 1: Decisão Forte"></v-list-item>
+            <v-divider></v-divider>
+
+            <v-list-item title="Fagulhas Impetuosas" subtitle="Cap 1: Carne e Osso"></v-list-item>
+            <v-divider></v-divider>
+
+            <v-list-item title="Império Hemácio" subtitle="Cap 3: transfução"></v-list-item>
+          </v-list>
+        </v-card>
       </v-list-item>
 
     </v-navigation-drawer>
@@ -90,7 +116,7 @@ export default {
 <style scoped>
 
 .item{
-  display: flex;
+  display: flex !important;
 }
 
 .teste-h1{
