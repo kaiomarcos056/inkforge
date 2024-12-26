@@ -1,74 +1,62 @@
 <template>
   <v-app id="inspire">
     <v-navigation-drawer v-model="drawer" class="pa-1">
-
-      <v-list-item lines="two" prepend-avatar="https://randomuser.me/api/portraits/women/81.jpg" subtitle="Leitor"
-        title="Jane Smith" class="mb-3"></v-list-item>
-
-      <v-list-item>
-        <v-list-item-title class="text-h6 font-weight-medium">Minha Biblioteca</v-list-item-title>
+      
+      <v-list-item class="mt-3">
+        <v-avatar color="grey-darken-1" >M</v-avatar>
+        <v-list-item-title class="teste-h2">Marcos Kaio</v-list-item-title>
+        <v-list-item-title class="teste-h3">@Jujubaferoz</v-list-item-title>
       </v-list-item>
-      <br><br>
-      <v-list-item>
-        <v-list-item-title class="text-h6 font-weight-medium">Continuar Lendo</v-list-item-title>
+      <br>
+      <v-list-item class="item">
+        <img src="./assets/icons/book.svg" alt="">
+        <h5>Minha Biblioteca</h5>
       </v-list-item>
 
-      <v-list-item class="mb-3" title="Além das Estrelas Caídas" subtitle="Clara Penrose"></v-list-item>
-      <v-list-item class="mb-3" title="O Último Sussurro do Inverno" subtitle="Gabriel Dantas"></v-list-item>
-      <v-list-item class="mb-3" title="Nas Profundezas da Alma" subtitle="Rafael Silva"></v-list-item>
+      <v-list-item class="item">
+        <img src="./assets/icons/rewind.svg" alt="">
+        <h5>Histórico de Leitura</h5>
+      </v-list-item>
+
+      <v-list-item class="item">
+        <img src="./assets/icons/textarrow.svg" alt="">
+        <h5>Continue de Onde Parou</h5>
+      </v-list-item>
 
     </v-navigation-drawer>
 
     <v-app-bar flat>
-      <v-app-bar-nav-icon>
-        <v-avatar color="grey-darken-1"> M </v-avatar>
-      </v-app-bar-nav-icon>
-      <!--<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>-->
-      <v-app-bar-title class="text-center">
-        <img src="./assets/logo.svg" alt="" srcset="">
-      </v-app-bar-title>
-      <v-app-bar-nav-icon>
-        <img src="./assets/icons/plus.svg" alt="" srcset="">
-      </v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="drawer = !drawer"> <v-avatar color="grey-darken-1">M</v-avatar> </v-app-bar-nav-icon>
+      <v-app-bar-title class="text-center"> <img src="./assets/logo.svg"> </v-app-bar-title>
+      <v-app-bar-nav-icon> <img src="./assets/icons/plus.svg"> </v-app-bar-nav-icon>
     </v-app-bar>
 
     <v-main style="background-color: #F7F7F5;">
-
-      
-
-
       <v-tabs fixed-tabs class="bg-white">
         <v-tab text="Para você"> </v-tab>
         <v-tab text="Seguindo"> </v-tab>
       </v-tabs>
 
-      
-
       <v-container class="pa-4 pa-md-10">
         <h1 class="teste-h1">Em destaque</h1>
-        
-      <div>
-        <CardComponent
-          backgroundImage="https://static.escolakids.uol.com.br/2024/04/a-ilha-dessa-foto-esta-localizada-em-ubatuba-sao-paulo.jpg"
-          title="Perdidos na Ilha do Amor"
-          :tags="['Romance', 'Aventura', 'Mistério']"
-        />
-      </div>
-
-      <br>
-
-      <div v-for="(livro, index) in livros" :key="index" class="previa">
-        <previa
-          class="bg-transparent"
-          avatar="https://via.placeholder.com/48"
-          :titulo="livro.titulo"
-          :tags="livro.tags"
-          :texto="livro.previa"
-        />
-      </div>
-      
+        <div>
+          <CardComponent
+            backgroundImage="https://static.escolakids.uol.com.br/2024/04/a-ilha-dessa-foto-esta-localizada-em-ubatuba-sao-paulo.jpg"
+            title="Perdidos na Ilha do Amor"
+            :tags="['Romance', 'Aventura', 'Mistério']"
+          />
+        </div>
+        <br>
+        <div v-for="(livro, index) in livros" :key="index" class="previa">
+          <previa
+            class="bg-transparent"
+            avatar="https://via.placeholder.com/48"
+            :titulo="livro.titulo"
+            :tags="livro.tags"
+            :texto="livro.previa"
+          />
+        </div>
       </v-container>
-
     </v-main>
 
   </v-app>
@@ -100,10 +88,26 @@ export default {
 </script>
 
 <style scoped>
+
+.item{
+  display: flex;
+}
+
 .teste-h1{
   font-family: 'Satoshi-Regular', sans-serif;
   font-size: 16px;
   margin-bottom: 4px;
+}
+
+.teste-h2{
+  font-family: 'Satoshi-Bold', sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.teste-h3{
+  font-family: 'Satoshi-Regular', sans-serif;
+  font-size: 16px;
 }
 
 .v-tab {
