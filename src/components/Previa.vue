@@ -1,5 +1,5 @@
 <template>
-    <v-card flat class="previa elevation-0">
+    <v-card flat class="previa">
         <previa-titulo :avatar="avatar" :titulo="titulo" :tags="tags" />
         <previa-corpo :texto="texto" />
         <previa-acoes />

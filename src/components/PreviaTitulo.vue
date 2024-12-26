@@ -1,7 +1,7 @@
 <template>
     <div class="titulo">
         <v-avatar color="grey-darken-1"> M </v-avatar>
-        
+
         <div class="info">
             <h3 class="book-title">{{ titulo }}</h3>
             <div class="tags">
@@ -62,7 +62,7 @@ export default {
 .tag {
     font-family: 'Satoshi-Regular', sans-serif;
     font-size: 12px;
-    background-color: rgb(255, 255, 255);
+    background-color: none;
     color: #505050;
     border: 1px solid #505050;
     border-radius: 20px;

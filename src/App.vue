@@ -32,12 +32,12 @@
       </v-app-bar-nav-icon>
     </v-app-bar>
 
-    <v-main>
+    <v-main style="background-color: #F7F7F5;">
 
       
 
 
-      <v-tabs fixed-tabs >
+      <v-tabs fixed-tabs class="bg-white">
         <v-tab text="Para você"> </v-tab>
         <v-tab text="Seguindo"> </v-tab>
       </v-tabs>
@@ -59,6 +59,7 @@
 
       <div v-for="(livro, index) in livros" :key="index" class="previa">
         <previa
+          class="bg-transparent"
           avatar="https://via.placeholder.com/48"
           :titulo="livro.titulo"
           :tags="livro.tags"
