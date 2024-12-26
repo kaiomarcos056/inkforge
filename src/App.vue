@@ -19,9 +19,12 @@
 
     </v-navigation-drawer>
 
-    <v-app-bar flat class="border-b">
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-app-bar-title class="text-center">InkForge</v-app-bar-title>
+    <v-app-bar flat class="d-flex justify-space-evenly">
+      <v-avatar color="grey-darken-1"> M </v-avatar>
+      <!--<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>-->
+      <v-app-bar-title class="text-center">
+        <img src="./assets/logo.svg" alt="" srcset="">
+      </v-app-bar-title>
     </v-app-bar>
 
     <v-main>
@@ -61,6 +64,7 @@
       </v-container>
 
     </v-main>
+
   </v-app>
 </template>
 

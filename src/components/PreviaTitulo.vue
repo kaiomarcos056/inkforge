@@ -1,6 +1,7 @@
 <template>
     <div class="titulo">
-        <v-avatar class="avatar" :src="avatar" />
+        <v-avatar color="grey-darken-1"> M </v-avatar>
+        
         <div class="info">
             <h3 class="book-title">{{ titulo }}</h3>
             <div class="tags">
