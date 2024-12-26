@@ -27,6 +27,7 @@ export default {
 }
 p{
     padding-left: 10px;
+    padding-right: 10px;
     border-left:1px solid #d9d9d9;
 }
 </style>
