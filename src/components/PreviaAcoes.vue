@@ -18,6 +18,7 @@ export default {
     display: flex;
     justify-content: space-between;
     margin-top: 12px;
+    margin-bottom: 12px;
 }
 
 .icon {

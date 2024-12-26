@@ -47,8 +47,8 @@ export default {
 }
 
 .book-title {
-    font-size: 18px;
-    font-weight: bold;
+    font-family: 'Satoshi-Regular', sans-serif;
+    font-size: 16px;
     margin: 0;
 }
 
@@ -59,11 +59,12 @@ export default {
 }
 
 .tag {
+    font-family: 'Satoshi-Regular', sans-serif;
     font-size: 12px;
-    background-color: black;
-    color: white;
-    border: 1px solid gray;
-    border-radius: 4px;
+    background-color: rgb(255, 255, 255);
+    color: #505050;
+    border: 1px solid #505050;
+    border-radius: 20px;
     padding: 2px 6px;
 }
 </style>

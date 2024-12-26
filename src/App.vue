@@ -44,7 +44,7 @@
 
       </v-row>
 
-      <v-container class="pa-5 pa-md-10">
+      <v-container class="pa-4 pa-md-10">
         <h1 class="teste-h1">Em destaque</h1>
         
         <div>
@@ -57,14 +57,14 @@
 
       <br>
 
-      <div>
-    <previa
-      avatar="https://via.placeholder.com/48"
-      titulo="O Grande Livro"
-      :tags="['Ação', 'Drama', 'Suspense']"
-      texto="Era uma vez em uma terra distante..."
-    />
-  </div>
+      <div v-for="(livro, index) in livros" :key="index" class="previa">
+        <previa
+          avatar="https://via.placeholder.com/48"
+          :titulo="livro.titulo"
+          :tags="livro.tags"
+          :texto="livro.previa"
+        />
+      </div>
 
 
         <!--<CarouselComponent />-->
@@ -96,8 +96,14 @@ const drawer = ref(null)
 
 <script>
 export default {
-  data: () => ({ drawer: null }),
-}
+  //data: () => ({ drawer: null }),
+  data() {
+    return {
+      drawer: null,
+      livros: previas
+    };
+  }
+};
 </script>
 
 <style scoped>

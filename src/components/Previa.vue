@@ -1,5 +1,5 @@
 <template>
-    <v-card class="previa">
+    <v-card class="previa elevation-0">
         <previa-titulo :avatar="avatar" :titulo="titulo" :tags="tags" />
         <previa-corpo :texto="texto" />
         <previa-acoes />
@@ -41,11 +41,11 @@ export default {
 
 <style scoped>
 .previa {
-    border-radius: 12px;
     width: 100%;
     max-width: 600px;
     margin: auto;
-    padding: 16px;
-    background-color: #f9f9f9;
+
+    margin-bottom: 30px;
+    border-bottom: 1px solid #D9D9D9;
 }
 </style>
