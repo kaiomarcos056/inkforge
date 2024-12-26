@@ -1,0 +1,32 @@
+[
+  {
+    "titulo": "O Grande Mistério",
+    "foto_perfil": "https://via.placeholder.com/48",
+    "autor": "Maria Silva",
+    "tags": ["Mistério", "Suspense", "Drama"],
+    "previa": "Em uma noite escura e tempestuosa, um detetive descobre pistas que podem mudar tudo.",
+    "curtidas": 120,
+    "compartilhamento": 45,
+    "comentarios": 30
+  },
+  {
+    "titulo": "Amores e Desafios",
+    "foto_perfil": "https://via.placeholder.com/48",
+    "autor": "João Pereira",
+    "tags": ["Romance", "Drama", "Aventura"],
+    "previa": "Duas almas perdidas encontram o caminho uma para a outra, mas os desafios estão apenas começando.",
+    "curtidas": 230,
+    "compartilhamento": 70,
+    "comentarios": 50
+  },
+  {
+    "titulo": "Além do Horizonte",
+    "foto_perfil": "https://via.placeholder.com/48",
+    "autor": "Ana Costa",
+    "tags": ["Ficção Científica", "Ação", "Fantasia"],
+    "previa": "No ano de 2150, a humanidade luta para sobreviver em um planeta devastado.",
+    "curtidas": 340,
+    "compartilhamento": 120,
+    "comentarios": 90
+  }
+]

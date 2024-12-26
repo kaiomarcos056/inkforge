@@ -1,0 +1,69 @@
+<template>
+    <div class="titulo">
+        <v-avatar class="avatar" :src="avatar" />
+        <div class="info">
+            <h3 class="book-title">{{ titulo }}</h3>
+            <div class="tags">
+                <span v-for="tag in tags" :key="tag" class="tag">{{ tag }}</span>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: "PreviaTitulo",
+    props: {
+        avatar: {
+            type: String,
+            required: true,
+        },
+        titulo: {
+            type: String,
+            required: true,
+        },
+        tags: {
+            type: Array,
+            default: () => [],
+        },
+    },
+};
+</script>
+
+<style scoped>
+.titulo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 48px;
+    height: 48px;
+}
+
+.info {
+    flex-grow: 1;
+}
+
+.book-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.tags {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.tag {
+    font-size: 12px;
+    background-color: black;
+    color: white;
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding: 2px 6px;
+}
+</style>
