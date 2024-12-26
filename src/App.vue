@@ -19,12 +19,17 @@
 
     </v-navigation-drawer>
 
-    <v-app-bar flat class="d-flex justify-space-evenly">
-      <v-avatar color="grey-darken-1"> M </v-avatar>
+    <v-app-bar flat>
+      <v-app-bar-nav-icon>
+        <v-avatar color="grey-darken-1"> M </v-avatar>
+      </v-app-bar-nav-icon>
       <!--<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>-->
       <v-app-bar-title class="text-center">
         <img src="./assets/logo.svg" alt="" srcset="">
       </v-app-bar-title>
+      <v-app-bar-nav-icon>
+        <img src="./assets/icons/plus.svg" alt="" srcset="">
+      </v-app-bar-nav-icon>
     </v-app-bar>
 
     <v-main>
