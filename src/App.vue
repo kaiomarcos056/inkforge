@@ -29,25 +29,17 @@
       
 
 
-      <v-row no-gutters>
-        <v-col cols="6">
-          <v-sheet class="pa-6" style=" background-color: #d9d9d9; border-right: 2px solid gray;">
-            
-          </v-sheet>
-        </v-col>
+      <v-tabs fixed-tabs >
+        <v-tab text="Para você"> </v-tab>
+        <v-tab text="Seguindo"> </v-tab>
+      </v-tabs>
 
-        <v-col cols="6" class="">
-          <v-sheet class="pa-6" style="background-color: #d9d9d9;">
-            
-          </v-sheet>
-        </v-col>
-
-      </v-row>
+      
 
       <v-container class="pa-4 pa-md-10">
         <h1 class="teste-h1">Em destaque</h1>
         
-        <div>
+      <div>
         <CardComponent
           backgroundImage="https://static.escolakids.uol.com.br/2024/04/a-ilha-dessa-foto-esta-localizada-em-ubatuba-sao-paulo.jpg"
           title="Perdidos na Ilha do Amor"
@@ -65,16 +57,7 @@
           :texto="livro.previa"
         />
       </div>
-
-
-        <!--<CarouselComponent />-->
-        <br>
-
-        <ReferralProgramCard />
-        <br>
-        <ReferralProgramCard />
-        <br>
-        <ReferralProgramCard />
+      
       </v-container>
 
     </v-main>
@@ -111,5 +94,18 @@ export default {
   font-family: 'Satoshi-Regular', sans-serif;
   font-size: 16px;
   margin-bottom: 4px;
+}
+
+.v-tab {
+  display: inline-block;
+  letter-spacing: 0.5px;
+  color: black;
+  font-family: 'Satoshi-Regular', sans-serif;
+  text-transform: none;
+}
+.v-tab--selected {
+  color: black;
+  font-weight: bold;
+  border-bottom: 2px solid;
 }
 </style>
