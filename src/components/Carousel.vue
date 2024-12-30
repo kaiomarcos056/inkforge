@@ -1,72 +1,66 @@
 <template>
-    <swiper 
-        :slides-per-view="1.5" 
-        space-between="50" 
-        loop pagination 
-        :navigation="navigation" 
-        class="mySwiper"
-    >
-        <swiper-slide v-for="(card, index) in cards" :key="index">
-            <v-card 
-                width="250" 
-                height="100" 
-                class=""
-            >
+    
 
-            
-                <v-card-title class="text-subtitle-1">Além das Estrelas Caídas</v-card-title>
-            </v-card>
-        </swiper-slide>
-    </swiper>
+        <div id="my-slider">
+            <div v-for="(item, index) in items" :key="index" class="slide">
+                <Card
+                    :backgroundImage="item.capa"
+                    :title="item.titulo" 
+                    :tags="item.tags" />
+            </div>
+        </div>
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import 'swiper/swiper-bundle.css';
+import { tns } from 'tiny-slider';
+import 'tiny-slider/dist/tiny-slider.css';
+
+import Card from "@/components/Card.vue";
 
 export default {
-    name: 'CarouselSwiper',
-    components: {
-        Swiper,
-        SwiperSlide,
-    },
+    name: 'Carousel',
     data() {
         return {
-            cards: [1, 2, 3, 4, 5], // Cards to display
-            navigation: true, // Show navigation by default
+            items: [
+                {
+                    capa: 'https://www.designi.com.br/images/preview/11014873.jpg', // Imagem de capa
+                    titulo: 'Aventura na Floresta', // Título da história
+                    tags: ['Aventura', 'Fantasia', 'Mistério'] // Gêneros
+                },
+                {
+                    capa: 'https://ik.imagekit.io/storybird/images/78d434d0-67f2-43d4-8b1e-b84498b890f7/0_1014998.webp', // Imagem de capa
+                    titulo: 'O Segredo do Castelo', // Título da história
+                    tags: ['Mistério', 'Suspense', 'Histórico'] // Gêneros
+                },
+                {
+                    capa: 'https://img.freepik.com/fotos-premium/um-poster-para-um-novo-livro-chamado-futuro_900775-7975.jpg', // Imagem de capa
+                    titulo: 'Viagem ao Futuro', // Título da história
+                    tags: ['Ciência-Ficção', 'Ação', 'Futurista'] // Gêneros
+                }
+            ]
         };
     },
-    watch: {
-        // Watch for screen size change and toggle navigation
-        $route(to, from) {
-            if (window.innerWidth < 768) {
-                this.navigation = false; // Hide navigation on mobile
-            } else {
-                this.navigation = true; // Show navigation on larger screens
-            }
-        }
-    },
     mounted() {
-        // Initial check on mount
-        if (window.innerWidth < 768) {
-            this.navigation = false; // Hide navigation on mobile
-        }
+        tns({
+            container: '#my-slider',
+            controls: false,
+            items: 1.2,
+            //slideBy: 1,
+            gutter: 50,
+            //autoplay: false,
+            loop: true,
+            mouseDrag: true,
+            nav: false,
+            //
+            //swipeAngle: false
+        });
     },
+    components: {
+        Card
+    }
 };
 </script>
 
 <style scoped>
-.mySwiper {
-    width: 100%;
-    height: 110px;
-    margin-bottom: 20px;
-}
 
-/* Hide navigation buttons on mobile */
-@media (max-width: 768px) {
-    .swiper-button-next,
-    .swiper-button-prev {
-        display: none !important;
-    }
-}
 </style>

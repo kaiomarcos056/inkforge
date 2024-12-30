@@ -1,7 +1,10 @@
 <template>
-    <v-card
+    <v-card 
         :style="`width: 327px; height: 93px; background-image: url('${backgroundImage}'); background-size: cover; background-position: center; border-radius: 12px;`"
-        class="d-flex flex-column justify-space-between" elevation="4">
+        class="d-flex flex-column justify-space-between" 
+        elevation="4" 
+        @click="goToDetails"
+    >
         <div class="overlay">
             <div class="d-flex justify-space-between align-center px-3">
                 <div style="flex: 1;">
@@ -34,6 +37,14 @@ export default {
             type: Array,
             required: true,
             default: () => [],
+        },
+    },
+    methods: {
+        goToDetails() {
+            console.log("Navegando para Detalhes");
+            this.$router.push(
+                { name: "details"}
+            );
         },
     },
 };
