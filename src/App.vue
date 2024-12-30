@@ -1,4 +1,14 @@
 <template>
+  <div class="my-slider">
+        <div v-for="(item, index) in items" :key="index" class="slide">
+          <CardComponent
+            backgroundImage="https://static.escolakids.uol.com.br/2024/04/a-ilha-dessa-foto-esta-localizada-em-ubatuba-sao-paulo.jpg"
+            title="Perdidos na Ilha do Amor"
+            :tags="['Romance', 'Aventura', 'Mistério']"
+          />
+        </div>
+      </div>
+
   <v-app id="inspire">
     <v-navigation-drawer v-model="drawer" class="pa-1">
 
@@ -91,6 +101,8 @@
 <script setup>
 import previas from './previas.json'; // Importa o arquivo JSON
 
+import { tns } from 'tiny-slider';
+import 'tiny-slider/dist/tiny-slider.css';
 
 import Previa from './components/Previa.vue'
 import CarouselComponent from './components/Carousel.vue';
@@ -107,13 +119,29 @@ export default {
   data() {
     return {
       drawer: null,
-      livros: previas
+      livros: previas,
+      items: ['Slide 1', 'Slide 2', 'Slide 3', 'Slide 4']
     };
-  }
+  },
+  mounted() {
+    // Inicialize o Tiny Slider
+    tns({
+      container: '.my-slider',
+      items: 1.2,
+      slideBy: 1,
+      gutter: 16,
+      autoplay: false,
+      loop: true,
+      mouseDrag: true,
+    });
+  },
 };
 </script>
 
 <style scoped>
+.slide {
+  padding: 20px;
+}
 
 .item{
   display: flex !important;
