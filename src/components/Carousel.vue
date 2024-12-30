@@ -1,7 +1,5 @@
 <template>
-    
-
-        <div id="my-slider">
+        <div id="my-slider" class="mb-5">
             <div v-for="(item, index) in items" :key="index" class="slide">
                 <Card
                     :backgroundImage="item.capa"
@@ -45,14 +43,12 @@ export default {
             container: '#my-slider',
             controls: false,
             items: 1.2,
-            //slideBy: 1,
+            slideBy: 1,
             gutter: 50,
-            //autoplay: false,
+            autoplay: false,
             loop: true,
             mouseDrag: true,
             nav: false,
-            //
-            //swipeAngle: false
         });
     },
     components: {

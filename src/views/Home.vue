@@ -1,9 +1,9 @@
 <template>
-    <v-container>
+    <v-container style="background-color: #F7F7F5;">
         <h1 class="h1 mb-2">Em destaque</h1>
         
-        <Carousel ></Carousel>
-        <br>
+        <Carousel></Carousel>
+        
         <div v-for="(livro, index) in livros" :key="index" class="previa">
             
             <Previa 
