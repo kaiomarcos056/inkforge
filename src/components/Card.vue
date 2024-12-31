@@ -43,7 +43,8 @@ export default {
         goToDetails() {
             console.log("Navegando para Detalhes");
             this.$router.push(
-                { name: "Historia"}
+                //{ name: "Historia"}
+                "/historia/1"
             );
         },
     },
