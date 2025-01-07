@@ -35,8 +35,8 @@
         </div>
 
         <v-footer style="display: flex; justify-content: center; align-items: center; gap: 20px; padding: 20px;">
-            <v-btn flat rounded="xl" height="48" width="144"> Página anterior </v-btn>
-            <v-btn flat rounded="xl" height="48" width="144" color="black" @click="dialog = true"> Próxima página</v-btn>
+            <v-btn class="btn-footer" rounded="xl" height="48" width="144"> Página anterior </v-btn>
+            <v-btn class="btn-footer" rounded="xl" height="48" width="144" color="black" @click="dialog = true"> Próxima página</v-btn>
         </v-footer>
 
 
@@ -74,13 +74,25 @@
 
                     <div style="display: flex; justify-content: space-between;">
                         <button style="color: #747474;">Cancelar </button>
-                        <button>Sugerir  <img src="../assets/icons/star.svg"></button>
+                        
                         <button>Escolher <img src="../assets/icons/chevron right.svg"></button>
+                        <v-btn @click="abrirBottomSheet">
+                            Sugerir 
+                            <img src="../assets/icons/star.svg" alt="Star Icon">
+                        </v-btn>
                     </div>
                 </div>
             </v-card>
         </v-dialog>
 
+        <v-bottom-sheet v-model="bottomSheet" max-width="500">
+            <v-card>
+                <v-card-title>Bottom Sheet</v-card-title>
+                <v-card-text>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ut, eos? Nulla aspernatur odio rem, culpa voluptatibus eius debitis.
+                </v-card-text>
+            </v-card>
+        </v-bottom-sheet>
 
     </div>
 </template>
@@ -90,10 +102,18 @@
         name: 'Capitulo',
         data() {
             return {
+                bottomSheet: false,
                 dialog: false,
                 selected: "Cap. 1", // Valor selecionado inicial
                 items: ["Cap. 1", "Cap. 2", "Cap. 3"], // Itens do select
             };
+        },
+        methods: {
+            abrirBottomSheet() {
+                this.bottomSheet = true; // Abre o Bottom Sheet
+                this.dialog = false;
+                // Aqui você pode adicionar código para fechar o diálogo, se necessário.
+            },
         },
     };
 </script>
@@ -132,7 +152,13 @@ span{
     font-family: 'Satoshi-Regular', sans-serif !important;
     font-size: 25px !important;
 }
-
+.btn-footer{
+    font-family: 'Satoshi-Bold', sans-serif;
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: none;
+    letter-spacing: 0px
+}
 /* RADIO */
 
 /* Grupo de botões de rádio */
