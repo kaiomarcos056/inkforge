@@ -48,6 +48,12 @@
                     Noah encara o monitor piscando, o brilho dos símbolos refletindo em seus olhos. Ele sente o peso da decisão iminente. A mensagem é clara: alguém — ou algo — está tentando se comunicar. Mas o que fazer?
                 </p>
 
+                <v-radio-group class="custom-radio-group">
+                    <v-radio label="Radio One" value="one" class="custom-radio" active-class="active"></v-radio>
+                    <label>ou</label>
+                    <v-radio label="Radio Three" value="three" class="custom-radio"></v-radio>
+                </v-radio-group>
+
                 <template v-slot:actions>
                     <v-btn class="ms-auto" text="Ok" @click="dialog = false" ></v-btn>
                 </template>
@@ -83,6 +89,46 @@
     font-size: 12;
     text-transform: none;
     letter-spacing: 0px;
+}
+
+.custom-radio-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; /* Espaço entre as opções */
+}
+
+.custom-radio {
+  background-color: #f0f0f0; /* Fundo cinza */
+  border: 1px solid #d9d9d9; /* Borda inicial */
+  border-radius: 10px; /* Bordas arredondadas */
+  padding: 10px 20px; /* Espaçamento interno */
+  text-align: center; /* Centralizar texto */
+  cursor: pointer; /* Mostrar cursor de clique */
+  transition: all 0.3s ease; /* Transição suave para efeitos */
+  font-weight: bold; /* Texto mais forte */
+  font-size: 16px; /* Tamanho do texto */
+  color: #151515; /* Cor do texto */
+  font-family: 'Noto Serif', serif;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.custom-radio:hover {
+  border-color: #b0b0b0; /* Mudar a cor da borda */
+}
+
+.custom-radio .v-input__control {
+  display: none;
+}
+
+.custom-radio--active {
+  border-color: #4caf50; /* Borda verde */
+  background-color: #e8f5e9; /* Fundo levemente verde */
+  color: #4caf50; /* Texto verde */
+}
+
+.active {
+  border: 2px solid green;
 }
 
 h3 {
