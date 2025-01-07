@@ -140,7 +140,7 @@ span{
     align-items: center;
     justify-content: center;
     background-color: #f7f7f5;
-    border: 1px solid #d9d9d9;
+    border: 2px solid #d9d9d9;
     border-radius: 16px;
     padding: 16px;
     cursor: pointer;
