@@ -87,10 +87,12 @@
 
         <v-bottom-sheet v-model="bottomSheet" max-width="500">
             <v-card>
-                <v-card-title>Bottom Sheet</v-card-title>
+                <v-card-title>Adicionar Sugestão</v-card-title>
+                <v-card-subtitle>Minha sugestão</v-card-subtitle>
                 <v-card-text>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ut, eos? Nulla aspernatur odio rem, culpa voluptatibus eius debitis.
+                    <v-textarea label="" row-height="15" rows="1" variant="outlined" auto-grow ></v-textarea>
                 </v-card-text>
+                
             </v-card>
         </v-bottom-sheet>
 
