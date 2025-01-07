@@ -42,21 +42,42 @@
 
         <v-dialog v-model="dialog" width="auto">
             <!-- <v-card max-width="400" prepend-icon="" text="" title="" > -->
-            <v-card max-width="400" >
+            <v-card max-width="400" class="rounded-lg">
+                <div style="padding: 20px; display: flex; flex-direction: column; gap: 10px;">
+                    <p style="font-size: 18px; font-weight: 500; font-family: 'Satoshi-Regular', sans-serif;" >Escolha</p>
 
-                <p class="cap-text">
-                    Noah encara o monitor piscando, o brilho dos símbolos refletindo em seus olhos. Ele sente o peso da decisão iminente. A mensagem é clara: alguém — ou algo — está tentando se comunicar. Mas o que fazer?
-                </p>
+                    <p class="cap-text" style="border-left: 1px solid #d9d9d9; padding-left: 10px; line-height:19px; letter-spacing: -0.4px;">
+                        Noah encara o monitor piscando, o brilho dos símbolos refletindo em seus olhos. Ele sente o peso da decisão iminente. A mensagem é clara: alguém — ou algo — está tentando se comunicar. Mas o que fazer?
+                    </p>
 
-                <v-radio-group class="custom-radio-group">
-                    <v-radio label="Radio One" value="one" class="custom-radio" active-class="active"></v-radio>
-                    <label>ou</label>
-                    <v-radio label="Radio Three" value="three" class="custom-radio"></v-radio>
-                </v-radio-group>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="customRadio" value="op1" />
+                            <div class="radio-button">
+                                <p style="font-family: 'Noto Serif', serif; font-weight: 400; font-size: 14px; line-height:19px; letter-spacing: -0.4px;">    
+                                    <b>Decifrar os símbolos:</b> Noah decide mergulhar nos códigos, cruzando referências com seu banco de dados astronômico e histórico, determinado a descobrir quem ou o que está enviando a mensagem. Ele acredita que a resposta está na lógica e na ciência.
+                                </p>
+                            </div>
+                        </label>
 
-                <template v-slot:actions>
-                    <v-btn class="ms-auto" text="Ok" @click="dialog = false" ></v-btn>
-                </template>
+                        <p style="text-align: center; font-size: 14px; font-weight: 700; font-family: 'Satoshi-Regular', sans-serif;">Ou</p>
+
+                        <label>
+                            <input type="radio" name="customRadio" value="op2" />
+                            <div class="radio-button">
+                                <p style="font-family: 'Noto Serif', serif; font-weight: 400; font-size: 14px; line-height:19px; letter-spacing: -0.4px;">
+                                    <b>Seguir as coordenadas:</b> Ignorando os códigos por ora, Noah escolhe investigar fisicamente o local indicado pelas coordenadas no mapa estelar. Ele sente que precisa ver o que está lá com seus próprios olhos, mesmo que isso signifique sair da segurança do observatório e enfrentar o desconhecido.
+                                </p>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div>
+                        <button>Cancelar</button>
+                        <button>Sugerir</button>
+                        <button>Escolher</button>
+                    </div>
+                </div>
             </v-card>
         </v-dialog>
 
@@ -78,59 +99,6 @@
 </script>
 
 <style scoped>
-.v-field__outline {
---v-field-border-width: 10px !important;;
---v-field-border-opacity: 1 !important;
-}
-
-.v-btn{
-    font-family: 'Satoshi-Regular', sans-serif;
-    font-weight: 700;
-    font-size: 12;
-    text-transform: none;
-    letter-spacing: 0px;
-}
-
-.custom-radio-group {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px; /* Espaço entre as opções */
-}
-
-.custom-radio {
-  background-color: #f0f0f0; /* Fundo cinza */
-  border: 1px solid #d9d9d9; /* Borda inicial */
-  border-radius: 10px; /* Bordas arredondadas */
-  padding: 10px 20px; /* Espaçamento interno */
-  text-align: center; /* Centralizar texto */
-  cursor: pointer; /* Mostrar cursor de clique */
-  transition: all 0.3s ease; /* Transição suave para efeitos */
-  font-weight: bold; /* Texto mais forte */
-  font-size: 16px; /* Tamanho do texto */
-  color: #151515; /* Cor do texto */
-  font-family: 'Noto Serif', serif;
-    font-weight: 600;
-    font-size: 14px;
-}
-
-.custom-radio:hover {
-  border-color: #b0b0b0; /* Mudar a cor da borda */
-}
-
-.custom-radio .v-input__control {
-  display: none;
-}
-
-.custom-radio--active {
-  border-color: #4caf50; /* Borda verde */
-  background-color: #e8f5e9; /* Fundo levemente verde */
-  color: #4caf50; /* Texto verde */
-}
-
-.active {
-  border: 2px solid green;
-}
-
 h3 {
     font-family: 'Satoshi-Regular', sans-serif;
     font-size: 16px;
@@ -156,4 +124,39 @@ span{
     font-size: 25px !important;
 }
 
+/* RADIO */
+
+/* Grupo de botões de rádio */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Espaçamento entre os botões */
+}
+
+/* Estilo do botão de rádio */
+.radio-button {
+    font-family: 'Noto Serif', serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f7f7f5;
+    border: 1px solid #d9d9d9;
+    border-radius: 16px;
+    padding: 16px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: #151515;
+    transition: all 0.3s ease; /* Transição suave */
+}
+
+/* Ocultando o input de rádio padrão */
+input[type="radio"] {
+    display: none;
+}
+
+/* Estilo para o botão selecionado */
+input[type="radio"]:checked + .radio-button {
+    border: 2px solid #4caf50;
+}
 </style>
