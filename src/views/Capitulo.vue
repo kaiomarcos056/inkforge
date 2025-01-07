@@ -72,10 +72,10 @@
                         </label>
                     </div>
 
-                    <div>
-                        <button>Cancelar</button>
-                        <button>Sugerir</button>
-                        <button>Escolher</button>
+                    <div style="display: flex; justify-content: space-between;">
+                        <button style="color: #747474;">Cancelar </button>
+                        <button>Sugerir  <img src="../assets/icons/star.svg"></button>
+                        <button>Escolher <img src="../assets/icons/chevron right.svg"></button>
                     </div>
                 </div>
             </v-card>
@@ -99,6 +99,15 @@
 </script>
 
 <style scoped>
+button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    font-family: 'Satoshi-Regular', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+}
 h3 {
     font-family: 'Satoshi-Regular', sans-serif;
     font-size: 16px;
