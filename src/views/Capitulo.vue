@@ -148,6 +148,7 @@ span{
     font-weight: 600;
     color: #151515;
     transition: all 0.3s ease; /* Transição suave */
+    box-sizing: border-box;
 }
 
 /* Ocultando o input de rádio padrão */
