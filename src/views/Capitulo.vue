@@ -11,8 +11,8 @@
         <div style="padding: 20px; background-color: #F7F7F5;">
 
             <div style="display: flex; gap: 10px; width: 70%;">                
-                <v-select label="" variant="outline" density="compact" :items="items" v-model="selected"></v-select>
-                <v-select label="" variant="outline" density="compact" :items="items" v-model="selected"></v-select>
+                <v-select label="" variant="outline" density="compact" :items="items" v-model="capselected"></v-select>
+                <v-select label="" variant="outline" density="compact" :items="pages" v-model="pageselected"></v-select>
             </div>
 
             <div>
@@ -35,8 +35,8 @@
         </div>
 
         <v-footer style="display: flex; justify-content: center; align-items: center; gap: 20px; padding: 20px;">
-            <v-btn class="btn-footer" rounded="xl" height="48" width="144"> Página anterior </v-btn>
-            <v-btn class="btn-footer" rounded="xl" height="48" width="144" color="black" @click="dialog = true"> Próxima página</v-btn>
+            <v-btn class="btn-footer" rounded="xl" height="48" width="144" flat> Página anterior </v-btn>
+            <v-btn class="btn-footer" rounded="xl" height="48" width="144" flat color="black" @click="dialog = true"> Próxima página</v-btn>
         </v-footer>
 
 
@@ -73,12 +73,14 @@
                     </div>
 
                     <div style="display: flex; justify-content: space-between;">
-                        <button style="color: #747474;">Cancelar </button>
-                        
-                        <button>Escolher <img src="../assets/icons/chevron right.svg"></button>
-                        <v-btn @click="abrirBottomSheet">
-                            Sugerir 
-                            <img src="../assets/icons/star.svg" alt="Star Icon">
+                        <v-btn size="x-small" class="btn-bottom-sheet" flat style="color: #747474;">Cancelar</v-btn>
+                        <v-btn size="x-small" class="btn-bottom-sheet" flat @click="abrirBottomSheet"> 
+                            <p class="mr-1">Sugerir</p>
+                            <img src="../assets/icons/star.svg" alt="Star Icon"> 
+                        </v-btn>
+                        <v-btn size="x-small" class="btn-bottom-sheet" flat> 
+                            <p class="mr-1">Escolher</p>
+                            <img src="../assets/icons/chevron right.svg"> 
                         </v-btn>
                     </div>
                 </div>
@@ -87,12 +89,12 @@
 
         <v-bottom-sheet v-model="bottomSheet" max-width="500">
             <v-card>
-                <v-card-title>Adicionar Sugestão</v-card-title>
-                <v-card-subtitle>Minha sugestão</v-card-subtitle>
-                <v-card-text>
-                    <v-textarea label="" row-height="15" rows="1" variant="outlined" auto-grow ></v-textarea>
-                </v-card-text>
-                
+                <div style="padding: 25px 15px; display: flex; flex-direction: column; gap: 10px;">
+                    <h1 style="line-height: 0; margin:0; padding: 0; font-family: 'Satoshi-Regular', sans-serif; font-size: 20px; font-weight: 500;">Adicionar Sugestão</h1>
+                    <p></p>
+                    <h2 style="font-family: 'Satoshi-Regular', sans-serif; font-size: 14px; font-weight: 500;">Minha sugestão</h2>
+                    <textarea rows="4" name="" id="" style="resize: none; border: 2px solid #151515; padding: 10px; border-radius: 16px; font-family: 'Satoshi-Regular', sans-serif; font-weight: 500;" ></textarea>
+                </div>
             </v-card>
         </v-bottom-sheet>
 
@@ -106,8 +108,10 @@
             return {
                 bottomSheet: false,
                 dialog: false,
-                selected: "Cap. 1", // Valor selecionado inicial
+                capselected: "Cap. 1", // Valor selecionado inicial
+                pageselected: "Pg. 1", // Valor selecionado inicial
                 items: ["Cap. 1", "Cap. 2", "Cap. 3"], // Itens do select
+                pages: ["Pg. 1", "Pg. 2", "Pg. 3"], // Itens do select
             };
         },
         methods: {
@@ -121,15 +125,18 @@
 </script>
 
 <style scoped>
-button{
+
+.btn-bottom-sheet{
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 5px;
     font-family: 'Satoshi-Regular', sans-serif;
     font-size: 14px;
     font-weight: 700;
+    gap: 10px;
+    text-transform: none;
 }
+
 h3 {
     font-family: 'Satoshi-Regular', sans-serif;
     font-size: 16px;
