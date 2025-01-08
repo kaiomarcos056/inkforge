@@ -3,7 +3,6 @@
         :style="`width: 327px; height: 93px; background-image: url('${backgroundImage}'); background-size: cover; background-position: center; border-radius: 12px;`"
         class="d-flex flex-column justify-space-between" 
         elevation="4" 
-        @click="goToDetails"
     >
         <div class="overlay">
             <div class="d-flex justify-space-between align-center px-3">
@@ -13,7 +12,7 @@
                         <div class="tags" style="display: flex;">
                             <span v-for="tag in tags" :key="tag" class="tag">{{ tag }}</span>
                         </div>
-                        <v-icon class="arrow-icon">mdi-chevron-right</v-icon>
+                        <v-icon class="arrow-icon" @click="goToDetails">mdi-chevron-right</v-icon>
                     </div>
                 </div>
             </div>

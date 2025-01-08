@@ -1,8 +1,8 @@
 <template>
     <div style="display: flex; flex-flow: column;">
 
-        <v-btn @click="voltar" flat style="font-size: 20px; text-align: right;">
-            <v-icon>mdi-chevron-left</v-icon>
+        <v-btn @click="voltar" style="font-size: 20px; align-self: baseline;" flat>
+            <v-icon style="text-align: left;">mdi-chevron-left</v-icon>
         </v-btn>
 
         <div style="padding: 0px 20px 20px 20px; border-bottom: 1px solid #D9D9D9;">
