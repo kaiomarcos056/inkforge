@@ -22,7 +22,7 @@
         @touchend="endSwipe"
       >
         <div class="slides-wrapper" :style="{ transform: `translateX(-${currentTab * 100}%)` }">
-            <div v-for="(tab, index) in tabs" :key="index" class="slide" style="height: 360px;">
+            <div v-for="(tab, index) in tabs" :key="index" class="slide">
                 <h3>{{ tab }}</h3>
             </div>
         </div>
@@ -65,6 +65,9 @@
   
 <style scoped>
 .tabs-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Agora ocupa todo o espaço do wrapper */
     width: 100%;
     max-width: 400px;
     margin: auto;
@@ -92,7 +95,7 @@
     font-weight: bold;
 }
   
-  /* Active Marker */
+/* Active Marker */
 .active-mark {
     position: absolute;
     bottom: 0;
@@ -103,8 +106,10 @@
     border-radius: 20px;
 }
   
-  /* Slide Content */
+/* Slide Content */
 .slides {
+    flex: 1; /* Agora ocupa todo o espaço restante */
+    display: flex;
     overflow: hidden;
     width: 100%;
     touch-action: pan-y;
@@ -112,6 +117,7 @@
 
 .slides-wrapper {
     display: flex;
+    height: 100%; /* Garante que o wrapper ocupe todo o espaço */
     transition: transform 0.3s ease;
 }
 
@@ -119,8 +125,10 @@
     min-width: 100%;
     height: 100%;
     padding: 20px;
-    /*background: #f7f7f5;*/
-    background: red;
+    background: #F7F7F5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 </style>

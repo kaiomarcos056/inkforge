@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <div style="flex: 1;">
+        <div class="tabs-wrapper">
             <Tabs></Tabs>
         </div>
 
@@ -57,10 +57,18 @@ export default {
 </script>
 
 <style scoped>
+
 section{
     height: 100%;
     display: flex;
     flex-direction: column;
+}
+
+.tabs-wrapper {
+    flex: 1; /* Ocupa todo o espaço restante */
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* Importante para que o flex funcione corretamente */
 }
 
 h3{
