@@ -1,10 +1,38 @@
 <template>
     <div style="display: flex; flex-flow: column;">
 
-        <v-btn @click="voltar" style="font-size: 20px; align-self: baseline;" flat>
-            <v-icon style="text-align: left;">mdi-chevron-left</v-icon>
-        </v-btn>
+        <v-icon @click="voltar" style="font-size: 38px;">mdi-chevron-left</v-icon>
 
+        <div>
+            <div style="display: flex; justify-content: center;">
+                <v-card
+                    image="https://marketplace.canva.com/EAFq91U_RUs/1/0/1003w/canva-capa-de-livro-de-fantasia-elegante-verde-e-bege-awJX91ybn9w.jpg"
+                    width="80"
+                    height="120"
+                    class="mr-4"
+                ></v-card>
+                <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <h3 class="mb-1">Um viciado nas estrelas</h3>
+                        <div style="display: flex; gap: 5px;">
+                            <p>Romance</p>
+                            <p>Aventura</p>
+                            <p>Mistério</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                            <div class="avatar">M</div>
+                            <label class="avatar-titulo">Marcos Kaio</label>
+                    </div>
+                </div>
+            </div>
+            <hr style="margin: 10px 40px;">
+            <div style="padding: 0px 35px;">
+                <previa-acoes />
+            </div>
+        </div>
+
+        <!--
         <div style="padding: 0px 20px 20px 20px; border-bottom: 1px solid #D9D9D9;">
             <div style="display: flex; align-items: center; gap: 10px;">
                 <v-avatar color="pink-darken-1"> P </v-avatar>
@@ -18,6 +46,7 @@
                 </div>
             </div>
         </div>
+        -->
 
         <div style="padding: 20px; background-color: #F7F7F5;">
             <v-card v-for="capitulo in capitulos" :key="capitulo.id" class="mb-4 rounded-lg elevation-1"
@@ -39,8 +68,13 @@
 </template>
 
 <script>
+import PreviaAcoes from "@/components/PreviaAcoes.vue";
+
 export default {
     name: 'Historia',
+    components: {
+        PreviaAcoes
+    },
     data() {
         return {
             capitulos: [
@@ -108,5 +142,24 @@ p {
     font-size: 16px;
     text-transform: none;
     letter-spacing: 0px
+}
+
+.avatar{
+    background-color: #DFDFDF;
+    color: #878787;
+    width: 32px;
+    height:32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+.avatar-titulo{
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 400;
 }
 </style>

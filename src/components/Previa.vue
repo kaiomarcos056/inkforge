@@ -10,7 +10,7 @@
                 <previa-titulo :titulo="titulo" :tags="tags" />
             </div>
 
-            <div style="flex: 1; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 8; -webkit-box-orient: vertical; text-overflow: ellipsis;">
+            <div style="flex: 1; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical; text-overflow: ellipsis;">
                 <previa-corpo :texto="texto" />
             </div>
             
@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    
+
     <!--
     <v-card flat class="previa">
         <previa-titulo :avatar="avatar" :titulo="titulo" :tags="tags" />
@@ -83,7 +83,7 @@ export default {
     font-size: 12px;
     font-weight: 500;
     margin-bottom: 5px;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 .avatar{

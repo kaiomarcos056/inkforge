@@ -1,6 +1,6 @@
 <template>
   <div style=" display: flex; gap: 25px; align-items: center; overflow-x: auto; scrollbar-width: none; width: 100%; height: 140px;">
-    <div style="display: flex;" v-for="(i, index) in 5" :key="index">
+    <div style="display: flex;" v-for="(i, index) in 5" :key="index" @click="goToDetails">
     <v-card
       class="mx-auto elevation-5 mr-3 ml-2"
       color="surface-variant"
@@ -41,7 +41,16 @@ export default {
             required: false,
             default: () => [],
         },
-    }
+    },
+    methods: {
+        goToDetails() {
+            console.log("Navegando para Detalhes");
+            this.$router.push(
+                //{ name: "Historia"}
+                "/historia/1"
+            );
+        },
+    },
 };
 </script>
 

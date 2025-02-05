@@ -30,8 +30,8 @@ export default {
     font-family: 'Satoshi-Regular', sans-serif;
     display: flex;
     justify-content: space-around;
-    margin-top: 12px;
-    margin-bottom: 12px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .icon {
