@@ -9,7 +9,7 @@
           :class="{ active: currentTab === index }"
           @click="currentTab = index"
         >
-          {{ tab }}
+          {{ tab.nome }}
         </span>
         <div class="active-mark" :style="{ left: `${currentTab * 33.33}%` }"></div>
       </div>
@@ -21,9 +21,9 @@
         @touchmove="moveSwipe"
         @touchend="endSwipe"
       >
-        <div class="slides-wrapper" :style="{ transform: `translateX(-${currentTab * 100}%)` }">
+        <div class="slides-wrapper" :style="{ transform: `translateX(-${currentTab * 100}%)`, width: `${tabs.length * 100}%` }">
             <div v-for="(tab, index) in tabs" :key="index" class="slide">
-                <h3>{{ tab }}</h3>
+                <component :is="tab.componente" />
             </div>
         </div>
 
@@ -31,11 +31,17 @@
     </div>
   </template>
   
-  <script>
+<script>
+import ListaLivro from './ListaLivro.vue';
+
   export default {
     data() {
       return {
-        tabs: ["Minha Biblioteca", "Histórico", "Salvos"],
+        tabs: [
+            { nome: "Minha Biblioteca", componente: ListaLivro},
+            { nome: "Histórico", componente: ListaLivro},
+            { nome: "Salvos", componente: ListaLivro},
+        ],
         currentTab: 0,
         startX: 0, // Posição inicial do toque
         endX: 0 // Posição final do toque
@@ -59,6 +65,9 @@
                 this.currentTab--;
             }
         }
+    },
+    components: {
+        ListaLivro
     }
   };
   </script>
@@ -122,13 +131,17 @@
 }
 
 .slide {
+    /*border: 1px solid red;*/
     min-width: 100%;
     height: 100%;
     padding: 20px;
     background: #F7F7F5;
     display: flex;
+    /*
+    
     align-items: center;
     justify-content: center;
+    */
 }
 
 </style>
