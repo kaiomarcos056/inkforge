@@ -1,12 +1,11 @@
 <template>
-    
 
-    <div style="display: flex; border: 1px solid red;">
+    <div style="display: flex;">
         <v-card
             class="elevation-5 mr-3" width="150" height="225"
             image="https://marketplace.canva.com/EAFq91U_RUs/1/0/1003w/canva-capa-de-livro-de-fantasia-elegante-verde-e-bege-awJX91ybn9w.jpg"
         ></v-card>
-        <div style="flex: 1; border: 1px solid blue; display: flex; flex-direction: column;">
+        <div style="flex: 1; display: flex; flex-direction: column;">
             <div style="margin-bottom: 8px;">
                 <previa-titulo :titulo="titulo" :tags="tags" />
             </div>
@@ -26,12 +25,14 @@
             </div>
         </div>
     </div>
-
+    
+    <!--
     <v-card flat class="previa">
         <previa-titulo :avatar="avatar" :titulo="titulo" :tags="tags" />
         <previa-corpo :texto="texto" />
         <previa-acoes />
     </v-card>
+    -->
 </template>
 
 <script>

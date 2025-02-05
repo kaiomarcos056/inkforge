@@ -61,4 +61,8 @@
     font-size: 16px;
 }
 
+.previa{
+    margin-bottom: 25px;
+}
+
 </style>
