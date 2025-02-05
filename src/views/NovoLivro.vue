@@ -2,10 +2,7 @@
     <v-container style="background-color: #F7F7F5;">
 
         <div style="display: flex; flex-flow: column;">
-
-            <v-btn class="mb-3" @click="voltar" style="font-size: 20px; align-self: baseline;" flat>
-                <v-icon style="text-align: left;">mdi-chevron-left</v-icon>
-            </v-btn>
+            <v-icon @click="voltar" style="font-size: 35px; margin-left: -8px;">mdi-chevron-left</v-icon>
             
             <div class="grupo-formulario"> 
                 <h1>Nova história</h1>
@@ -85,6 +82,7 @@ export default {
                 backgroundSize: "contain", // Ajusta a imagem sem cortá-la
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat", // Evita a repetição da imagem
+                backgroundColor: "none",
             };
         },
     },
@@ -163,6 +161,14 @@ textarea {
     background-color: #fff;
     transition: border-color 0.3s ease;
     resize: vertical; /* Permite redimensionamento apenas na vertical */
+}
+textarea:focus {
+    border-color: #151515;
+    outline: none;
+}
+
+textarea:not(:placeholder-shown) {
+    border-color: #151515;
 }
 
 .checkbox-group {

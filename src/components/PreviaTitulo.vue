@@ -1,7 +1,5 @@
 <template>
     <div class="titulo">
-        <v-avatar color="grey-darken-1"> M </v-avatar>
-
         <div class="info">
             <h3 class="book-title">{{ titulo }}</h3>
             <div class="tags">
@@ -17,7 +15,7 @@ export default {
     props: {
         avatar: {
             type: String,
-            required: true,
+            required: false,
         },
         titulo: {
             type: String,
@@ -61,7 +59,7 @@ export default {
 
 .tag {
     font-family: 'Satoshi-Regular', sans-serif;
-    font-size: 12px;
+    font-size: 10px;
     background-color: none;
     color: #505050;
     border: 1px solid #505050;
