@@ -7,8 +7,8 @@
             <div style="display: flex; justify-content: center;">
                 <v-card
                     image="https://marketplace.canva.com/EAFq91U_RUs/1/0/1003w/canva-capa-de-livro-de-fantasia-elegante-verde-e-bege-awJX91ybn9w.jpg"
-                    width="80"
-                    height="120"
+                    width="90"
+                    height="130"
                     class="mr-4"
                 ></v-card>
                 <div style="display: flex; flex-direction: column; justify-content: space-between;">
@@ -26,8 +26,8 @@
                     </div>
                 </div>
             </div>
-            <hr style="margin: 10px 40px;">
-            <div style="padding: 0px 35px;">
+            <hr style="margin: 15px 30px 10px 30px">
+            <div style="padding: 0px 30px;">
                 <previa-acoes />
             </div>
         </div>

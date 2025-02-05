@@ -6,7 +6,7 @@
             <v-avatar color="grey-darken-1">M</v-avatar> 
         </v-app-bar-nav-icon>
         
-        <v-app-bar-title class="text-center"> 
+        <v-app-bar-title class="text-center" @click="home"> 
             <img src="@/assets/logo.svg"> 
         </v-app-bar-title>
 
@@ -61,7 +61,7 @@ export default {
         return {
             drawer: false, // ESTADO INICIAL DO DRAWER
             menuItems: [
-                { title: "Minha Biblioteca", icon: "bookIcon", route: "/" },
+                { title: "Minha Biblioteca", icon: "bookIcon", route: "/biblioteca" },
                 { title: "Histórico de Leitura", icon: "rewindIcon", route: "/stories" },
                 { title: "Continue de Onde Parou", icon: "textArrowIcon", route: "/settings" },
             ],
@@ -86,6 +86,10 @@ export default {
             this.$router.push(route); // NAVEGANDO PARA ROTA ESPECIFICA
             this.drawer = false; // FECHANDO O DRAWER DEPOIS DE CLICAR NO ITEM DO MENU
         },
+        home(){
+            this.$router.push("/"); // NAVEGANDO PARA ROTA ESPECIFICA
+            this.drawer = false; // FECHANDO O DRAWER DEPOIS DE CLICAR NO ITEM DO MENU
+        }
     },
 };
 </script>
