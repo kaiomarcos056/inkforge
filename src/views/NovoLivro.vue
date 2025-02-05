@@ -52,9 +52,18 @@
             <div class="grupo-formulario">
                 <h1>Imagem da capa</h1>
                 <p>Anexar arquivo</p>
-                <input type="file" accept="image/*">
+                
+                <div class="upload-box" @click="selectImage" :style="backgroundStyle">
+                    <h3 v-if="!imagePreview">Enviar Imagem</h3>
+                    <p v-if="!imagePreview">Dimensão da imagem (720x1080)</p>
+                    <input type="file" ref="fileInput" @change="handleImageUpload" accept="image/*" hidden>
+                </div>
             </div>
             
+            <div style="height: 60px;"></div>
+
+            <button class="floating-btn" @click="onClick">Salvar</button>
+
         </div>
 
     </v-container>
@@ -65,8 +74,19 @@ export default {
     name: 'NovoLivro',
     data() {
         return {
-            
+            imagePreview: null, // Armazena a pré-visualização da imagem
         };
+    },
+    computed: {
+        backgroundStyle() {
+            return {
+                backgroundImage: this.imagePreview ? `url(${this.imagePreview})` : "none",
+                //backgroundSize: "cover",
+                backgroundSize: "contain", // Ajusta a imagem sem cortá-la
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat", // Evita a repetição da imagem
+            };
+        },
     },
     methods: {
         voltar() {
@@ -76,7 +96,24 @@ export default {
             else {
                 this.$router.push("/");
             }
-        }
+        },
+        selectImage() {
+            this.$refs.fileInput.click(); // Simula o clique no input de arquivo
+        },
+        handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                this.imagePreview = e.target.result; // Atualiza a pré-visualização
+                };
+                reader.readAsDataURL(file);
+            }
+        },
+        onClick() {
+            // Adicione a lógica que você quiser ao clicar no botão
+            alert("Botão flutuante clicado!");
+        },
     },
 };
 </script>
@@ -153,5 +190,39 @@ input[type="checkbox"]:checked + label {
     background-color: #E1FAE2;
     color: #73BC47;
     border-color: #73BC47;
+}
+
+.upload-box {
+  width: 100%;
+  height: 300px;
+  background-color: #E2E2E2;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.floating-btn {
+  position: fixed; /* Fixa o botão na tela */
+  bottom: 20px; /* Distância do fundo da janela */
+  right: 10px; /* Distância da lateral direita */
+  background-color: #151515; /* Cor do botão */
+  color: white;
+  border: none;
+  border-radius: 50px; /* Botão redondo */
+  width: 95%;
+  height: 48px;
+  padding: 8px 16px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.floating-btn:hover {
+  background-color: #1a1a1a; /* Cor quando passar o mouse */
 }
 </style>
