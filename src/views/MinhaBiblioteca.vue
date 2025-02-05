@@ -1,7 +1,8 @@
 <template>
+        
     <section>
 
-        <div style="border: 1px solid red; padding: 15px;">
+        <div style="padding: 15px;">
             <div style="display: flex; align-items: center; margin-bottom: 10px;">
                 <div class="avatar">M</div>
                 <div>
@@ -21,19 +22,22 @@
         </div>
 
         <div style="border: 1px solid blue; flex: 1;">
-
+            <Tabs></Tabs>
         </div>
 
     </section>
+
 </template>
 
 <script>
+
+import Tabs from '../components/Tabs.vue';
 
 export default {
     name: 'MinhaBiblioteca',
     data() {
         return {
-            
+          
         };
     },
     methods: {
@@ -45,13 +49,16 @@ export default {
             }
         }
     },
+    components: {
+        Tabs
+    }
 };
 
 </script>
 
 <style scoped>
 section{
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
 }
@@ -96,4 +103,5 @@ p{
     display: flex;
     gap: 8px;
 }
+
 </style>
