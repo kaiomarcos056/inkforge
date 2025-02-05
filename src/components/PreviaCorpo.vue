@@ -19,8 +19,10 @@ export default {
 <style scoped>
 .corpo {
     font-family: 'Noto Serif', serif;
-    font-size: 12px;
     color: #151515;
-    line-height: 1.6;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 13.6px;
+    letter-spacing: -0.4px;
 }
 </style>
