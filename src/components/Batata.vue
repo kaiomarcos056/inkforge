@@ -1,8 +1,8 @@
 <template>
-  <div style="display: flex; gap: 25px; overflow-x: auto; scrollbar-width: none; width: 100%; height: 130px;">
+  <div style=" display: flex; gap: 25px; align-items: center; overflow-x: auto; scrollbar-width: none; width: 100%; height: 140px;">
     <div style="display: flex;" v-for="(i, index) in 5" :key="index">
     <v-card
-      class="mx-auto elevation-5 mr-3"
+      class="mx-auto elevation-5 mr-3 ml-2"
       color="surface-variant"
       image="https://marketplace.canva.com/EAFq91U_RUs/1/0/1003w/canva-capa-de-livro-de-fantasia-elegante-verde-e-bege-awJX91ybn9w.jpg"
       width="80"
