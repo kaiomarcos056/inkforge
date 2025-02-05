@@ -2,12 +2,10 @@
     <v-container style="background-color: #F7F7F5;">
         <h1 class="h1 mb-2">Em destaque</h1>
         
-        <Batata></Batata>
+        <Batata style=""></Batata>
+        <Batata style="margin-bottom: 20px;"></Batata>
 
-<h1>aaa
-    
-</h1>
-        <Carousel></Carousel>
+        <!-- <Carousel></Carousel> -->
         
         <div v-for="(livro, index) in livros" :key="index" class="previa">
             

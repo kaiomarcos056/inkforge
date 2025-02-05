@@ -10,7 +10,7 @@
             <img src="@/assets/logo.svg"> 
         </v-app-bar-title>
 
-        <v-app-bar-nav-icon> 
+        <v-app-bar-nav-icon @click="navigate('new-book')"> 
             <img src="@/assets/icons/plus.svg"> 
         </v-app-bar-nav-icon>
 

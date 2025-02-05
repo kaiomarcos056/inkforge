@@ -4,9 +4,12 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
 import Historia from "@/views/Historia.vue";
 import Capitulo from "@/views/Capitulo.vue";
+import NovoLivro from "@/views/NovoLivro.vue";
 
 const routes = [
   { path: "/", name: "Home", component: Home },
+
+  { path: "/new-book", name: "NovoLivro", component: NovoLivro },
 
   { path: "/historia/:id", name: "Historia", component: Historia },
 
