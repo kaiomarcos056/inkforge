@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <div style="border: 1px solid blue; flex: 1;">
+        <div style="flex: 1;">
             <Tabs></Tabs>
         </div>
 
