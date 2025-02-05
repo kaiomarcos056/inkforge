@@ -11,12 +11,13 @@
                 <previa-titulo :titulo="titulo" :tags="tags" />
             </div>
 
-            <div style="flex: 1; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; text-overflow: ellipsis;">
+            <div style="flex: 1; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 8; -webkit-box-orient: vertical; text-overflow: ellipsis;">
                 <previa-corpo :texto="texto" />
             </div>
             
-            <div style="display: flex; align-items: center;">
+            <div class="ver-mais" style="display: flex; align-items: center;">
                 <p>Ver mais</p>
+                <v-icon>mdi-chevron-right</v-icon>
             </div>
 
             <div style="display: flex; align-items: center;">
@@ -75,6 +76,13 @@ export default {
     margin-bottom: 30px;
     border-radius: 0px;
     border-bottom: 1px solid #D9D9D9;
+}
+
+.ver-mais{
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
 
 .avatar{
