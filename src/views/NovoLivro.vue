@@ -1,41 +1,63 @@
 <template>
-    <div style="display: flex; flex-flow: column;">
+    <v-container style="background-color: #F7F7F5;">
 
-        <v-btn @click="voltar" style="font-size: 20px; align-self: baseline;" flat>
-            <v-icon style="text-align: left;">mdi-chevron-left</v-icon>
-        </v-btn>
+        <div style="display: flex; flex-flow: column;">
 
-        <div style="padding: 0px 20px 20px 20px; border-bottom: 1px solid #D9D9D9;">
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <v-avatar color="pink-darken-1"> P </v-avatar>
-                <div style="display: flex; flex-flow: column;">
-                    <h3 class="mb-1">Um viciado nas estrelas</h3>
-                    <div style="display: flex; gap: 5px;">
-                        <p>Romance</p>
-                        <p>Aventura</p>
-                        <p>Mistério</p>
-                    </div>
+            <v-btn class="mb-3" @click="voltar" style="font-size: 20px; align-self: baseline;" flat>
+                <v-icon style="text-align: left;">mdi-chevron-left</v-icon>
+            </v-btn>
+            
+            <div class="grupo-formulario"> 
+                <h1>Nova história</h1>
+                <p>Como a história vai se chamar?</p>
+                <input type="text" placeholder="Digite o nome da hitória...">
+            </div>
+            
+            <div class="grupo-formulario">
+                <h1>Do que a história se trata?</h1>
+                <p>Escreva uma pequena sinopse da história</p>
+                <textarea placeholder="O que acontece na história?" rows="6"></textarea>
+            </div>
+            
+            <div class="grupo-formulario">
+                <h1>Qual o tema da sua história</h1>
+                <p>Se pudesse resumir o cerne da sua história sera:</p>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="Romance" name="chips" value="Romance">
+                    <label for="Romance">Romance</label>
+
+                    <input type="checkbox" id="Aventura" name="chips" value="Aventura">
+                    <label for="Aventura">Aventura</label>
+
+                    <input type="checkbox" id="Misterio" name="chips" value="Mistério">
+                    <label for="Misterio">Mistério</label>
+
+                    <input type="checkbox" id="Terror" name="chips" value="Terror">
+                    <label for="Terror">Terror</label>
+
+                    <input type="checkbox" id="Suspense" name="chips" value="Suspense">
+                    <label for="Suspense">Suspense</label>
+
+                    <input type="checkbox" id="Comedia" name="chips" value="Comedia">
+                    <label for="Comedia">Comédia</label>
+
+                    <input type="checkbox" id="Infantil" name="chips" value="Infantil">
+                    <label for="Infantil">Infantil</label>
+
+                    <input type="checkbox" id="Drama" name="chips" value="Drama">
+                    <label for="Drama">Drama</label>
                 </div>
             </div>
+
+            <div class="grupo-formulario">
+                <h1>Imagem da capa</h1>
+                <p>Anexar arquivo</p>
+                <input type="file" accept="image/*">
+            </div>
+            
         </div>
 
-        <div style="padding: 20px; background-color: #F7F7F5;">
-            <v-card v-for="capitulo in capitulos" :key="capitulo.id" class="mb-4 rounded-lg elevation-1"
-                @click="navegarParaCapitulo(capitulo.id)">
-                <v-card-title class="cap-titulo">
-                    {{ capitulo.titulo }}
-                </v-card-title>
-
-                <v-card-text class="cap-text">
-                    {{ capitulo.resumo }}
-                </v-card-text>
-                <v-card-actions class="cap-actions">
-                    <v-btn class="cap-btn">Ler <v-icon class="arrow-icon"
-                            style="font-size: 26px;">mdi-chevron-right</v-icon> </v-btn>
-                </v-card-actions>
-            </v-card>
-        </div>
-    </div>
+    </v-container>
 </template>
 
 <script>
@@ -43,70 +65,93 @@ export default {
     name: 'NovoLivro',
     data() {
         return {
-            capitulos: [
-                { id: 1, titulo: "Cap. 1: Luzes na Escuridão", resumo: "Noah, um astrônomo recluso, encontra coordenadas ocultas em mapas celestes antigos enquanto trabalha em um observatório. Movido pela curiosidade, ele decide investigar, mas estranhos fenômenos começam a ocorrer, deixando-o com mais perguntas do que respostas.", route: "/" },
-                { id: 2, titulo: "Cap. 2: Encontro Sob as Estrelas", resumo: "Durante uma exposição fotográfica, Noah conhece Clara, uma fotógrafa ousada que compartilha sua paixão pelo céu. Eles descobrem que suas pistas se cruzam e decidem unir forças. Mas uma figura sombria os observa de longe, sugerindo que eles podem estar mexendo com algo perigoso.", route: "/" },
-                { id: 3, titulo: "Cap. 3: O Primeiro Destino", resumo: "Seguindo as pistas, Noah e Clara chegam a um remoto deserto, onde encontram uma estrutura antiga que guarda mais enigmas. Entre desvendá-los e escapar de perigos inesperados, os dois começam a perceber que suas jornadas pessoais podem estar mais conectadas do que imaginavam.", route: "/" },
-            ]
+            
         };
     },
     methods: {
         voltar() {
-        if (window.history.length > 1) {
-            this.$router.back();
-        } else {
-            this.$router.push("/");
+            if (window.history.length > 1) {
+                this.$router.back();
+            } 
+            else {
+                this.$router.push("/");
+            }
         }
-        },
-        navegarParaCapitulo(capituloId) {
-            console.log(capituloId)
-            this.$router.push({
-                path: `/historia/${1}/capitulo`,
-                query: { capitulo: 1, page: 1 },
-            });
-        },
     },
 };
 </script>
 
 <style scoped>
-h3 {
+h1 {
     font-family: 'Satoshi-Regular', sans-serif;
-    font-size: 16px;
+    font-weight: 700;
+    font-size: 20px;
 }
 
 p {
-    border: 1px solid gray;
-    border-radius: 50px;
-    text-align: center;
-    padding: 2px 5px;
-    font-size: 12px;
-
-}
-
-.cap-titulo {
     font-family: 'Satoshi-Regular', sans-serif;
-    font-weight: 600;
-    font-size: 18px;
-}
-
-.cap-text {
-    font-family: 'Noto Serif', serif;
     font-weight: 400;
     font-size: 14px;
-    border-left: 1px solid #d9d9d9;
-    margin-left: 20px;
+    color: #151515;
+    margin-bottom: 6px;
 }
 
-.cap-actions {
-    justify-content: end;
+.grupo-formulario {
+    margin-bottom: 10px;
 }
 
-.cap-btn {
-    font-family: 'Satoshi-Bold', sans-serif;
-    font-weight: bold;
+input[type="text"] {
+    border: 2px solid #E2E2E2;
+    border-radius: 16px;
+    padding: 16px;
+    width: 100%;
     font-size: 16px;
-    text-transform: none;
-    letter-spacing: 0px
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+input[type="text"]:focus {
+    border-color: #151515; /* Muda a borda quando o input está focado */
+    outline: none; /* Remove o contorno padrão do navegador */
+}
+input[type="text"]:not(:placeholder-shown) {
+    border-color: #151515; /* Muda a borda quando o input tem algum valor */
+}
+
+textarea {
+    width: 100%;
+    border: 2px solid #E2E2E2;
+    border-radius: 16px;
+    padding: 16px;
+    font-size: 16px;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+    resize: vertical; /* Permite redimensionamento apenas na vertical */
+}
+
+.checkbox-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+input[type="checkbox"] {
+    display: none; /* Oculta o checkbox padrão */
+}
+
+.checkbox-group label {
+    padding: 1px 8px;
+    border: 1px solid #505050;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    background: none;
+    color: #505050;
+    transition: all 0.3s ease;
+}
+
+input[type="checkbox"]:checked + label {
+    background-color: #E1FAE2;
+    color: #73BC47;
+    border-color: #73BC47;
 }
 </style>
