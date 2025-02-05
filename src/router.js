@@ -11,7 +11,8 @@ const routes = [
   { path: "/", name: "Home", component: Home },
 
   { path: "/new-book", name: "NovoLivro", component: NovoLivro },
-  { path: "/biblioteca", name: "NovoLivro", component: MinhaBiblioteca },
+
+  { path: "/biblioteca", name: "MinhaBiblioteca", component: MinhaBiblioteca },
 
   { path: "/historia/:id", name: "Historia", component: Historia },
 
