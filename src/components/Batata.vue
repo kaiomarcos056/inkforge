@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex; gap: 25px; overflow-x: auto; width: 100%;">
+  <div style="display: flex; gap: 25px; overflow-x: auto; scrollbar-width: none; width: 100%; height: 130px;">
     <div style="display: flex;" v-for="(i, index) in 5" :key="index">
     <v-card
       class="mx-auto elevation-5 mr-3"
