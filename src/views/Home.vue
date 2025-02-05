@@ -2,6 +2,11 @@
     <v-container style="background-color: #F7F7F5;">
         <h1 class="h1 mb-2">Em destaque</h1>
         
+        <Batata></Batata>
+
+<h1>aaa
+    
+</h1>
         <Carousel></Carousel>
         
         <div v-for="(livro, index) in livros" :key="index" class="previa">
@@ -25,17 +30,27 @@
     // COMPONENTES
     import Previa from '../components/Previa.vue'
     import Carousel from '../components/Carousel.vue';
+    import Batata from '../components/Batata.vue';
 
     export default {
         name: 'Home',
         data() {
             return {
-                livros: previas
+                livros: previas,
+                item: {
+                    capa: 'https://www.designi.com.br/images/preview/11014873.jpg',
+                    titulo: 'Aventura na Floresta',
+                    tags: ['Aventura', 'Fantasia', 'Mistério']
+                }
             };
         },
         components: {
             Previa,
-            Carousel
+            Carousel,
+            Batata
+        },
+        methods: {
+
         }
     };
 
