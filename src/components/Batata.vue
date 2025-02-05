@@ -1,7 +1,8 @@
 <template>
-  <div style="display: flex;">
+  <div style="display: flex; gap: 25px; overflow-x: auto; width: 100%;">
+    <div style="display: flex;" v-for="(i, index) in 5" :key="index">
     <v-card
-      class="mx-auto elevation-5 mr-4"
+      class="mx-auto elevation-5 mr-3"
       color="surface-variant"
       image="https://marketplace.canva.com/EAFq91U_RUs/1/0/1003w/canva-capa-de-livro-de-fantasia-elegante-verde-e-bege-awJX91ybn9w.jpg"
       width="80"
@@ -19,6 +20,8 @@
       <label>Autor: Marcos Kaio</label>
     </div>
   </div>
+  </div>
+  
 </template>
 
 <script>
