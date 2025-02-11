@@ -25,6 +25,7 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 100%;
 }
 
 .novo-capitulo p{
@@ -32,12 +33,13 @@ export default {
     font-size: 16px;
     font-weight: 500;
     color: #151515;
+
 }
 
 .novo-capitulo a{
     font-family: 'Satoshi-Bold', sans-serif;
     font-size: 14px;
-    font-weight: 900;
+    font-weight: 800;
     color: #151515;
     letter-spacing: -1px;
 }

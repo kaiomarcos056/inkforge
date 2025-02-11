@@ -199,6 +199,7 @@ p {
     overflow-x: hidden;
     /*display: flex;*/
     /*flex-direction: column;*/
+    background-color: #f7f7f7;
 }
 
 /* Estilização da navegação das abas */
@@ -220,12 +221,11 @@ p {
     text-align: center;
     cursor: pointer;
     line-height: 50px;
+    transition: all 0.3s ease-in-out;
+    position: relative; /* Para permitir posicionamento absoluto da borda */
 }
 
 .tab-nav .swiper-slide.active {
-    /*font-family: 'Satoshi-Bold', sans-serif;
-    font-weight: bold;
-    border-bottom: 4px solid black;*/
     color: black;
 }
 
@@ -244,13 +244,13 @@ p {
 .tab-content {
     flex: 1; /* Ocupa o espaço disponível */
     width: 100%;
-    /*height: 100%;*/
+    height: 85%;
 }
 
 /* Estilização do conteúdo das abas */
 .tab-content .swiper-slide {
     width: 100%;
     background-color: #f7f7f7;
-    /*height: 100%;*/
+    height: 100%;
 }
 </style>
