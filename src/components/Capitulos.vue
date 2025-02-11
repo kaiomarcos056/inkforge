@@ -4,6 +4,7 @@
         <div class="novo-capitulo">
             <p>Esse livro ainda não possui nenhum capitulo</p>
             <a href="novocapitulo">Clique aqui para criar seu primeiro capitulo.</a>
+            <button @click="abrir">aqui</button>
         </div>
     </div>
 
@@ -11,7 +12,12 @@
 
 <script>
 export default {
-    name: 'Capitulos'
+    name: 'Capitulos',
+    methods: {
+        abrir: function(event){
+            this.$router.push("/novocapitulo");
+        }
+    }
 };
 </script>
 
