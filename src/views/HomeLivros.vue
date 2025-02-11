@@ -45,10 +45,11 @@
             </div>
             <div class="tab-content">
                 <div class="swiper-wrapper">
-                    <div v-for="(tab, index) in tabs" :key="index" class="swiper-slide"
-                        :style="{ backgroundColor: tab.color }">
-                        {{ tab.content }}
+                    
+                    <div v-for="(tab, index) in tabs" :key="index" class="swiper-slide" >
+                        <component :is="tab.componente" />
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -58,6 +59,10 @@
 
 <script>
 import PreviaAcoes from "@/components/PreviaAcoes.vue"; // Importa o componente de ações
+
+import Capitulos from "@/components/Capitulos.vue";
+import Escolhas from "@/components/Escolhas.vue";
+
 import Swiper from 'swiper'; // Importa Swiper.js para o efeito de slide
 import 'swiper/css'; // Importa os estilos do Swiper.js
 
@@ -65,7 +70,8 @@ export default {
     name: 'Historia', // Nome do componente
 
     components: {
-        PreviaAcoes // Declaração do componente de ações
+        PreviaAcoes,
+        Capitulos
     },
 
     data() {
@@ -75,8 +81,8 @@ export default {
             btnW: 70, // Largura do botão de navegação
             slideAmount: 10, // Quantidade de slides (parece não estar sendo usado)
             tabs: [ // Definição das abas
-                { name: 'Capitulos', content: 'Swipe', color: '#04a5c1' },
-                { name: 'Escolhas', content: 'Swipe', color: '#f298e7' }
+                { name: 'Capitulos', content: 'Swipe', color: '#04a5c1', componente: Capitulos},
+                { name: 'Escolhas', content: 'Swipe', color: '#f298e7', componente: Escolhas }
             ],
             tabNavSwiper: null, // Instância do Swiper para a navegação
             tabContentSwiper: null // Instância do Swiper para o conteúdo das abas
@@ -133,7 +139,7 @@ export default {
 .container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     box-sizing: border-box;
 }
 
@@ -177,10 +183,10 @@ p {
 .tab {
     flex: 1;
     width: 100%;
-    background-color: #fff;
+    /*background-color: #fff;*/
     overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
+    /*display: flex;*/
+    /*flex-direction: column;*/
 }
 
 /* Estilização da navegação das abas */
@@ -197,7 +203,6 @@ p {
 .tab-nav .swiper-slide {
     font-family: 'Satoshi-Regular', sans-serif;
     width: 50%;
-    color: #999;
     font-size: 14px;
     text-align: center;
     cursor: pointer;
@@ -212,16 +217,13 @@ p {
 .tab-content {
     flex: 1; /* Ocupa o espaço disponível */
     width: 100%;
-    height: 100%;
+    /*height: 100%;*/
 }
 
 /* Estilização do conteúdo das abas */
 .tab-content .swiper-slide {
-    color: #fff;
-    line-height: 200px;
-    text-align: center;
-    cursor: pointer;
     width: 100%;
-    height: 100%;
+    background-color: #f7f7f7;
+    /*height: 100%;*/
 }
 </style>
