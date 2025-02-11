@@ -45,7 +45,7 @@ export default {
         },
         onClick() {
             // Adicione a lógica que você quiser ao clicar no botão
-            alert("Botão flutuante clicado!");
+            this.$router.push("/novapagina");
         },
     },
 };
