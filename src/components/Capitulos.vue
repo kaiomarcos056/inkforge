@@ -3,7 +3,7 @@
     <div class="container">
         <div class="novo-capitulo">
             <p>Esse livro ainda não possui nenhum capitulo</p>
-            <a href="#">Clique aqui para criar seu primeiro capitulo.</a>
+            <a href="novocapitulo">Clique aqui para criar seu primeiro capitulo.</a>
         </div>
     </div>
 
