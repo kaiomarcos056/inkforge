@@ -38,6 +38,7 @@
                     <div class="swiper-slide" :class="{ active: activeIndex === 0 }" @click="changeTab(0)">
                         Capitulos
                     </div>
+                    <div style="height: 20px; border: 1.5px solid #d9d9d9; align-self: center;"></div>
                     <div class="swiper-slide" :class="{ active: activeIndex === 1 }" @click="changeTab(1)">
                         Escolhas
                     </div>
@@ -130,7 +131,18 @@ export default {
                 }
             }
         });
-    }
+    },
+
+    computed: {
+        activeBarStyle() {
+            return {
+                left: `${this.btnW * this.activeIndex}px`,
+                width: `${this.barW}px`,
+                backgroundColor: this.tabs[this.activeIndex].color,
+                transitionDuration: '0.25s'
+            };
+        }
+    },
 };
 </script>
 
@@ -200,6 +212,7 @@ p {
 }
 
 /* Cada item da navegação */
+
 .tab-nav .swiper-slide {
     font-family: 'Satoshi-Regular', sans-serif;
     width: 50%;
@@ -209,9 +222,23 @@ p {
     line-height: 50px;
 }
 
-/* Aba ativa */
 .tab-nav .swiper-slide.active {
+    /*font-family: 'Satoshi-Bold', sans-serif;
     font-weight: bold;
+    border-bottom: 4px solid black;*/
+    color: black;
+}
+
+.tab-nav .swiper-slide.active::after {
+    content: "";
+    position: absolute;
+    bottom: 7px; /* Coloca a borda no final do slide */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%; /* Define a largura da borda */
+    height: 4px; /* Espessura da borda */
+    background-color: black; /* Cor da borda */
+    border-radius: 5px; /* Arredonda os cantos da borda */
 }
 
 .tab-content {
