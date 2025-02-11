@@ -7,8 +7,12 @@ import Capitulo from "@/views/Capitulo.vue";
 import NovoLivro from "@/views/NovoLivro.vue";
 import MinhaBiblioteca from "@/views/MinhaBiblioteca.vue";
 
+import EdicaoLivro from "@/views/EdicaoLivro.vue";
+
 const routes = [
   { path: "/", name: "Home", component: Home },
+
+  { path: "/edicaolivro", name: "EdicaoLivro", component: EdicaoLivro },
 
   { path: "/new-book", name: "NovoLivro", component: NovoLivro },
 

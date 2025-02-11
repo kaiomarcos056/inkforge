@@ -62,7 +62,7 @@ export default {
             drawer: false, // ESTADO INICIAL DO DRAWER
             menuItems: [
                 { title: "Minha Biblioteca", icon: "bookIcon", route: "/biblioteca" },
-                { title: "Histórico de Leitura", icon: "rewindIcon", route: "/stories" },
+                { title: "Histórico de Leitura", icon: "rewindIcon", route: "/edicaolivro" },
                 { title: "Continue de Onde Parou", icon: "textArrowIcon", route: "/settings" },
             ],
             icons: {
