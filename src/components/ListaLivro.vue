@@ -6,6 +6,7 @@
       image="https://marketplace.canva.com/EAFq91U_RUs/1/0/1003w/canva-capa-de-livro-de-fantasia-elegante-verde-e-bege-awJX91ybn9w.jpg"
       width="150"
       height="225"
+      @click="homeLivro"
     ></v-card>
 
 </template>
@@ -20,7 +21,9 @@ export default {
         };
     },
     methods: {
-        
+        homeLivro: function(event){
+            this.$router.push('/homelivro');
+        }
     }
 };
 

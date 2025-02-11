@@ -94,10 +94,11 @@ body {
 .tab {
     position: absolute;
     top: 50%;
-    left: 50%;
-    margin-top: -125px;
-    margin-left: -160px;
-    width: 320px;
+    /*left: 50%;*/
+    /*margin-top: -125px;*/
+    /*margin-left: -160px;*/
+    /*width: 320px;*/
+    width: 100%;
     height: 250px;
     background-color: #fff;
     overflow-x: hidden;
@@ -106,7 +107,8 @@ body {
 .tab-nav {
     position: relative;
     height: 50px;
-    width: 320px;
+    /*width: 320px;*/
+    width: 100%;
     padding: 0 10px;
     background-color: #fff;
     overflow-x: hidden;
@@ -147,5 +149,7 @@ body {
     line-height: 200px;
     text-align: center;
     cursor: pointer;
+    width: 100%;
+    border: 1px solid red;
 }
 </style>

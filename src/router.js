@@ -6,11 +6,16 @@ import Historia from "@/views/Historia.vue";
 import Capitulo from "@/views/Capitulo.vue";
 import NovoLivro from "@/views/NovoLivro.vue";
 import MinhaBiblioteca from "@/views/MinhaBiblioteca.vue";
-
 import EdicaoLivro from "@/views/EdicaoLivro.vue";
+import NovaEscolha from "@/views/NovaEscolha.vue";
+import HomeLivros from "@/views/HomeLivros.vue";
 
 const routes = [
   { path: "/", name: "Home", component: Home },
+
+  { path: "/homelivro", name: "HomeLivros", component: HomeLivros },
+
+  { path: "/novaescolha", name: "NovaEscolha", component: NovaEscolha },
 
   { path: "/edicaolivro", name: "EdicaoLivro", component: EdicaoLivro },
 
