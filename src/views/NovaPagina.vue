@@ -1,20 +1,15 @@
 <template>
-  <v-container style="background-color: #F7F7F5; height: 100vh;">
+  <!--<v-container style="background-color: #F7F7F5; height: 100vh;">-->
+  <div style="background-color: #F7F7F5; display: flex; flex-direction: column; gap: 15px; height: 100%; padding: 10px;">
 
-    <div style="display: flex; flex-flow: column;">
-
-      <div class="top">
+    <div class="top">
         <v-icon @click="voltar" style="font-size: 35px; margin-left: -8px;">mdi-chevron-left</v-icon>
         <label @click="finalizar"> Finalizar</label>
-      </div>
-      
-      <div style="height: 10px;"></div>
-        
-      <div class="grupo-formulario"> 
-        <h1>Páginas</h1>
-        <br>
-        <div>
-          <div id="toolbar">
+    </div>
+
+    <h1>Páginas</h1>
+
+    <div id="toolbar">
             <select class="ql-font"></select>
             <select class="ql-size"></select>
             <button class="ql-bold"></button>
@@ -34,17 +29,12 @@
             <button class="ql-video"></button>
             <button class="ql-link"></button>
           </div>
-          <br>
-          <div id="editor-container"></div>
-        </div>
-        <br>  
-        <button class="floating-btn" @click="onClick">Salvar</button>
-      </div>
-      
-    </div>
-    
 
-    <!-- MODAL -->
+
+          <div id="editor-container"></div>
+
+          <button class="floating-btn" @click="onClick">Salvar</button>
+    
     <v-bottom-sheet v-model="bottomSheet" max-width="500">
       <v-card>
         <div style="padding: 25px 15px; display: flex; flex-direction: column; gap: 10px;">
@@ -63,9 +53,10 @@
       </v-card>
     </v-bottom-sheet>
 
-  </v-container>
+  <!--</v-container>-->
+</div>
     
-  </template>
+</template>
   
   <script>
   export default {
@@ -103,12 +94,12 @@
 .v-card.v-theme--light.v-card--density-default.v-card--variant-elevated{
   border-radius: 15px 15px 0px 0px;
 }
+
 .bottom-p{
   font-family: 'Satoshi-Regular', sans-serif; 
   font-size: 12px;
   font-weight: 500;
   line-height: 15px;
-
 }
 
 .bottom-button{
@@ -125,7 +116,6 @@
     display: flex; 
     align-items: center; 
     justify-content: space-between; 
-    
   }
 
   .top label{
@@ -135,7 +125,9 @@
   }
 
   #editor-container {
-    height: 350px;
+    /*height: 350px;*/
+    flex: 1;
+    height: 100%;
     border-radius: 20px;
   }
   
@@ -202,12 +194,11 @@
   }
   
   .floating-btn {
-
     background-color: #151515; /* Cor do botão */
     color: white;
     border: none;
     border-radius: 50px; /* Botão redondo */
-    width: 95%;
+    width: 100%;
     height: 48px;
     padding: 8px 16px;
     font-size: 12px;
