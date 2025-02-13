@@ -29,6 +29,8 @@
                         </div>
                     </div>
                 </div>
+                
+                <div style="height: 5px;"></div>
 
                 <div class="grupo-formulario">
                     <h1>Imagem da capa</h1>
