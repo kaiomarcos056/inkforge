@@ -1,5 +1,9 @@
 <template>
-    <v-container style="background-color: #F7F7F5;">
+    <div v-if="isLoading" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
+        <v-progress-circular indeterminate ></v-progress-circular>
+    </div>
+
+    <v-container style="background-color: #F7F7F5;" v-else>
         <h1 class="h1 mb-2">Em destaque</h1>
         
         <Batata :data="data"></Batata>
@@ -41,6 +45,7 @@
                     tags: ['Aventura', 'Fantasia', 'Mistério']
                 },
                 data: null,
+                isLoading: true,
             };
         },
         components: {
@@ -58,6 +63,9 @@
             } 
             catch (error) {
                 console.error("#ERRO AO BUSCAR LIVROS = ", error);
+            }
+            finally {
+                this.isLoading = false;
             }
         },
     };
