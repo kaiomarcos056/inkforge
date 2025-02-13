@@ -15,9 +15,7 @@
                     <div>
                         <h3 class="mb-1">{{livro.nome}}</h3>
                         <div style="display: flex; gap: 5px;">
-                            <p>Romance</p>
-                            <p>Aventura</p>
-                            <p>Mistério</p>
+                            <p v-for="(genero, index) in livro.generos" :key="index" class="tag">{{ genero.nome }}</p>
                         </div>
                     </div>
                     <div style="display: flex; align-items: center;">
@@ -50,10 +48,10 @@
         -->
 
         <div style="padding: 20px; background-color: #F7F7F5;">
-            <v-card v-for="capitulo in capitulos" :key="capitulo.id" class="mb-4 rounded-lg elevation-1"
+            <v-card v-for="(capitulo, index) in capitulos" :key="capitulo.id" class="mb-4 rounded-lg elevation-1"
                 @click="navegarParaCapitulo(capitulo.id)">
                 <v-card-title class="cap-titulo">
-                    {{ capitulo.titulo }}
+                    Cap.{{index+1}}: {{ capitulo.titulo }}
                 </v-card-title>
 
                 <v-card-text class="cap-text">
