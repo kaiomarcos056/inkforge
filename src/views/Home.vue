@@ -2,7 +2,7 @@
     <v-container style="background-color: #F7F7F5;">
         <h1 class="h1 mb-2">Em destaque</h1>
         
-        <Batata style=""></Batata>
+        <Batata :data="data"></Batata>
         <Batata style="margin-bottom: 20px;"></Batata>
 
         <!-- <Carousel></Carousel> -->
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-
+    import axios from "axios";
     import previas from '@/previas.json'; // JSON
 
     // COMPONENTES
@@ -39,7 +39,8 @@
                     capa: 'https://www.designi.com.br/images/preview/11014873.jpg',
                     titulo: 'Aventura na Floresta',
                     tags: ['Aventura', 'Fantasia', 'Mistério']
-                }
+                },
+                data: null,
             };
         },
         components: {
@@ -49,7 +50,16 @@
         },
         methods: {
 
-        }
+        },
+        async mounted() {
+            try {
+                const response = await axios.get("https://inkforge-be.onrender.com/livros");
+                this.data = response.data;
+            } 
+            catch (error) {
+                console.error("#ERRO AO BUSCAR LIVROS = ", error);
+            }
+        },
     };
 
 </script>

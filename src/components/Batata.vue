@@ -1,5 +1,25 @@
 <template>
   <div style=" display: flex; gap: 25px; align-items: center; overflow-x: auto; scrollbar-width: none; width: 100%; height: 140px;">
+    
+    <div style="display: flex;" v-for="(item, index) in data" :key="index" @click="goToDetails">
+      <v-card
+        class="mx-auto elevation-5 mr-3 ml-2"
+        color="surface-variant"
+        :image="item.capa"
+        width="80"
+        height="120"
+      ></v-card>
+      <div style="flex: 1;">
+        <p>{{ item.nome }}</p>
+       
+        <div class="tags" style="display: flex;">
+          <span v-for="(tag, index) in item.generos" :key="index" class="tag">{{ tag.nome }}</span>
+        </div>
+        
+        <label>Autor: {{item.autor}}</label>
+      </div>
+    </div>
+    
     <div style="display: flex;" v-for="(i, index) in 5" :key="index" @click="goToDetails">
     <v-card
       class="mx-auto elevation-5 mr-3 ml-2"
@@ -28,6 +48,10 @@
 export default {
     name: 'Batata',
     props: {
+        data: {
+          type: Array,
+          default: () => []
+        },
         backgroundImage: {
             type: String,
             required: false,
