@@ -7,74 +7,45 @@
 
         <div style="display: flex; flex-flow: column;">
             <v-icon @click="voltar" style="font-size: 35px; margin-left: -8px;">mdi-chevron-left</v-icon>
-            
-            <div class="grupo-formulario"> 
-                <h1>Nova história</h1>
-                <p>Como a história vai se chamar?</p>
-                <input type="text" placeholder="Digite o nome da hitória...">
-            </div>
-            
-            <div class="grupo-formulario">
-                <h1>Do que a história se trata?</h1>
-                <p>Escreva uma pequena sinopse da história</p>
-                <textarea placeholder="O que acontece na história?" rows="6"></textarea>
-            </div>
-            <!--
-            <div class="grupo-formulario">
-                <h1>Qual o tema da sua história</h1>
-                <p>Se pudesse resumir o cerne da sua história sera:</p>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="Romance" name="chips" value="Romance">
-                    <label for="Romance">Romance</label>
 
-                    <input type="checkbox" id="Aventura" name="chips" value="Aventura">
-                    <label for="Aventura">Aventura</label>
-
-                    <input type="checkbox" id="Misterio" name="chips" value="Mistério">
-                    <label for="Misterio">Mistério</label>
-
-                    <input type="checkbox" id="Terror" name="chips" value="Terror">
-                    <label for="Terror">Terror</label>
-
-                    <input type="checkbox" id="Suspense" name="chips" value="Suspense">
-                    <label for="Suspense">Suspense</label>
-
-                    <input type="checkbox" id="Comedia" name="chips" value="Comedia">
-                    <label for="Comedia">Comédia</label>
-
-                    <input type="checkbox" id="Infantil" name="chips" value="Infantil">
-                    <label for="Infantil">Infantil</label>
-
-                    <input type="checkbox" id="Drama" name="chips" value="Drama">
-                    <label for="Drama">Drama</label>
+            <form @submit.prevent="submitForm">
+                <div class="grupo-formulario"> 
+                    <h1>Nova história</h1>
+                    <p>Como a história vai se chamar?</p>
+                    <input type="text" placeholder="Digite o nome da hitória..." v-model="titulo">
                 </div>
-            </div>
-        -->
+                
+                <div class="grupo-formulario">
+                    <h1>Do que a história se trata?</h1>
+                    <p>Escreva uma pequena sinopse da história</p>
+                    <textarea placeholder="O que acontece na história?" rows="6" v-model="sinopse"></textarea>
+                </div>
 
-            <div class="grupo-formula">
-                <div class="checkbox-group">
-                    <div v-for="(genero, index) in generos" :key="genero.uuid_genero">
-                        <input type="checkbox" :id="genero.nome" name="chips" :value="genero.uuid_genero">
-                        <label :for="genero.nome">{{ genero.nome }}</label>
+                <div class="grupo-formulario">
+                    <div class="checkbox-group">
+                        <div v-for="(genero, index) in generos" :key="genero.uuid_genero">
+                            <input type="checkbox" :id="genero.nome" name="chips" :value="genero.uuid_genero" v-model="generosSelecionados">
+                            <label :for="genero.nome">{{ genero.nome }}</label>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="grupo-formulario">
-                <h1>Imagem da capa</h1>
-                <p>Anexar arquivo</p>
-                
-                <div class="upload-box" @click="selectImage" :style="backgroundStyle">
-                    <h3 v-if="!imagePreview">Enviar Imagem</h3>
-                    <p v-if="!imagePreview">Dimensão da imagem (720x1080)</p>
-                    <input type="file" ref="fileInput" @change="handleImageUpload" accept="image/*" hidden>
+                <div class="grupo-formulario">
+                    <h1>Imagem da capa</h1>
+                    <p>Anexar arquivo</p>
+                    
+                    <div class="upload-box" @click="selectImage" :style="backgroundStyle">
+                        <h3 v-if="!imagePreview">Enviar Imagem</h3>
+                        <p v-if="!imagePreview">Dimensão da imagem (720x1080)</p>
+                        <input type="file" ref="fileInput" @change="handleImageUpload" accept="image/*" hidden>
+                    </div>
                 </div>
-            </div>
+                
+                <div style="height: 60px;"></div>
+
+                <button type="submit" class="floating-btn">Salvar</button>
+            </form>
             
-            <div style="height: 60px;"></div>
-
-            <button class="floating-btn" @click="onClick">Salvar</button>
-
         </div>
 
     </v-container>
@@ -88,6 +59,9 @@ export default {
     name: 'NovoLivro',
     data() {
         return {
+            titulo: '',
+            sinopse: '',
+            generosSelecionados: [],
             imagePreview: null,
             isLoading: true,
             generos: [],
@@ -122,15 +96,17 @@ export default {
             if (file) {
                 const reader = new FileReader();
                 reader.onload = (e) => {
-                this.imagePreview = e.target.result; // Atualiza a pré-visualização
+                    this.imagePreview = e.target.result; // Atualiza a pré-visualização
                 };
                 reader.readAsDataURL(file);
             }
         },
-        onClick() {
-            // Adicione a lógica que você quiser ao clicar no botão
-            alert("Botão flutuante clicado!");
-        },
+        submitForm() {
+            console.log(this.titulo)
+            console.log(this.sinopse)
+            console.log(this.generosSelecionados)
+            console.log(this.imagePreview)
+        }
     },
     async mounted() {
         try {
