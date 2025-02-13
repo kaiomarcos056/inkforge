@@ -61,9 +61,9 @@ export default {
         return {
             drawer: false, // ESTADO INICIAL DO DRAWER
             menuItems: [
-                { title: "Minha Biblioteca", icon: "bookIcon", route: "/biblioteca" },
-                { title: "Histórico de Leitura", icon: "rewindIcon", route: "/edicaolivro" },
-                { title: "Continue de Onde Parou", icon: "textArrowIcon", route: "/settings" },
+                { title: "Minha Biblioteca", icon: "bookIcon", route: "biblioteca" },
+                { title: "Histórico de Leitura", icon: "rewindIcon", route: "edicaolivro" },
+                { title: "Continue de Onde Parou", icon: "textArrowIcon", route: "settings" },
             ],
             icons: {
                 bookIcon,
@@ -83,7 +83,7 @@ export default {
             this.drawer = !this.drawer; // ALTERANDO O ESTADO DO DRAWER
         },
         navigate(route) {
-            this.$router.push(route); // NAVEGANDO PARA ROTA ESPECIFICA
+            this.$router.push(`/${route}`); // NAVEGANDO PARA ROTA ESPECIFICA
             this.drawer = false; // FECHANDO O DRAWER DEPOIS DE CLICAR NO ITEM DO MENU
         },
         home(){

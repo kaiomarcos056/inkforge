@@ -1,5 +1,9 @@
 <template>
-    <v-container style="background-color: #F7F7F5;">
+    <div v-if="isLoading" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
+        <v-progress-circular indeterminate ></v-progress-circular>
+    </div>
+
+    <v-container v-else style="background-color: #F7F7F5;">
 
         <div style="display: flex; flex-flow: column;">
             <v-icon @click="voltar" style="font-size: 35px; margin-left: -8px;">mdi-chevron-left</v-icon>
@@ -15,7 +19,7 @@
                 <p>Escreva uma pequena sinopse da história</p>
                 <textarea placeholder="O que acontece na história?" rows="6"></textarea>
             </div>
-            
+            <!--
             <div class="grupo-formulario">
                 <h1>Qual o tema da sua história</h1>
                 <p>Se pudesse resumir o cerne da sua história sera:</p>
@@ -45,6 +49,16 @@
                     <label for="Drama">Drama</label>
                 </div>
             </div>
+        -->
+
+            <div class="grupo-formula">
+                <div class="checkbox-group">
+                    <div v-for="(genero, index) in generos" :key="genero.uuid_genero">
+                        <input type="checkbox" :id="genero.nome" name="chips" :value="genero.uuid_genero">
+                        <label :for="genero.nome">{{ genero.nome }}</label>
+                    </div>
+                </div>
+            </div>
 
             <div class="grupo-formulario">
                 <h1>Imagem da capa</h1>
@@ -64,14 +78,19 @@
         </div>
 
     </v-container>
+
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     name: 'NovoLivro',
     data() {
         return {
-            imagePreview: null, // Armazena a pré-visualização da imagem
+            imagePreview: null,
+            isLoading: true,
+            generos: [],
         };
     },
     computed: {
@@ -112,6 +131,19 @@ export default {
             // Adicione a lógica que você quiser ao clicar no botão
             alert("Botão flutuante clicado!");
         },
+    },
+    async mounted() {
+        try {
+            // LIVRO
+            const response = await axios.get(`https://inkforge-be.onrender.com/generos`);
+            this.generos = response.data;
+        } 
+        catch (error) {
+            console.error("#ERRO AO BUSCAR LIVROS = ", error);
+        }
+        finally {
+            this.isLoading = false;
+        }
     },
 };
 </script>

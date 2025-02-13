@@ -71,12 +71,7 @@ export default {
     },
     methods: {
         voltar() {
-            if (window.history.length > 1) {
-                this.$router.back();
-            } 
-            else {
-                this.$router.push("/");
-            }
+            this.$router.push("/");
         },
         navegarParaCapitulo(capituloId) {
             console.log(capituloId)
