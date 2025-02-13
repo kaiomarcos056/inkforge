@@ -194,7 +194,8 @@ input[type="checkbox"] {
     border: 1px solid #505050;
     border-radius: 20px;
     cursor: pointer;
-    font-size: 13px;
+    font-size: 14px;
+    padding: 3px 10px;
     background: none;
     color: #505050;
     transition: all 0.3s ease;
