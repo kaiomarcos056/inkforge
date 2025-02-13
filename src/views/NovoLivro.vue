@@ -103,11 +103,33 @@ export default {
                 reader.readAsDataURL(file);
             }
         },
-        submitForm() {
+        async submitForm() {
             console.log(this.titulo)
             console.log(this.sinopse)
             console.log(this.generosSelecionados)
             console.log(this.imagePreview)
+
+            const body = {
+                nome: this.titulo,
+                generos: this.generosSelecionados,
+                capa: this.imagePreview
+            }
+
+            try {
+                const response = await axios.post("https://inkforge-be.onrender.com/livros",body, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkX3VzdWFyaW8iOiI4YTQ5YWU5Zi01MTg5LTRhYTAtYjI4NS1hYTk4M2VjMWVmOTYiLCJub21lIjoiTWF4IiwiZW1haWwiOiJtYXhAZW1haWwuY29tIiwidGlwbyI6ImF1dG9yIiwiaWF0IjoxNzM5NDQ3NTM1LCJleHAiOjE3Mzk1MzM5MzV9.FH94t7l_9wT4X1MWQScUAJITkh-xZ4TKUptFBAa5mCg",
+                    }
+                });
+
+                //this.mensagem = "História criada com sucesso!";
+                console.log(response.data);
+            } 
+            catch (error) {
+                //this.mensagem = "Erro ao criar história!";
+                console.error("Erro ao enviar:", error);
+            }
         }
     },
     async mounted() {
