@@ -6,14 +6,14 @@
         <div>
             <div style="display: flex; justify-content: center;">
                 <v-card
-                    image="https://marketplace.canva.com/EAFq91U_RUs/1/0/1003w/canva-capa-de-livro-de-fantasia-elegante-verde-e-bege-awJX91ybn9w.jpg"
+                    :image="livro.capa"
                     width="90"
                     height="130"
                     class="mr-4"
                 ></v-card>
                 <div style="display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
-                        <h3 class="mb-1">Um viciado nas estrelas</h3>
+                        <h3 class="mb-1">{{livro.nome}}</h3>
                         <div style="display: flex; gap: 5px;">
                             <p>Romance</p>
                             <p>Aventura</p>
@@ -22,7 +22,7 @@
                     </div>
                     <div style="display: flex; align-items: center;">
                             <div class="avatar">M</div>
-                            <label class="avatar-titulo">Marcos Kaio</label>
+                            <label class="avatar-titulo">{{livro.autor}}</label>
                     </div>
                 </div>
             </div>
@@ -31,6 +31,7 @@
                 <previa-acoes />
             </div>
         </div>
+        
 
         <!--
         <div style="padding: 0px 20px 20px 20px; border-bottom: 1px solid #D9D9D9;">
@@ -56,7 +57,7 @@
                 </v-card-title>
 
                 <v-card-text class="cap-text">
-                    {{ capitulo.resumo }}
+                    {{ capitulo.conteudo }}
                 </v-card-text>
                 <v-card-actions class="cap-actions">
                     <v-btn class="cap-btn">Ler <v-icon class="arrow-icon"
@@ -68,6 +69,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import PreviaAcoes from "@/components/PreviaAcoes.vue";
 
 export default {
@@ -77,20 +79,17 @@ export default {
     },
     data() {
         return {
-            capitulos: [
-                { id: 1, titulo: "Cap. 1: Luzes na Escuridão", resumo: "Noah, um astrônomo recluso, encontra coordenadas ocultas em mapas celestes antigos enquanto trabalha em um observatório. Movido pela curiosidade, ele decide investigar, mas estranhos fenômenos começam a ocorrer, deixando-o com mais perguntas do que respostas.", route: "/" },
-                { id: 2, titulo: "Cap. 2: Encontro Sob as Estrelas", resumo: "Durante uma exposição fotográfica, Noah conhece Clara, uma fotógrafa ousada que compartilha sua paixão pelo céu. Eles descobrem que suas pistas se cruzam e decidem unir forças. Mas uma figura sombria os observa de longe, sugerindo que eles podem estar mexendo com algo perigoso.", route: "/" },
-                { id: 3, titulo: "Cap. 3: O Primeiro Destino", resumo: "Seguindo as pistas, Noah e Clara chegam a um remoto deserto, onde encontram uma estrutura antiga que guarda mais enigmas. Entre desvendá-los e escapar de perigos inesperados, os dois começam a perceber que suas jornadas pessoais podem estar mais conectadas do que imaginavam.", route: "/" },
-            ]
+            livro: {},
+            capitulos: []
         };
     },
     methods: {
         voltar() {
-        if (window.history.length > 1) {
-            this.$router.back();
-        } else {
-            this.$router.push("/");
-        }
+            if (window.history.length > 1) {
+                this.$router.back();
+            } else {
+                this.$router.push("/");
+            }
         },
         navegarParaCapitulo(capituloId) {
             console.log(capituloId)
@@ -99,6 +98,20 @@ export default {
                 query: { capitulo: 1, page: 1 },
             });
         },
+    },
+    async mounted() {
+        try {
+            // LIVRO
+            const response = await axios.get(`https://inkforge-be.onrender.com/livros/${this.$route.params.id}`);
+            this.livro = response.data;
+
+            // CAPITULO
+            const capitulo = await axios.get(`https://inkforge-be.onrender.com/capitulos/${this.$route.params.id}`);
+            this.capitulos = capitulo.data;
+        } 
+        catch (error) {
+            console.error("#ERRO AO BUSCAR LIVROS = ", error);
+        }
     },
 };
 </script>

@@ -1,7 +1,8 @@
 <template>
+  
   <div style=" display: flex; gap: 25px; align-items: center; overflow-x: auto; scrollbar-width: none; width: 100%; height: 140px;">
     
-    <div style="display: flex;" v-for="(item, index) in data" :key="index" @click="goToDetails">
+    <div style="display: flex;" v-for="(item, index) in data" :key="index" @click="goToDetails(item.uuid_livro)">
       <v-card
         class="mx-auto elevation-5 mr-3 ml-2"
         color="surface-variant"
@@ -19,27 +20,7 @@
         <label>Autor: {{item.autor}}</label>
       </div>
     </div>
-    
-    <div style="display: flex;" v-for="(i, index) in 5" :key="index" @click="goToDetails">
-    <v-card
-      class="mx-auto elevation-5 mr-3 ml-2"
-      color="surface-variant"
-      image="https://marketplace.canva.com/EAFq91U_RUs/1/0/1003w/canva-capa-de-livro-de-fantasia-elegante-verde-e-bege-awJX91ybn9w.jpg"
-      width="80"
-      height="120"
-    ></v-card>
-    <div style="flex: 1;">
-      <p>O Mistério da Casa Borcelle</p>
-      
-      <div class="tags" style="display: flex;">
-        <span class="tag">Suspense</span>
-        <span class="tag">Romance</span>
-        <span class="tag">Drama</span>
-      </div>
-      
-      <label>Autor: Marcos Kaio</label>
-    </div>
-  </div>
+
   </div>
   
 </template>
@@ -52,28 +33,9 @@ export default {
           type: Array,
           default: () => []
         },
-        backgroundImage: {
-            type: String,
-            required: false,
-        },
-        title: {
-            type: String,
-            required: false,
-        },
-        tags: {
-            type: Array,
-            required: false,
-            default: () => [],
-        },
     },
     methods: {
-        goToDetails() {
-            console.log("Navegando para Detalhes");
-            this.$router.push(
-                //{ name: "Historia"}
-                "/historia/1"
-            );
-        },
+        goToDetails(id) { this.$router.push(`/historia/${id}`); },
     },
 };
 </script>

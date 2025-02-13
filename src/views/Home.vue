@@ -3,7 +3,7 @@
         <h1 class="h1 mb-2">Em destaque</h1>
         
         <Batata :data="data"></Batata>
-        <Batata style="margin-bottom: 20px;"></Batata>
+        <Batata :data="data" style="margin-bottom: 20px;"></Batata>
 
         <!-- <Carousel></Carousel> -->
         
