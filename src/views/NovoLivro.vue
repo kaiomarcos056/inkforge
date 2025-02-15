@@ -5,6 +5,13 @@
 
     <v-container v-else style="background-color: #F7F7F5;">
 
+        <v-snackbar v-model="snackbar" :timeout="900" color="error" style="bottom: 70px;">
+            {{ snackbarMessage }}
+            <template v-slot:actions>
+                <v-btn color="white" text @click="snackbar = false">Fechar</v-btn>
+            </template>
+        </v-snackbar>
+
         <div style="display: flex; flex-flow: column;">
             <v-icon @click="voltar" style="font-size: 35px; margin-left: -8px;">mdi-chevron-left</v-icon>
 
@@ -12,22 +19,26 @@
                 <div class="grupo-formulario"> 
                     <h1>Nova história</h1>
                     <p>Como a história vai se chamar?</p>
-                    <input type="text" placeholder="Digite o nome da hitória..." v-model="titulo">
+                    <input type="text" placeholder="Digite o nome da história..." v-model="titulo" :class="{ 'input-error': errors.titulo }">
+                    <span v-if="errors.titulo" class="error">{{ errors.titulo }}</span>
                 </div>
                 
                 <div class="grupo-formulario">
                     <h1>Do que a história se trata?</h1>
                     <p>Escreva uma pequena sinopse da história</p>
-                    <textarea placeholder="O que acontece na história?" rows="6" v-model="sinopse"></textarea>
+                    <textarea placeholder="O que acontece na história?" rows="6" v-model="sinopse" :class="{ 'input-error': errors.sinopse }"></textarea>
+                    <span v-if="errors.sinopse" class="error">{{ errors.sinopse }}</span>
                 </div>
 
                 <div class="grupo-formulario">
                     <div class="checkbox-group">
-                        <div v-for="(genero, index) in generos" :key="genero.uuid_genero">
+                        <div v-for="genero in generos" :key="genero.uuid_genero">
                             <input type="checkbox" :id="genero.nome" name="chips" :value="genero.uuid_genero" v-model="generosSelecionados">
                             <label :for="genero.nome">{{ genero.nome }}</label>
                         </div>
                     </div>
+                    <div style="margin: 8px;"></div>
+                    <span v-if="errors.genero" class="error">{{ errors.genero }}</span>
                 </div>
                 
                 <div style="height: 5px;"></div>
@@ -67,13 +78,15 @@ export default {
             imagePreview: null,
             isLoading: true,
             generos: [],
+            errors: {},
+            snackbar: false,
+            snackbarMessage: ''
         };
     },
     computed: {
         backgroundStyle() {
             return {
                 backgroundImage: this.imagePreview ? `url(${this.imagePreview})` : "none",
-                //backgroundSize: "cover",
                 backgroundSize: "contain", // Ajusta a imagem sem cortá-la
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat", // Evita a repetição da imagem
@@ -104,10 +117,27 @@ export default {
             }
         },
         async submitForm() {
-            console.log(this.titulo)
-            console.log(this.sinopse)
-            console.log(this.generosSelecionados)
-            console.log(this.imagePreview)
+            this.errors = {}
+            //console.log(this.titulo)
+            //console.log(this.sinopse)
+            //console.log(this.generosSelecionados)
+            //console.log(this.imagePreview)
+
+            let cadastrar = true;
+            
+            if (!this.titulo.trim()) {
+                this.errors.titulo = "Por favor, informe um nome para a história.";
+                cadastrar = false;
+            }
+            if (!this.sinopse.trim()) {
+                this.errors.sinopse = "Por favor, informe uma sinopse para a história.";
+                cadastrar = false;
+            }
+            if (this.generosSelecionados.length < 1) {
+                this.errors.genero = "Por favor, informe pelo menos uma categoria para a história.";
+                cadastrar = false;
+            }
+
 
             const body = {
                 nome: this.titulo,
@@ -115,20 +145,25 @@ export default {
                 capa: this.imagePreview
             }
 
-            try {
-                const response = await axios.post("https://inkforge-be.onrender.com/livros",body, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkX3VzdWFyaW8iOiI4YTQ5YWU5Zi01MTg5LTRhYTAtYjI4NS1hYTk4M2VjMWVmOTYiLCJub21lIjoiTWF4IiwiZW1haWwiOiJtYXhAZW1haWwuY29tIiwidGlwbyI6ImF1dG9yIiwiaWF0IjoxNzM5NDQ3NTM1LCJleHAiOjE3Mzk1MzM5MzV9.FH94t7l_9wT4X1MWQScUAJITkh-xZ4TKUptFBAa5mCg",
-                    }
-                });
+            if(cadastrar){
+                try {
+                    /*
+                    const response = await axios.post("https://inkforge-be.onrender.com/livros",body, {
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkX3VzdWFyaW8iOiI4YTQ5YWU5Zi01MTg5LTRhYTAtYjI4NS1hYTk4M2VjMWVmOTYiLCJub21lIjoiTWF4IiwiZW1haWwiOiJtYXhAZW1haWwuY29tIiwidGlwbyI6ImF1dG9yIiwiaWF0IjoxNzM5NDQ3NTM1LCJleHAiOjE3Mzk1MzM5MzV9.FH94t7l_9wT4X1MWQScUAJITkh-xZ4TKUptFBAa5mCg",
+                        }
+                    });
 
-                //this.mensagem = "História criada com sucesso!";
-                console.log(response.data);
-            } 
-            catch (error) {
-                //this.mensagem = "Erro ao criar história!";
-                console.error("Erro ao enviar:", error);
+                    //this.mensagem = "História criada com sucesso!";
+                    console.log(response.data);
+                    */
+                    throw new Error("Ocorreu um erro!");
+                } 
+                catch (error) {
+                    this.snackbarMessage = error.message;
+                    this.snackbar = true;
+                }
             }
         }
     },
@@ -149,6 +184,15 @@ export default {
 </script>
 
 <style scoped>
+.error{
+    font-family: 'Satoshi-Regular';
+    font-size: 14px;
+    color: red;
+}
+.input-error {
+  border: 2px solid red !important; 
+}
+
 h1 {
     font-family: 'Satoshi-Regular', sans-serif;
     font-weight: 700;
