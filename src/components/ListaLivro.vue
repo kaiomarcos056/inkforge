@@ -12,7 +12,7 @@
                     :image="i.capa"
                     width="150"
                     height="225"
-                    @click="teste(i.uuid_livro)"
+                    @click="homeLivro(i.uuid_livro)"
                 ></v-card>
             </div>
             
@@ -30,16 +30,8 @@ export default {
         };
     },
     methods: {
-        teste(id){
+        homeLivro(id){
             this.$router.push(`/homelivro/${id}`);
-        },
-        // homeLivro: function(event){
-        //     this.$router.push('/homelivro');
-        // }
-        homeLivro(id) {
-            console.log(id)
-            //this.$router.push(`homelivro/${id}`);
-            this.$router.push(`${id}`);
         },
     },
     props: {

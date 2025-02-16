@@ -1,28 +1,32 @@
 <template>
-    <div class="container">
+    <div v-if="loading" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
+        <v-progress-circular indeterminate ></v-progress-circular>
+    </div>
+
+    <div class="container" v-else>
 
         <v-icon @click="voltar" style="font-size: 38px;">mdi-chevron-left</v-icon>
 
         <div>
             <div style="display: flex; justify-content: center;">
                 <v-card
-                    image="https://marketplace.canva.com/EAFq91U_RUs/1/0/1003w/canva-capa-de-livro-de-fantasia-elegante-verde-e-bege-awJX91ybn9w.jpg"
+                    :image="livro.capa"
                     width="90"
                     height="130"
                     class="mr-4"
                 ></v-card>
                 <div style="display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
-                        <h3 class="mb-1">Um viciado nas estrelas</h3>
+                        <h3 class="mb-1">{{livro.nome}}</h3>
                         <div style="display: flex; gap: 5px;">
-                            <p>Romance</p>
-                            <p>Aventura</p>
-                            <p>Mistério</p>
+                            <p v-for="genero in livro.generos" :key="genero.uuid_genero">
+                                {{ genero.nome }}
+                            </p>
                         </div>
                     </div>
                     <div style="display: flex; align-items: center;">
                             <div class="avatar">M</div>
-                            <label class="avatar-titulo">Marcos Kaio</label>
+                            <label class="avatar-titulo">{{ livro.autor }}</label>
                     </div>
                 </div>
             </div>
@@ -47,8 +51,16 @@
             <div class="tab-content">
                 <div class="swiper-wrapper">
                     
-                    <div v-for="(tab, index) in tabs" :key="index" class="swiper-slide" >
+                    <!-- <div v-for="(tab, index) in tabs" :key="index" class="swiper-slide" >
                         <component :is="tab.componente" />
+                    </div> -->
+                    
+                    <div class="swiper-slide">
+                        <component :is="tabs[0].componente" :data="capitulos"/>
+                    </div>
+                    
+                    <div class="swiper-slide">
+                        <component :is="tabs[1].componente" />
                     </div>
                     
                 </div>
@@ -59,8 +71,9 @@
 </template>
 
 <script>
-import PreviaAcoes from "@/components/PreviaAcoes.vue"; // Importa o componente de ações
+import axios from "axios";
 
+import PreviaAcoes from "@/components/PreviaAcoes.vue";
 import Capitulos from "@/components/Capitulos.vue";
 import Escolhas from "@/components/Escolhas.vue";
 
@@ -78,32 +91,28 @@ export default {
     data() {
         return {
             activeIndex: 0, // Aba ativa inicialmente
-            barW: 20, // Largura da barra ativa (não está sendo usada diretamente)
-            btnW: 70, // Largura do botão de navegação
-            slideAmount: 10, // Quantidade de slides (parece não estar sendo usado)
-            tabs: [ // Definição das abas
+            tabs: [
                 { name: 'Capitulos', content: 'Swipe', color: '#04a5c1', componente: Capitulos},
                 { name: 'Escolhas', content: 'Swipe', color: '#f298e7', componente: Escolhas }
             ],
-            tabNavSwiper: null, // Instância do Swiper para a navegação
-            tabContentSwiper: null // Instância do Swiper para o conteúdo das abas
+            tabNavSwiper: null,
+            tabContentSwiper: null,
+            livro: {},
+            capitulos: [],
+            loading: true
         };
     },
 
     methods: {
-        // Método para voltar para a página anterior
         voltar() {
             if (window.history.length > 1) {
-                //this.$router.back(); // Volta para a página anterior no histórico
-                this.$router.push("/biblioteca"); // Se não houver histórico, volta para a home
+                this.$router.push("/biblioteca");
             } else {
-                this.$router.push("/"); // Se não houver histórico, volta para a home
+                this.$router.push("/");
             }
         },
 
-        // Método para navegar para um capítulo específico
         navegarParaCapitulo(capituloId) {
-            console.log(capituloId); // Exibe o ID do capítulo no console
             this.$router.push({
                 path: `/historia/${1}/capitulo`, // Redireciona para a página do capítulo
                 query: { capitulo: 1, page: 1 }, // Define parâmetros na URL
@@ -114,24 +123,41 @@ export default {
         changeTab(index) {
             this.activeIndex = index; // Atualiza o índice da aba ativa
             this.tabContentSwiper.slideTo(index); // Move o Swiper para a aba correspondente
+        },
+
+        initializeSwiper() {
+            this.tabNavSwiper = new Swiper('.tab-nav', {
+                slidesPerView: 'auto'
+            });
+
+            this.tabContentSwiper = new Swiper('.tab-content', {
+                on: {
+                    slideChange: () => {
+                        this.activeIndex = this.tabContentSwiper.activeIndex;
+                        this.tabNavSwiper.slideTo(this.activeIndex - 1);
+                    }
+                }
+            });
         }
     },
 
-    mounted() {
-        // Inicializa o Swiper na navegação das abas
-        this.tabNavSwiper = new Swiper('.tab-nav', {
-            slidesPerView: 'auto' // Ajusta a exibição conforme o número de itens
-        });
+    async mounted() { 
+        try {
+            const livro = await axios.get(`https://inkforge-be.onrender.com/livros/${this.$route.params.id}`);
+            this.livro = livro.data;
 
-        // Inicializa o Swiper no conteúdo das abas
-        this.tabContentSwiper = new Swiper('.tab-content', {
-            on: {
-                slideChange: () => {
-                    this.activeIndex = this.tabContentSwiper.activeIndex; // Atualiza a aba ativa ao deslizar
-                    this.tabNavSwiper.slideTo(this.activeIndex - 1); // Sincroniza a navegação
-                }
-            }
-        });
+            const capitulos = await axios.get(`https://inkforge-be.onrender.com/capitulos/${this.$route.params.id}`);
+            this.capitulos = capitulos.data;
+        } 
+        catch (error) {
+            console.error("#ERRO AO BUSCAR LIVROS = ", error);
+        }
+        finally {
+            this.loading = false;
+            this.$nextTick(() => {
+                this.initializeSwiper();
+            });
+        }
     },
 
     computed: {
