@@ -7,22 +7,25 @@
             <div class="grupo-formulario"> 
                 <h1>Hora da escolha</h1>
                 <p>Normalmente damos aos leitores uma situação, e propomos dois caminhos pra a história seguir</p>
-                <input type="text" placeholder="Qual será a situação?">
+                <input type="text" placeholder="Qual será a situação?" :class="{ 'input-error': errors.titulo }" v-model="titulo">
+                <span v-if="errors.titulo" class="error">{{ errors.titulo }}</span>
             </div>
             
             <div class="grupo-formulario">
                 <h1>Escolha 1</h1>
                 <p>Escreva um pequeno resumo da escolha e suas possiveis consequencias.</p>
-                <textarea placeholder="O que acontece na história?" rows="6"></textarea>
+                <textarea placeholder="O que acontece na história?" rows="6" :class="{ 'input-error': errors.escolhaUm }" v-model="escolhaUm"></textarea>
+                <span v-if="errors.escolhaUm" class="error">{{ errors.escolhaUm }}</span>
             </div>
 
             <div class="grupo-formulario">
                 <h1>Escolha 2</h1>
                 <p>Escreva um pequeno resumo da escolha e suas possiveis consequencias.</p>
-                <textarea placeholder="O que acontece na história?" rows="6"></textarea>
+                <textarea placeholder="O que acontece na história?" rows="6" :class="{ 'input-error': errors.escolhaDois }" v-model="escolhaDois"></textarea>
+                <span v-if="errors.escolhaDois" class="error">{{ errors.escolhaDois }}</span>
             </div>
             
-            <div style="height: 50px;"></div>
+            <div style="height: 60px;"></div>
 
             <button class="floating-btn" @click="onClick">Finalizar</button>
 
@@ -32,11 +35,20 @@
 </template>
   
 <script>
+import axios from "axios";
+import { useSnackbarStore } from '@/stores/snackbarStore';
+import { useTokenStore } from '@/stores/tokenStore';
+
 export default {
     name: 'NovoLivro',
     data() {
         return {
-            
+            titulo: '',
+            escolhaUm: '',
+            escolhaDois: '',
+            errors: {},
+            snackbar: false,
+            snackbarMessage: ''
         };
     },
     computed: {
@@ -51,14 +63,68 @@ export default {
                 this.$router.push("/");
             }
         },
-        onClick() {
-            this.$router.push("/homelivro");
+        async onClick() {
+            let cadastrar = true;
+
+            if (!this.titulo.trim()) {
+                this.errors.titulo = "Por favor, informe uma situação.";
+                cadastrar = false;
+            }
+            if (!this.escolhaUm.trim()) {
+                this.errors.escolhaUm = "Por favor, informe um primeiro desfecho para situação.";
+                cadastrar = false;
+            }
+            if (!this.escolhaDois.trim()) {
+                this.errors.escolhaDois = "Por favor, informe um segundo desfecho para situação.";
+                cadastrar = false;
+            }
+
+            if(cadastrar){
+                try {
+                    const body = {
+                        uuid_capitulo: this.$route.query.capitulo,
+                        titulo: this.titulo,
+                        data_inicio: "2025-02-16T00:00:00Z",
+                        data_fim: "2025-02-20T23:59:59Z",
+                        opcoes: [
+                            { descricao: this.escolhaUm },
+                            { descricao: this.escolhaDois }
+                        ]
+                    }
+
+                    const response = await axios.post("https://inkforge-be.onrender.com/votacao", body, {
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${useTokenStore().token}`,
+                        }
+                    });
+
+                    const snackbarStore = useSnackbarStore();
+                    snackbarStore.triggerSnackbar('Votação cadastrada com sucesso.');
+
+                    this.$router.push(`/homelivro/${this.$route.query.livro}`);
+                } 
+                catch (error) {
+                    console.log(error.message)
+                }
+            }
+
+            //this.$router.push("/homelivro");
         },
     },
 };
 </script>
 
 <style scoped>
+.error{
+    font-family: 'Satoshi-Regular';
+    font-size: 14px;
+    color: red;
+}
+.input-error {
+  border: 2px solid red !important; 
+}
+
 h1 {
     font-family: 'Satoshi-Bold', sans-serif;
     font-size: 20px;

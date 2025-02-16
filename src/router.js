@@ -19,7 +19,7 @@ const routes = [
 
   { path: "/novaescolha", name: "NovaEscolha", component: NovaEscolha },
   
-  { path: "/novapagina/:id", name: "NovaPagina", component: NovaPagina },
+  { path: "/novapagina", name: "NovaPagina", component: NovaPagina },
 
   { path: "/novocapitulo/:id", name: "NovoCapitulo", component: NovoCapitulo },
 

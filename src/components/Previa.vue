@@ -1,13 +1,12 @@
 <template>
-
     <div style="display: flex;">
         <v-card
             class="elevation-5 mr-3" width="150" height="225"
-            image="https://marketplace.canva.com/EAFq91U_RUs/1/0/1003w/canva-capa-de-livro-de-fantasia-elegante-verde-e-bege-awJX91ybn9w.jpg"
+            :image="livro.capa"
         ></v-card>
         <div style="flex: 1; display: flex; flex-direction: column;">
             <div style="margin-bottom: 8px;">
-                <previa-titulo :titulo="titulo" :tags="tags" />
+                <previa-titulo :titulo="livro.nome" :tags="tags" />
             </div>
 
             <div style="flex: 1; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical; text-overflow: ellipsis;">
@@ -21,7 +20,7 @@
 
             <div style="display: flex; align-items: center;">
                 <div class="avatar">M</div>
-                <label class="avatar-titulo">Marcos Kaio</label>
+                <label class="avatar-titulo"> {{ livro.autor }} </label>
             </div>
         </div>
     </div>
@@ -48,13 +47,17 @@ export default {
         PreviaAcoes,
     },
     props: {
+        livro:{
+            type: Object,
+            default: () => {}
+        },
         avatar: {
             type: String,
-            required: true,
+            required: false,
         },
         titulo: {
             type: String,
-            required: true,
+            required: false,
         },
         tags: {
             type: Array,
@@ -62,7 +65,7 @@ export default {
         },
         texto: {
             type: String,
-            required: true,
+            required: false,
         },
     },
 };

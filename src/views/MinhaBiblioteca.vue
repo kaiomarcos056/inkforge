@@ -122,7 +122,10 @@ export default {
         },
     },
     computed: {
-        snackbar() { return useSnackbarStore(); },
+        snackbar() { 
+            console.log('TOAST MENSAGEM = '+useSnackbarStore().message)
+            return useSnackbarStore(); 
+        },
         userUuid() {  return useAuthStore().userUuid; }
     },
     async mounted() { 

@@ -9,18 +9,12 @@
         <Batata :data="data"></Batata>
         <Batata :data="data" style="margin-bottom: 20px;"></Batata>
 
-        <!-- <Carousel></Carousel> -->
-        
-        <div v-for="(livro, index) in livros" :key="index" class="previa">
-            
+        <div v-for="livro in data" :key="livro.uui_livro" class="previa">
             <Previa 
                 class="bg-transparent" 
                 avatar="https://via.placeholder.com/48" 
-                :titulo="livro.titulo"
-                :tags="livro.tags" 
-                :texto="livro.previa"
+                :livro="livro"
             />
-
         </div>
     </v-container>
 </template>

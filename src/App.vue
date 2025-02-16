@@ -36,13 +36,9 @@ export default {
       try{
         
         const response = await axios.post("https://inkforge-be.onrender.com/auth/login", {
-          email: "kaio@email.com",
+          email: "max@email.com",
           senha: "senha123",
         });
-
-        //console.log();
-        //console.log();
-        //console.log(response.data.usuario.uuid_usuario);
 
         const newToken = response.data.token;
         const expiresIn = response.data.expiresIn;

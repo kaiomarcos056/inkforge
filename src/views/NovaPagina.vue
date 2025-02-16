@@ -100,7 +100,8 @@ export default {
       this.bottomSheet = true;
     },
     goEscolha: function (event) {
-      this.$router.push("/novaescolha");
+      //this.$router.push(`/novaescolha/${this.$route.params.id}`);
+      this.$router.push({ path: '/novaescolha', query: { livro: this.$route.query.livro, capitulo: this.$route.query.capitulo } });
     }
   }
 };

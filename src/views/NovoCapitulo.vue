@@ -83,17 +83,12 @@ export default {
                         }
                     });
 
-                    //this.mensagem = "História criada com sucesso!";
-                    console.log(response.data);
+                    this.$router.push(`/novapagina/${this.$route.params.id}`);
                 } 
                 catch (error) {
-                    //this.snackbarMessage = error.message;
-                    //this.snackbar = true;
                     console.log(error.message)
                 }
             }
-            console.log(useTokenStore().token)
-            //this.$router.push(`/novapagina/${this.$route.params.id}`);
         },
     },
 };

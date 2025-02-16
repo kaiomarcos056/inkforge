@@ -68,6 +68,7 @@
 <script>
 import axios from "axios";
 import { useSnackbarStore } from '@/stores/snackbarStore';
+import { useTokenStore } from '@/stores/tokenStore';
 
 export default {
     name: 'NovoLivro',
@@ -135,7 +136,6 @@ export default {
                 cadastrar = false;
             }
 
-
             const body = {
                 nome: this.titulo,
                 generos: this.generosSelecionados,
@@ -144,20 +144,17 @@ export default {
 
             if(cadastrar){
                 try {
-                    /*
+                    
                     const response = await axios.post("https://inkforge-be.onrender.com/livros",body, {
                         headers: {
                             "Content-Type": "application/json",
-                            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkX3VzdWFyaW8iOiI4YTQ5YWU5Zi01MTg5LTRhYTAtYjI4NS1hYTk4M2VjMWVmOTYiLCJub21lIjoiTWF4IiwiZW1haWwiOiJtYXhAZW1haWwuY29tIiwidGlwbyI6ImF1dG9yIiwiaWF0IjoxNzM5NDQ3NTM1LCJleHAiOjE3Mzk1MzM5MzV9.FH94t7l_9wT4X1MWQScUAJITkh-xZ4TKUptFBAa5mCg",
+                            "Authorization": `Bearer ${useTokenStore().token}`,
                         }
                     });
 
-                    //this.mensagem = "História criada com sucesso!";
-                    console.log(response.data);
-                    */
-                    //throw new Error("Ocorreu um erro!");
                     const snackbarStore = useSnackbarStore();
                     snackbarStore.triggerSnackbar('Livro cadastrado com sucesso.');
+                    
                     this.$router.push('/biblioteca');
                 } 
                 catch (error) {

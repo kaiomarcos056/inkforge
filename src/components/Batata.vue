@@ -19,8 +19,8 @@
         
         <label>Autor: {{item.autor}}</label>
       </div>
+      
     </div>
-
   </div>
   
 </template>

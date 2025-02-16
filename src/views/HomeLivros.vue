@@ -5,6 +5,13 @@
 
     <div class="container" v-else>
 
+        <v-snackbar v-model="snackbar.show" :timeout="3000" color="success">
+            {{ snackbar.message }}
+            <template v-slot:actions>
+                <v-btn color="white" text @click="snackbar.closeSnackbar">Fechar</v-btn>
+            </template>
+        </v-snackbar>
+
         <v-icon @click="voltar" style="font-size: 38px;">mdi-chevron-left</v-icon>
 
         <div>
@@ -56,11 +63,11 @@
                     </div> -->
                     
                     <div class="swiper-slide">
-                        <component :is="tabs[0].componente" :data="capitulos" :uuidLivro="uuiLivro"></component>/>
+                        <component :is="tabs[0].componente" :data="capitulos" :uuidLivro="uuiLivro"></component>
                     </div>
                     
                     <div class="swiper-slide">
-                        <component :is="tabs[1].componente" />
+                        <component :is="tabs[1].componente" :data="capitulos" />
                     </div>
                     
                 </div>
@@ -79,7 +86,8 @@ import Escolhas from "@/components/Escolhas.vue";
 
 import Swiper from 'swiper';
 import 'swiper/css';
-import { th } from "vuetify/locale";
+
+import { useSnackbarStore } from '@/stores/snackbarStore';
 
 export default {
     name: 'Historia', // Nome do componente
@@ -171,7 +179,12 @@ export default {
                 backgroundColor: this.tabs[this.activeIndex].color,
                 transitionDuration: '0.25s'
             };
-        }
+        },
+
+        snackbar() { 
+            console.log('TOAST MENSAGEM = '+useSnackbarStore().message)
+            return useSnackbarStore(); 
+        },
     },
 };
 </script>
