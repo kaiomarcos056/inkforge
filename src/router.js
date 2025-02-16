@@ -15,7 +15,7 @@ import NovaPagina from "@/views/NovaPagina.vue";
 const routes = [
   { path: "/", name: "Home", component: Home },
 
-  { path: "/homelivro", name: "HomeLivros", component: HomeLivros },
+  { path: "/homelivro/:id", name: "HomeLivros", component: HomeLivros },
 
   { path: "/novaescolha", name: "NovaEscolha", component: NovaEscolha },
   { path: "/novapagina", name: "NovaPagina", component: NovaPagina },

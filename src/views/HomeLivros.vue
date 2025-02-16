@@ -64,8 +64,8 @@ import PreviaAcoes from "@/components/PreviaAcoes.vue"; // Importa o componente 
 import Capitulos from "@/components/Capitulos.vue";
 import Escolhas from "@/components/Escolhas.vue";
 
-import Swiper from 'swiper'; // Importa Swiper.js para o efeito de slide
-import 'swiper/css'; // Importa os estilos do Swiper.js
+import Swiper from 'swiper';
+import 'swiper/css';
 
 export default {
     name: 'Historia', // Nome do componente
@@ -94,7 +94,8 @@ export default {
         // Método para voltar para a página anterior
         voltar() {
             if (window.history.length > 1) {
-                this.$router.back(); // Volta para a página anterior no histórico
+                //this.$router.back(); // Volta para a página anterior no histórico
+                this.$router.push("/biblioteca"); // Se não houver histórico, volta para a home
             } else {
                 this.$router.push("/"); // Se não houver histórico, volta para a home
             }
@@ -195,10 +196,7 @@ p {
 .tab {
     flex: 1;
     width: 100%;
-    /*background-color: #fff;*/
     overflow-x: hidden;
-    /*display: flex;*/
-    /*flex-direction: column;*/
     background-color: #f7f7f7;
 }
 

@@ -1,12 +1,23 @@
 <template>
-        
-    <section>
+    <div v-if="loading" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
+        <v-progress-circular indeterminate ></v-progress-circular>
+    </div>
 
+    <section v-else>
+        <!-- TOAST NOTIFICAÇÃO -->
+        <v-snackbar v-model="snackbar.show" :timeout="3000" color="success">
+            {{ snackbar.message }}
+            <template v-slot:actions>
+                <v-btn color="white" text @click="snackbar.closeSnackbar">Fechar</v-btn>
+            </template>
+        </v-snackbar>
+
+        <!-- INFORMAÇÕES DO USUARIO LOGADO -->
         <div style="padding: 15px;">
             <div style="display: flex; align-items: center; margin-bottom: 10px;">
                 <div class="avatar">M</div>
                 <div>
-                    <h3>Marcos Kaio dos Santos</h3>
+                    <h3>{{usuario.nome}}</h3>
                     <div class="grupo-tags">
                         <span>Escritor nato</span>
                         <span>Aventura</span>
@@ -21,54 +32,125 @@
             </div>
         </div>
 
-        <div class="tabs-wrapper">
-            <Tabs></Tabs>
+        <!-- TABS SLIDE -->
+        <div class="tabs-slider-wrapper">
+            <!-- Tabs -->
+            <div class="tabs">
+                <div v-for="(tab, index) in tabs" :key="index" :class="['tab', { active: activeIndex === index }]" @click="changeTab(index)">
+                    {{ tab }}
+                </div>
+            </div>
+
+            <!-- Swiper Slider -->
+            <div class="slider">
+                <div class="swiper" ref="swiperContainer">
+                    <div class="swiper-wrapper">
+                        <!-- <div v-for="(content, index) in slides" :key="index" class="swiper-slide">
+                            <component :is="content.componente" style="height: 100%;"/>
+                        </div> -->
+                        <div class="swiper-slide">
+                            <component :is="slides[0].componente" style="height: 100%;" :data="meusLivros"/>
+                        </div>
+                        <div class="swiper-slide">
+                            <component :is="slides[1].componente" style="height: 100%;" />
+                        </div>
+                        <div class="swiper-slide">
+                            <component :is="slides[2].componente" style="height: 100%;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
     </section>
-
 </template>
 
 <script>
+import axios from "axios";
 
-import Tabs from '../components/Tabs.vue';
+import { useSnackbarStore } from '@/stores/snackbarStore';
+import { useAuthStore } from '@/stores/authStore';
+
+import Swiper from "swiper";
+import "swiper/css";
+
+import ListaLivro from '@/components/ListaLivro.vue';
 
 export default {
-    name: 'MinhaBiblioteca',
+    name: "TabsSlider",
     data() {
         return {
-          
+            tabs: ["Meus Livros", "Histórico", "Salvos"],
+            slides: [
+                { title: "Slide 1", description: "Content of Slide 1", componente: ListaLivro },
+                { title: "Slide 2", description: "Content of Slide 2", componente: ListaLivro  },
+                { title: "Slide 3", description: "Content of Slide 3", componente: ListaLivro  },
+            ],
+            activeIndex: 0,
+            swiperInstance: null,
+            loading: true,
+            meusLivros: []
         };
     },
+    components: {
+        ListaLivro,
+    },
     methods: {
-        voltar() {
-            if (window.history.length > 1) {
-                this.$router.back();
-            } else {
-                this.$router.push("/");
+        initializeSwiper() {
+            const swiperElement = this.$refs.swiperContainer;
+            if (!swiperElement) {
+                console.error("Swiper container not found!");
+                return;
             }
+
+            this.swiperInstance = new Swiper(swiperElement, {
+                slidesPerView: 1,
+                on: {
+                    slideChange: () => {
+                        this.activeIndex = this.swiperInstance.activeIndex;
+                    },
+                },
+            });
+        },
+        changeTab(index) {
+            this.activeIndex = index;
+            if (this.swiperInstance) {
+                this.swiperInstance.slideTo(index);
+            } 
+            else {
+                console.error("Swiper instance not initialized yet.");
+            }
+        },
+    },
+    computed: {
+        snackbar() { return useSnackbarStore(); },
+        userUuid() {  return useAuthStore().userUuid; }
+    },
+    async mounted() { 
+        try {
+            const livros = await axios.get(`https://inkforge-be.onrender.com/usuarios/livros/${this.userUuid}`);
+            const usuario = await axios.get(`https://inkforge-be.onrender.com/usuarios/${this.userUuid}`);
+            
+            this.meusLivros = livros.data;
+            this.usuario = usuario.data;
+        } 
+        catch (error) {
+            console.error("#ERRO AO BUSCAR LIVROS = ", error);
+        }
+        finally {
+            this.loading = false;
+            this.$nextTick(() => {
+                this.initializeSwiper();
+            });
         }
     },
-    components: {
-        Tabs
-    }
 };
-
 </script>
 
 <style scoped>
-
 section{
-    height: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-}
-
-.tabs-wrapper {
-    flex: 1; /* Ocupa todo o espaço restante */
-    display: flex;
-    flex-direction: column;
-    min-height: 0; /* Importante para que o flex funcione corretamente */
 }
 
 h3{
@@ -93,7 +175,6 @@ p{
     font-weight: 400;
     line-height: 16px;
 }
-
 .avatar{
     background-color: #DFDFDF;
     color: #878787;
@@ -112,4 +193,75 @@ p{
     gap: 8px;
 }
 
+/* Wrapper for tabs and slider */
+.tabs-slider-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+/* Tabs container */
+.tabs {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Individual tab styles */
+.tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px 0;
+    cursor: pointer;
+    font-size: 16px;
+    color: #757575;
+    position: relative;
+    transition: color 0.3s ease-in-out;
+}
+
+/* Active tab styles with pseudo-element */
+.tab.active {
+    color: #000;
+    font-weight: bold;
+}
+
+.tab.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 20px);
+    /* Tamanho ajustado automaticamente ao texto */
+    height: 4px;
+    background-color: #000;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Swiper styles */
+.slider {
+    background-color: #f7f7f7;
+    flex: 1;
+}
+
+.swiper-wrapper {
+    height: 100%;
+}
+
+.swiper-slide {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-slide component {
+    flex: 1;
+    /* height: 100%; */
+}
+
+.swiper.swiper-initialized.swiper-horizontal.swiper-ios.swiper-backface-hidden{
+    height: 100%;
+}
 </style>

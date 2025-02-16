@@ -67,6 +67,7 @@
 
 <script>
 import axios from "axios";
+import { useSnackbarStore } from '@/stores/snackbarStore';
 
 export default {
     name: 'NovoLivro',
@@ -158,7 +159,10 @@ export default {
                     //this.mensagem = "História criada com sucesso!";
                     console.log(response.data);
                     */
-                    throw new Error("Ocorreu um erro!");
+                    //throw new Error("Ocorreu um erro!");
+                    const snackbarStore = useSnackbarStore();
+                    snackbarStore.triggerSnackbar('Livro cadastrado com sucesso.');
+                    this.$router.push('/biblioteca');
                 } 
                 catch (error) {
                     this.snackbarMessage = error.message;

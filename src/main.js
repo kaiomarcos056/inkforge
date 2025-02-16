@@ -11,6 +11,9 @@ import { aliases, mdi } from 'vuetify/iconsets/mdi';
 import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
 
+// PINIA
+import { createPinia } from 'pinia';
+
 const vuetify = createVuetify({
   components,
   directives,
@@ -26,4 +29,5 @@ const vuetify = createVuetify({
 createApp(App)
   .use(vuetify)
   .use(router)
+  .use(createPinia())
   .mount('#app');
