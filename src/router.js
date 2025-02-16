@@ -11,6 +11,7 @@ import NovaEscolha from "@/views/NovaEscolha.vue";
 import HomeLivros from "@/views/HomeLivros.vue";
 import NovoCapitulo from "@/views/NovoCapitulo.vue";
 import NovaPagina from "@/views/NovaPagina.vue";
+import ListaEscolha from "@/views/ListaEscolha.vue";
 
 const routes = [
   { path: "/", name: "Home", component: Home },
@@ -22,6 +23,8 @@ const routes = [
   { path: "/novapagina", name: "NovaPagina", component: NovaPagina },
 
   { path: "/novocapitulo/:id", name: "NovoCapitulo", component: NovoCapitulo },
+
+  { path: "/listaescolha/:id", name: "ListaEscolha", component: ListaEscolha },
 
   { path: "/edicaolivro", name: "EdicaoLivro", component: EdicaoLivro },
 

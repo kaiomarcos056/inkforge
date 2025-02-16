@@ -1,11 +1,13 @@
 <template>
 
     <div class="container">
+        <br>
+        
         <div class="capitulos">
             <div style="flex: 1;">
-                <div v-for="(capitulo, index) in data" :key="capitulo.id" class="capitulo">
-                    <h1> Cap. {{index+1}}: {{capitulo.titulo}} </h1>
-                    <v-icon class="arrow-icon elevation-0" style="font-size: 26px;"  @click="escolha(capitulo.uuid_capitulo)">mdi-chevron-right</v-icon> 
+                <div v-for="(item, index) in votacao" :key="index" class="capitulo">
+                    <h1> Cap. {{index+1}}: {{item.titulo}} </h1>
+                    <v-icon class="arrow-icon elevation-0" style="font-size: 26px;"  @click="escolha(item.uuid_capitulo)">mdi-chevron-right</v-icon> 
                 </div>
             </div>
         </div>
@@ -15,17 +17,19 @@
 
 <script>
 export default {
-    name: 'Capitulos',
+    name: 'Escolhas',
+    data() {
+        return {
+            escolhas: [],
+        };
+    },
     methods: {
-        novoCapitulo(id){
-            this.$router.push(`/novocapitulo/${id}`);
-        },
         escolha(id){
-            this.$router.push({ path: '/novapagina', query: { livro: this.uuidLivro, capitulo: id } });
+            this.$router.push(`/listaescolha/${id}`);
         }
     },
     props: {
-        data: {
+        votacao: {
             type: Array,
             default: () => []
         },
@@ -42,31 +46,6 @@ export default {
     background-color: #F7F7F7;
 }
 
-.novo-capitulo{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-}
-
-.novo-capitulo p{
-    font-family: 'Satoshi-Regular', sans-serif;
-    font-size: 16px;
-    font-weight: 500;
-    color: #151515;
-
-}
-
-.novo-capitulo a{
-    font-family: 'Satoshi-Bold', sans-serif;
-    font-size: 14px;
-    font-weight: 800;
-    color: #151515;
-    letter-spacing: -1px;
-    text-decoration: underline;
-}
-
 .capitulos{
     padding-left: 20px;
     padding-right: 20px;
@@ -80,9 +59,9 @@ export default {
     box-shadow: 0px 0px 95.42px 0px #0000000D;
     padding: 20px 20px;
     display: flex;
-    flex-direction: column;
     gap: 10px;
     margin-bottom: 20px;
+    justify-content: space-between;
 }
 
 .capitulo h1{

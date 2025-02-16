@@ -67,7 +67,7 @@
                     </div>
                     
                     <div class="swiper-slide">
-                        <component :is="tabs[1].componente" :data="capitulos" />
+                        <component :is="tabs[1].componente" :votacao="votacao" />
                     </div>
                     
                 </div>
@@ -109,7 +109,8 @@ export default {
             livro: {},
             capitulos: [],
             loading: true,
-            uuiLivro: ''
+            uuiLivro: '',
+            votacao: [],
         };
     },
 
@@ -153,11 +154,31 @@ export default {
 
     async mounted() { 
         try {
+            // INFORMAÇÕES DO LIVRO
             const livro = await axios.get(`https://inkforge-be.onrender.com/livros/${this.$route.params.id}`);
             this.livro = livro.data;
-
+            
+            // CAPITULOS
             const capitulos = await axios.get(`https://inkforge-be.onrender.com/capitulos/${this.$route.params.id}`);
             this.capitulos = capitulos.data;
+
+            // ESCOLHAS
+            for (const capitulo of this.capitulos) {
+                try {
+                    const escolha = await axios.get(`https://inkforge-be.onrender.com/votacao/capitulo/${capitulo.uuid_capitulo}`);
+
+                    let item = {
+                        uuid_capitulo: capitulo.uuid_capitulo,
+                        titulo: capitulo.titulo,
+                        uuid_votacao: escolha.data.uuid_votacao
+                    }
+
+                    this.votacao.push(item);
+                } 
+                catch (error) {
+                    //console.error(error);
+                }
+            }
         } 
         catch (error) {
             console.error("#ERRO AO BUSCAR LIVROS = ", error);
