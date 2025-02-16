@@ -3,11 +3,11 @@
     <div class="container">
         <div class="novo-capitulo" v-if="data.length<1">
             <p>Esse livro ainda não possui nenhum capitulo</p>
-            <a href="novocapitulo">Clique aqui para criar seu primeiro capitulo.</a>
+            <a @click="novoCapitulo(uuidLivro)">Clique aqui para criar seu primeiro capitulo.</a>
         </div>
         <div class="capitulos" v-else>
             <div style="flex: 1; text-align: right;">
-                <v-icon @click="voltar" style="font-size: 32px; text-align: left;">mdi mdi-plus</v-icon>
+                <v-icon @click="novoCapitulo(uuidLivro)" style="font-size: 32px; text-align: left;">mdi mdi-plus</v-icon>
             </div>
             <div>
                 <v-card v-for="(capitulo, index) in data" :key="capitulo.id" class="mb-4 rounded-lg elevation-1"
@@ -36,14 +36,18 @@
 export default {
     name: 'Capitulos',
     methods: {
-        abrir: function(event){
-            this.$router.push("/novocapitulo");
+        novoCapitulo(id){
+            this.$router.push(`/novocapitulo/${id}`);
         }
     },
     props: {
         data: {
             type: Array,
             default: () => []
+        },
+        uuidLivro: {
+            type: String,
+            default: () => ''
         }
     },
 };
@@ -76,6 +80,7 @@ export default {
     font-weight: 800;
     color: #151515;
     letter-spacing: -1px;
+    text-decoration: underline;
 }
 
 .capitulos{

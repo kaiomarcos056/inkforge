@@ -56,7 +56,7 @@
                     </div> -->
                     
                     <div class="swiper-slide">
-                        <component :is="tabs[0].componente" :data="capitulos"/>
+                        <component :is="tabs[0].componente" :data="capitulos" :uuidLivro="uuiLivro"></component>/>
                     </div>
                     
                     <div class="swiper-slide">
@@ -79,6 +79,7 @@ import Escolhas from "@/components/Escolhas.vue";
 
 import Swiper from 'swiper';
 import 'swiper/css';
+import { th } from "vuetify/locale";
 
 export default {
     name: 'Historia', // Nome do componente
@@ -99,7 +100,8 @@ export default {
             tabContentSwiper: null,
             livro: {},
             capitulos: [],
-            loading: true
+            loading: true,
+            uuiLivro: ''
         };
     },
 
@@ -154,6 +156,7 @@ export default {
         }
         finally {
             this.loading = false;
+            this.uuiLivro = this.$route.params.id;
             this.$nextTick(() => {
                 this.initializeSwiper();
             });

@@ -119,10 +119,6 @@ export default {
         },
         async submitForm() {
             this.errors = {}
-            //console.log(this.titulo)
-            //console.log(this.sinopse)
-            //console.log(this.generosSelecionados)
-            //console.log(this.imagePreview)
 
             let cadastrar = true;
             

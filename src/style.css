@@ -78,3 +78,9 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+@media (min-width: 768px) {
+  #app {
+    display: none;
+  }
+}

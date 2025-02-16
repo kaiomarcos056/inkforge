@@ -18,9 +18,10 @@ const routes = [
   { path: "/homelivro/:id", name: "HomeLivros", component: HomeLivros },
 
   { path: "/novaescolha", name: "NovaEscolha", component: NovaEscolha },
-  { path: "/novapagina", name: "NovaPagina", component: NovaPagina },
+  
+  { path: "/novapagina/:id", name: "NovaPagina", component: NovaPagina },
 
-  { path: "/novocapitulo", name: "NovoCapitulo", component: NovoCapitulo },
+  { path: "/novocapitulo/:id", name: "NovoCapitulo", component: NovoCapitulo },
 
   { path: "/edicaolivro", name: "EdicaoLivro", component: EdicaoLivro },
 
