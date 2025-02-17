@@ -1,20 +1,30 @@
 <template>
-    <div style="display: flex; flex-flow: column;">
-
+    <div v-if="loading" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
+        <v-progress-circular indeterminate ></v-progress-circular>
+    </div>
+    <div class="container" v-else>
         <div style="padding: 10px 5px; border-bottom: 1px solid #D9D9D9;">
             <div style="display: flex; align-items: center;">
-                <v-icon class="icon">mdi-chevron-left</v-icon>
-                <h3>Um viciado nas estrelas</h3>
+                <v-icon class="icon" @click="voltar">mdi-chevron-left</v-icon>
+                <h3>{{ capitulo.titulo }}</h3>
             </div>
         </div>
 
-        <div style="padding: 20px; background-color: #F7F7F5;">
-
-            <div style="display: flex; gap: 10px; width: 70%;">                
-                <v-select label="" variant="outline" density="compact" :items="items" v-model="capselected"></v-select>
-                <v-select label="" variant="outline" density="compact" :items="pages" v-model="pageselected"></v-select>
+        <div style="display: flex; padding: 10px; gap: 20px; padding-left: 15px; background-color: #F7F7F7;">
+            <div class="custom-select">
+                <select @change="escolherCapitulo" v-model="opcaoSelecionada">
+                    <option v-for="(cap, index) in capitulos" :key="index" :value="cap.uuid_capitulo" :selected="cap.uuid_capitulo == $route.query.capitulo"> Cap. {{ index+1 }} </option>
+                </select>
             </div>
 
+            <div class="custom-select">
+                <select>
+                    <option >Pag. 1 </option>
+                </select>
+            </div>
+        </div>
+
+        <div style="border: 1px solid blue; flex: 1; padding: 20px; background-color: #F7F7F7; overflow: auto;">
             <div>
                 <h2 class="mb-2"> Luzes na Escuridão </h2>
             
@@ -33,15 +43,18 @@
                 </p>
             </div>
         </div>
-
-        <v-footer style="display: flex; justify-content: center; align-items: center; gap: 20px; padding: 20px;">
+        
+        <div style="display: flex; justify-content: center; align-items: center; gap: 20px; padding: 15px 5px;">
             <v-btn class="btn-footer" rounded="xl" height="48" width="144" flat> Página anterior </v-btn>
             <v-btn class="btn-footer" rounded="xl" height="48" width="144" flat color="black" @click="dialog = true"> Próxima página</v-btn>
-        </v-footer>
+        </div>
+    </div>
 
-
+    <!--
+    <div style="display: flex; flex-flow: column;">
+        
         <v-dialog v-model="dialog" width="auto">
-            <!-- <v-card max-width="400" prepend-icon="" text="" title="" > -->
+            
             <v-card max-width="400" class="rounded-lg">
                 <div style="padding: 20px; display: flex; flex-direction: column; gap: 10px;">
                     <p style="font-size: 18px; font-weight: 500; font-family: 'Satoshi-Regular', sans-serif;" >Escolha</p>
@@ -97,34 +110,85 @@
                 </div>
             </v-card>
         </v-bottom-sheet>
-
     </div>
+    -->
 </template>
 
 <script>
-    export default {
-        name: 'Capitulo',
-        data() {
-            return {
-                bottomSheet: false,
-                dialog: false,
-                capselected: "Cap. 1", // Valor selecionado inicial
-                pageselected: "Pg. 1", // Valor selecionado inicial
-                items: ["Cap. 1", "Cap. 2", "Cap. 3"], // Itens do select
-                pages: ["Pg. 1", "Pg. 2", "Pg. 3"], // Itens do select
-            };
+import axios from "axios";
+
+export default {
+    name: 'Capitulo',
+    data() {
+        return {
+            bottomSheet: false,
+            dialog: false,
+            loading: true,
+            capitulo: {},
+            capitulos: [],
+            opcaoSelecionada: ''
+        };
+    },
+    methods: {
+        abrirBottomSheet() {
+            this.bottomSheet = true;
+            this.dialog = false;
         },
-        methods: {
-            abrirBottomSheet() {
-                this.bottomSheet = true; // Abre o Bottom Sheet
-                this.dialog = false;
-                // Aqui você pode adicionar código para fechar o diálogo, se necessário.
-            },
+        voltar(){
+            this.$router.push(`/historia/${this.$route.query.livro}`);
         },
-    };
+        escolherCapitulo(event){
+            console.log('Mudança detectada! Nova opção:', this.opcaoSelecionada);
+            this.$router.push({ path: '/capitulo', query: { livro: this.$route.query.livro, capitulo: this.opcaoSelecionada } });
+        }
+    },
+    async mounted() {
+        try {
+            const capitulos = await axios.get(`https://inkforge-be.onrender.com/capitulos/${this.$route.query.livro}`);
+            this.capitulos = capitulos.data;
+            this.capitulo = capitulos.data.find(c => c.uuid_capitulo === this.$route.query.capitulo);
+            // this.opcaoSelecionada = this.capitulos.length > 0 ? this.capitulos[0].uuid_capitulo : ''; 
+            this.opcaoSelecionada = this.capitulo.uuid_capitulo; 
+        } 
+        catch (error) {
+            console.error(error);
+        }
+        finally {
+            this.loading = false;
+        }
+    },
+    watch: {
+        '$route.query.capitulo': async function(newCapitulo, oldCapitulo) {
+            if (newCapitulo !== oldCapitulo) {
+                this.loading = true;
+                try {
+                    const capitulos = await axios.get(`https://inkforge-be.onrender.com/capitulos/${this.$route.query.livro}`);
+                    this.capitulos = capitulos.data;
+                    this.capitulo = capitulos.data.find(c => c.uuid_capitulo === newCapitulo);
+                } 
+                catch (error) {
+                    console.error(error);
+                }
+                finally {
+                    this.loading = false;
+                }
+            }
+        }
+    },
+    beforeRouteUpdate(to, from, next) {
+        this.opcaoSelecionada = to.query.capitulo;
+        next();
+    }
+};
 </script>
 
 <style scoped>
+
+.container{
+    height: calc(100vh - 64px);
+    display: flex;
+    flex-direction: column;
+}
 
 .btn-bottom-sheet{
     display: flex;
@@ -168,16 +232,13 @@ span{
     text-transform: none;
     letter-spacing: 0px
 }
-/* RADIO */
 
-/* Grupo de botões de rádio */
 .radio-group {
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Espaçamento entre os botões */
+    gap: 10px; 
 }
 
-/* Estilo do botão de rádio */
 .radio-button {
     font-family: 'Noto Serif', serif;
     display: flex;
@@ -191,17 +252,55 @@ span{
     font-size: 14px;
     font-weight: 600;
     color: #151515;
-    transition: all 0.3s ease; /* Transição suave */
+    transition: all 0.3s ease;
     box-sizing: border-box;
 }
 
-/* Ocultando o input de rádio padrão */
 input[type="radio"] {
     display: none;
 }
 
-/* Estilo para o botão selecionado */
 input[type="radio"]:checked + .radio-button {
     border: 2px solid #4caf50;
+}
+
+
+.custom-select {
+    position: relative;
+    width: 100px;
+    /* position: relative;
+    display: inline-block;
+    width: 200px; */
+}
+
+select {
+    width: 100%;
+    padding: 5px;
+    /* padding-right: 30px; */
+    font-size: 16px;
+    appearance: none;
+    font-family: 'Satoshi-Regular', sans-serif !important;
+    font-weight: 700;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+select:focus{
+    outline: none;
+    border: none;
+}
+
+.custom-select::after {
+    content: "";
+    background-image: url('https://i.ibb.co/SX2fLFp0/seta-baixo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 63%;
+    right: 10px;
+    transform: translateY(-50%);
+    width: 20px; 
+    height: 20px;
+    pointer-events: none;
 }
 </style>

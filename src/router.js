@@ -12,6 +12,7 @@ import HomeLivros from "@/views/HomeLivros.vue";
 import NovoCapitulo from "@/views/NovoCapitulo.vue";
 import NovaPagina from "@/views/NovaPagina.vue";
 import ListaEscolha from "@/views/ListaEscolha.vue";
+import TextoDinamico from "@/views/TextoDinamico.vue";
 
 const routes = [
   { path: "/", name: "Home", component: Home },
@@ -34,13 +35,10 @@ const routes = [
 
   { path: "/historia/:id", name: "Historia", component: Historia },
 
-  { path: "/historia/:id/capitulo", name: "Capitulo", component: Capitulo,
-    props: (route) => ({
-      id: route.params.id,
-      capitulo: route.query.capitulo,
-      page: route.query.page,
-    }),
-  },
+  { path: "/capitulo", name: "Capitulo", component: Capitulo },
+
+  { path: "/dinamico", name: "TextoDinamico", component: TextoDinamico },
+
 ];
 
 // Crie o roteador

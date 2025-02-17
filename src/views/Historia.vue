@@ -2,7 +2,7 @@
     <div v-if="isLoading" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
         <v-progress-circular indeterminate ></v-progress-circular>
     </div>
-    <div style="display: flex; flex-flow: column;" v-else>
+    <div style="display: flex; flex-flow: column; height: calc(100vh - 64px);" v-else>
 
         <v-icon @click="voltar" style="font-size: 38px;">mdi-chevron-left</v-icon>
 
@@ -33,23 +33,23 @@
             </div>
         </div>
 
-        <div style="padding: 20px; background-color: #F7F7F5;">
+        <div style="padding: 20px; background-color: #F7F7F5; height: 100%;">
             <v-card v-for="(capitulo, index) in capitulos" :key="capitulo.id" class="mb-4 rounded-lg elevation-1"
-                @click="navegarParaCapitulo(capitulo.id)">
-                <v-card-title class="cap-titulo">
-                    Cap.{{index+1}}: {{ capitulo.titulo }}
-                </v-card-title>
+                @click="navegarParaCapitulo(capitulo.uuid_capitulo)">
 
-                <v-card-text class="cap-text">
-                    {{ capitulo.conteudo }}
-                </v-card-text>
+                <v-card-title class="cap-titulo"> Cap. {{index+1}}: {{ capitulo.titulo }} </v-card-title>
+
+                <v-card-text class="cap-text"> {{ capitulo.conteudo }} </v-card-text>
+
                 <v-card-actions class="cap-actions">
-                    <v-btn class="cap-btn">Ler <v-icon class="arrow-icon"
-                            style="font-size: 26px;">mdi-chevron-right</v-icon> </v-btn>
+                    <v-btn class="cap-btn">
+                        Ler <v-icon class="arrow-icon" style="font-size: 26px;">mdi-chevron-right</v-icon> 
+                    </v-btn>
                 </v-card-actions>
             </v-card>
-        </div>
 
+            <div style="height: 20px;"></div>
+        </div>
     </div>
 </template>
 
@@ -73,12 +73,9 @@ export default {
         voltar() {
             this.$router.push("/");
         },
-        navegarParaCapitulo(capituloId) {
-            console.log(capituloId)
-            this.$router.push({
-                path: `/historia/${1}/capitulo`,
-                query: { capitulo: 1, page: 1 },
-            });
+        navegarParaCapitulo(id) {
+            // this.$router.push({ path: '/capitulo', query: { livro: this.$route.params.id, capitulo: id } });
+            this.$router.push({ path: '/dinamico', query: { livro: this.$route.params.id, capitulo: id } });
         },
     },
     async mounted() {

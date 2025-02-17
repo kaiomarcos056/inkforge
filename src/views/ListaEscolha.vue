@@ -62,11 +62,14 @@
                         </div>
                         
                         <div class="swiper-slide">
-                            <div style="padding: 20px; display: flex; flex-direction: column; gap: 10px; width: 100%; box-sizing: border-box;">
+                            <div style="padding: 20px; display: flex; flex-direction: column; gap: 20px; width: 100%; box-sizing: border-box;">
                                 <div class="escolha">
 
                                     <div class="votos">
-                                        <h1>Escolha 1</h1>
+                                        <div style="display: flex; align-items: center;">
+                                            <div class="avatar">M</div>
+                                            <label class="avatar-titulo">Marcos Kaio</label>
+                                        </div>
                                         <div>
                                             <span class="mdi mdi-arrow-up-thin"></span> {{ escolhas[0].opcoes[0].qtd_votos }} voto(s) 
                                         </div>
@@ -80,7 +83,10 @@
                                 <div class="escolha">
 
                                     <div class="votos">
-                                        <h1>Escolha 2</h1>
+                                        <div style="display: flex; align-items: center;">
+                                            <div class="avatar">P</div>
+                                            <label class="avatar-titulo">Pedro Henrique</label>
+                                        </div>
                                         <div>
                                             {{ escolhas[0].opcoes[1].qtd_votos }} voto(s) 
                                         </div>
@@ -275,5 +281,18 @@ p{
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.avatar {
+    background-color: #DFDFDF;
+    color: #878787;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 14px;
+    margin-right: 5px;
 }
 </style>
