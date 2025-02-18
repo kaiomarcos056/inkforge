@@ -53,63 +53,9 @@
     <!--
     <div style="display: flex; flex-flow: column;">
         
-        <v-dialog v-model="dialog" width="auto">
-            
-            <v-card max-width="400" class="rounded-lg">
-                <div style="padding: 20px; display: flex; flex-direction: column; gap: 10px;">
-                    <p style="font-size: 18px; font-weight: 500; font-family: 'Satoshi-Regular', sans-serif;" >Escolha</p>
+        
 
-                    <p class="cap-text" style="border-left: 1px solid #d9d9d9; padding-left: 10px; line-height:19px; letter-spacing: -0.4px;">
-                        Noah encara o monitor piscando, o brilho dos símbolos refletindo em seus olhos. Ele sente o peso da decisão iminente. A mensagem é clara: alguém — ou algo — está tentando se comunicar. Mas o que fazer?
-                    </p>
-
-                    <div class="radio-group">
-                        <label>
-                            <input type="radio" name="customRadio" value="op1" />
-                            <div class="radio-button">
-                                <p style="font-family: 'Noto Serif', serif; font-weight: 400; font-size: 14px; line-height:19px; letter-spacing: -0.4px;">    
-                                    <b>Decifrar os símbolos:</b> Noah decide mergulhar nos códigos, cruzando referências com seu banco de dados astronômico e histórico, determinado a descobrir quem ou o que está enviando a mensagem. Ele acredita que a resposta está na lógica e na ciência.
-                                </p>
-                            </div>
-                        </label>
-
-                        <p style="text-align: center; font-size: 14px; font-weight: 700; font-family: 'Satoshi-Regular', sans-serif;">Ou</p>
-
-                        <label>
-                            <input type="radio" name="customRadio" value="op2" />
-                            <div class="radio-button">
-                                <p style="font-family: 'Noto Serif', serif; font-weight: 400; font-size: 14px; line-height:19px; letter-spacing: -0.4px;">
-                                    <b>Seguir as coordenadas:</b> Ignorando os códigos por ora, Noah escolhe investigar fisicamente o local indicado pelas coordenadas no mapa estelar. Ele sente que precisa ver o que está lá com seus próprios olhos, mesmo que isso signifique sair da segurança do observatório e enfrentar o desconhecido.
-                                </p>
-                            </div>
-                        </label>
-                    </div>
-
-                    <div style="display: flex; justify-content: space-between;">
-                        <v-btn size="x-small" class="btn-bottom-sheet" flat style="color: #747474;">Cancelar</v-btn>
-                        <v-btn size="x-small" class="btn-bottom-sheet" flat @click="abrirBottomSheet"> 
-                            <p class="mr-1">Sugerir</p>
-                            <img src="../assets/icons/star.svg" alt="Star Icon"> 
-                        </v-btn>
-                        <v-btn size="x-small" class="btn-bottom-sheet" flat> 
-                            <p class="mr-1">Escolher</p>
-                            <img src="../assets/icons/chevron right.svg"> 
-                        </v-btn>
-                    </div>
-                </div>
-            </v-card>
-        </v-dialog>
-
-        <v-bottom-sheet v-model="bottomSheet" max-width="500">
-            <v-card>
-                <div style="padding: 25px 15px; display: flex; flex-direction: column; gap: 10px;">
-                    <h1 style="line-height: 0; margin:0; padding: 0; font-family: 'Satoshi-Regular', sans-serif; font-size: 20px; font-weight: 500;">Adicionar Sugestão</h1>
-                    <p></p>
-                    <h2 style="font-family: 'Satoshi-Regular', sans-serif; font-size: 14px; font-weight: 500;">Minha sugestão</h2>
-                    <textarea rows="4" name="" id="" style="resize: none; border: 2px solid #151515; padding: 10px; border-radius: 16px; font-family: 'Satoshi-Regular', sans-serif; font-weight: 500;" ></textarea>
-                </div>
-            </v-card>
-        </v-bottom-sheet>
+        
     </div>
     -->
 </template>
@@ -190,37 +136,13 @@ export default {
     flex-direction: column;
 }
 
-.btn-bottom-sheet{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Satoshi-Regular', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    gap: 10px;
-    text-transform: none;
-}
 
-h3 {
-    font-family: 'Satoshi-Regular', sans-serif;
-    font-size: 16px;
-}
-
-h2 {
-    font-family: 'Satoshi-Regular', sans-serif;
-    font-size: 18px;
-}
 
 .icon{
     font-size: 34px;
 }
 
-.cap-text {
-    font-family: 'Noto Serif', serif;
-    font-weight: 400;
-    font-size: 14px;
-    text-align: justify;
-}
+
 span{
     font-family: 'Satoshi-Regular', sans-serif !important;
     font-size: 25px !important;
@@ -233,36 +155,7 @@ span{
     letter-spacing: 0px
 }
 
-.radio-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px; 
-}
 
-.radio-button {
-    font-family: 'Noto Serif', serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f7f7f5;
-    border: 2px solid #d9d9d9;
-    border-radius: 16px;
-    padding: 16px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    color: #151515;
-    transition: all 0.3s ease;
-    box-sizing: border-box;
-}
-
-input[type="radio"] {
-    display: none;
-}
-
-input[type="radio"]:checked + .radio-button {
-    border: 2px solid #4caf50;
-}
 
 
 .custom-select {

@@ -18,7 +18,6 @@ import { useAuthStore } from '@/stores/authStore';
 import { useTokenStore } from '@/stores/tokenStore';
 
 import axios from "axios";
-import { VValidation } from "vuetify/components";
 
 export default {
   components: {

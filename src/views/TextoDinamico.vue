@@ -34,11 +34,72 @@
 
         <div style="display: flex; justify-content: center; align-items: center; gap: 20px; padding: 15px 5px;">
             <v-btn class="btn-footer" rounded="xl" height="48" width="144" flat @click="previousPage"> Página anterior </v-btn>
+
             <!-- <v-btn class="btn-footer" rounded="xl" height="48" width="144" flat color="black" @click="dialog = true"> Próxima página</v-btn> -->
+
             <v-btn class="btn-footer" rounded="xl" height="48" width="144" flat color="black" @click="nextPage"> Próxima página</v-btn>
+
             <!-- <button @click="previousPage" :disabled="selectedPage === 0">Anterior</button>
             <button @click="nextPage" :disabled="selectedPage === pages.length - 1">Próximo</button> -->
         </div>
+
+        <v-dialog v-model="dialog" width="auto">
+            
+            <v-card max-width="400" class="rounded-lg">
+                <div style="padding: 20px; display: flex; flex-direction: column; gap: 10px;">
+                    <p style="font-size: 18px; font-weight: bold; font-family: 'Satoshi-Regular', sans-serif;" >Escolha</p>
+
+                    <p class="cap-text" style="border-left: 1px solid #d9d9d9; padding-left: 10px; line-height:19px; letter-spacing: -0.4px;">
+                        {{ escolhas[0].titulo }}
+                    </p>
+
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="customRadio" value="op1" />
+                            <div class="radio-button">
+                                <p style="font-family: 'Noto Serif', serif; font-weight: 400; font-size: 14px; line-height:19px; letter-spacing: -0.4px;">    
+                                    {{ escolhas[0].opcoes[0].descricao }}
+                                </p>
+                            </div>
+                        </label>
+
+                        <p style="text-align: center; font-size: 14px; font-weight: 700; font-family: 'Satoshi-Regular', sans-serif;">Ou</p>
+
+                        <label>
+                            <input type="radio" name="customRadio" value="op2" />
+                            <div class="radio-button">
+                                <p style="font-family: 'Noto Serif', serif; font-weight: 400; font-size: 14px; line-height:19px; letter-spacing: -0.4px;">
+                                    {{ escolhas[0].opcoes[1].descricao }}
+                                </p>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between;">
+                        <v-btn size="x-small" class="btn-bottom-sheet" flat style="color: #747474;">Cancelar</v-btn>
+                        <v-btn size="x-small" class="btn-bottom-sheet" flat @click="abrirBottomSheet"> 
+                            <p class="mr-1">Sugerir</p>
+                            <img src="../assets/icons/star.svg" alt="Star Icon"> 
+                        </v-btn>
+                        <v-btn size="x-small" class="btn-bottom-sheet" flat> 
+                            <p class="mr-1">Escolher</p>
+                            <img src="../assets/icons/chevron right.svg"> 
+                        </v-btn>
+                    </div>
+                </div>
+            </v-card>
+        </v-dialog>
+
+        <v-bottom-sheet v-model="bottomSheet" max-width="500">
+            <v-card>
+                <div style="padding: 25px 15px; display: flex; flex-direction: column; gap: 10px;">
+                    <h1 style="line-height: 0; margin:0; padding: 0; font-family: 'Satoshi-Regular', sans-serif; font-size: 20px; font-weight: 500;">Adicionar Sugestão</h1>
+                    <p></p>
+                    <h2 style="font-family: 'Satoshi-Regular', sans-serif; font-size: 14px; font-weight: 500;">Minha sugestão</h2>
+                    <textarea rows="4" name="" id="" style="resize: none; border: 2px solid #151515; padding: 10px; border-radius: 16px; font-family: 'Satoshi-Regular', sans-serif; font-weight: 500;" ></textarea>
+                </div>
+            </v-card>
+        </v-bottom-sheet>
     </div>
 </template>
 
@@ -51,6 +112,10 @@ export default {
             loading: false,
             capitulo: {},
             capitulos: [],
+            escolhas: [],
+
+            dialog: false,
+            bottomSheet: false,
 
             text: `Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.KAIO`,
             pages: [],
@@ -104,8 +169,14 @@ export default {
             }
         },
         nextPage() {
+            console.log('PAGINA SELECIONADA = ' + this.selectedPage);
+            console.log('QUANTIDADE DE PAGINAS = '+this.pages.length);
+
             if (this.selectedPage < this.pages.length - 1) {
                 this.selectedPage++;
+            }
+            else{
+                this.dialog = true;
             }
         },
         abrirBottomSheet() {
@@ -128,12 +199,20 @@ export default {
                     const capitulos = await axios.get(`https://inkforge-be.onrender.com/capitulos/${this.$route.query.livro}`);
                     this.capitulos = capitulos.data;
                     this.capitulo = capitulos.data.find(c => c.uuid_capitulo === newCapitulo);
+                    this.text = this.capitulo.conteudo
+
+                    const escolhas = await axios.get(`https://inkforge-be.onrender.com/votacao/capitulo/${this.$route.query.capitulo}`);
+                    this.escolhas = escolhas.data
                 } 
                 catch (error) {
                     console.error(error);
                 }
                 finally {
                     this.loading = false;
+                    this.$nextTick(() => {
+                        this.splitTextIntoPages();
+                        window.addEventListener("resize", this.splitTextIntoPages);
+                    });
                 }
             }
         }
@@ -147,6 +226,9 @@ export default {
             
             this.opcaoSelecionada = this.capitulo.uuid_capitulo; 
             this.text = this.capitulo.conteudo
+
+            const escolhas = await axios.get(`https://inkforge-be.onrender.com/votacao/capitulo/${this.$route.query.capitulo}`);
+            this.escolhas = escolhas.data
         } 
         catch (error) {
             console.error(error);
@@ -170,10 +252,6 @@ export default {
 </script>
 
 <style scoped>
-h3 {
-    font-family: 'Satoshi-Regular', sans-serif;
-    font-size: 16px;
-}
 
 #app {
     height: calc(100vh - 64px);
@@ -248,6 +326,64 @@ select:focus{
     letter-spacing: 0px
 }
 
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+}
+
+.radio-button {
+    font-family: 'Noto Serif', serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f7f7f5;
+    border: 2px solid #d9d9d9;
+    border-radius: 16px;
+    padding: 16px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: #151515;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+input[type="radio"]:checked + .radio-button {
+    border: 2px solid #4caf50;
+}
+
+.btn-bottom-sheet{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Satoshi-Regular', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    gap: 10px;
+    text-transform: none;
+}
+
+h3 {
+    font-family: 'Satoshi-Regular', sans-serif;
+    font-size: 16px;
+}
+
+h2 {
+    font-family: 'Satoshi-Regular', sans-serif;
+    font-size: 18px;
+}
+
+.cap-text {
+    font-family: 'Noto Serif', serif;
+    font-weight: 400;
+    font-size: 14px;
+    text-align: justify;
+}
 </style>
 
 
