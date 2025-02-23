@@ -157,7 +157,7 @@ export default {
 	                interesses: this.interessesSelecionados
                 }
 
-                const response = await axios.post("http://localhost:3000/auth/registrar",body, {
+                const response = await axios.post("https://inkforge-api.onrender.com/auth/registrar",body, {
                         headers: {
                             "Content-Type": "application/json"
                         }

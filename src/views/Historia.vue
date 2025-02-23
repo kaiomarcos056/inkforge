@@ -87,7 +87,7 @@ export default {
                     uuid_capitulo: id
                 }
                 console.log(body)
-                const response = await axios.post("http://localhost:3000/historico",body, {
+                const response = await axios.post("https://inkforge-api.onrender.com/historico",body, {
                     headers: { "Content-Type": "application/json" }
                 });
                 this.$router.push({ path: '/dinamico', query: { livro: this.$route.params.id, capitulo: id } });
@@ -101,11 +101,11 @@ export default {
     async mounted() {
         try {
             // LIVRO
-            const response = await axios.get(`http://localhost:3000/livros/${this.$route.params.id}`);
+            const response = await axios.get(`https://inkforge-api.onrender.com/livros/${this.$route.params.id}`);
             this.livro = response.data;
 
             // CAPITULO
-            const capitulo = await axios.get(`http://localhost:3000/capitulos/${this.$route.params.id}`);
+            const capitulo = await axios.get(`https://inkforge-api.onrender.com/capitulos/${this.$route.params.id}`);
             this.capitulos = capitulo.data;
         } 
         catch (error) {

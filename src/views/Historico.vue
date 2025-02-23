@@ -42,7 +42,7 @@ export default {
     },
     async mounted() {
         try {
-            const historicos = await axios.get(`http://localhost:3000/historico/${this.auth.usuario.uuid_usuario}`);
+            const historicos = await axios.get(`https://inkforge-api.onrender.com/historico/${this.auth.usuario.uuid_usuario}`);
             
             for(let i = 0; i < historicos.data.length; i++){
                 let item = {

@@ -88,7 +88,7 @@
         },
         async mounted() {
             try {
-                const response = await axios.get("http://localhost:3000/livros");
+                const response = await axios.get("https://inkforge-api.onrender.com/livros");
                 this.data = response.data;
             } 
             catch (error) {

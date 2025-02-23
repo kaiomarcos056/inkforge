@@ -81,7 +81,7 @@ export default {
 	                senha: this.senha
                 }
 
-                const response = await axios.post("http://localhost:3000/auth/login",body, {
+                const response = await axios.post("https://inkforge-api.onrender.com/auth/login",body, {
                         headers: {
                             "Content-Type": "application/json"
                         }

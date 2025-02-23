@@ -77,7 +77,7 @@ export default {
           conteudo: this.capitulo.conteudo,
         }
 
-        const capitulo = await axios.put(`http://localhost:3000/capitulos/conteudo/${this.$route.query.capitulo}`, body, {
+        const capitulo = await axios.put(`https://inkforge-api.onrender.com/capitulos/conteudo/${this.$route.query.capitulo}`, body, {
           headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${this.auth.token}`,
@@ -102,7 +102,7 @@ export default {
 
   async mounted() {
     try {
-      const capitulos = await axios.get(`http://localhost:3000/capitulos/${this.$route.query.livro}`);
+      const capitulos = await axios.get(`https://inkforge-api.onrender.com/capitulos/${this.$route.query.livro}`);
       this.capitulo = capitulos.data.find(capitulo => capitulo.uuid_capitulo === this.$route.query.capitulo);
 
       if (window.ClassicEditor) {

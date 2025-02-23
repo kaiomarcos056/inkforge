@@ -87,14 +87,14 @@ export default {
                         ]
                     }
 
-                    const response = await axios.post("http://localhost:3000/votacao", body, {
+                    const response = await axios.post("https://inkforge-api.onrender.com/votacao", body, {
                         headers: {
                             "Content-Type": "application/json",
                             "Authorization": `Bearer ${this.auth.token}`,
                         }
                     });
 
-                    const update = await axios.put(`http://localhost:3000/capitulos/finalizar/${this.$route.query.capitulo}`, {}, {
+                    const update = await axios.put(`https://inkforge-api.onrender.com/capitulos/finalizar/${this.$route.query.capitulo}`, {}, {
                         headers: {
                             "Content-Type": "application/json",
                             "Authorization": `Bearer ${this.auth.token}`,

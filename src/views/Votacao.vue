@@ -180,7 +180,7 @@ export default {
     },
     async mounted() { 
         try {
-            const escolhas = await axios.get(`http://localhost:3000/votacao/capitulo/${this.$route.params.id}`);
+            const escolhas = await axios.get(`https://inkforge-api.onrender.com/votacao/capitulo/${this.$route.params.id}`);
             this.escolhas = escolhas.data;
         } 
         catch (error) {

@@ -133,7 +133,7 @@ export default {
     async mounted() { 
         console.log(this.auth)
         try {
-            const livros = await axios.get(`http://localhost:3000/usuarios/livros/${this.auth.usuario.uuid_usuario}`);
+            const livros = await axios.get(`https://inkforge-api.onrender.com/usuarios/livros/${this.auth.usuario.uuid_usuario}`);
             this.meusLivros = livros.data;
         } 
         catch (e) {

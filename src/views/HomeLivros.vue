@@ -159,17 +159,17 @@ export default {
         try {
             
             // INFORMAÇÕES DO LIVRO
-            const livro = await axios.get(`http://localhost:3000/livros/${this.$route.params.id}`);
+            const livro = await axios.get(`https://inkforge-api.onrender.com/livros/${this.$route.params.id}`);
             this.livro = livro.data;
             
             // CAPITULOS
-            const capitulos = await axios.get(`http://localhost:3000/capitulos/${this.$route.params.id}`);
+            const capitulos = await axios.get(`https://inkforge-api.onrender.com/capitulos/${this.$route.params.id}`);
             this.capitulos = capitulos.data;
 
             // ESCOLHAS
             for (const capitulo of this.capitulos) {
                 try {
-                    const escolha = await axios.get(`http://localhost:3000/votacao/capitulo/${capitulo.uuid_capitulo}`);
+                    const escolha = await axios.get(`https://inkforge-api.onrender.com/votacao/capitulo/${capitulo.uuid_capitulo}`);
 
                     let item = {
                         uuid_capitulo: capitulo.uuid_capitulo,

@@ -173,7 +173,7 @@ export default {
             if(cadastrar){
                 this.salvando = true
                 try {
-                    const response = await axios.post("http://localhost:3000/livros",body, {
+                    const response = await axios.post("https://inkforge-api.onrender.com/livros",body, {
                         headers: {
                             "Content-Type": "application/json",
                             "Authorization": `Bearer ${this.auth.token}`,
@@ -202,7 +202,7 @@ export default {
     },
     async mounted() {
         try {
-            const generos = await axios.get(`http://localhost:3000/generos`);
+            const generos = await axios.get(`https://inkforge-api.onrender.com/generos`);
             this.generos = generos.data;
         } 
         catch (e) {

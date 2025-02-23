@@ -74,7 +74,7 @@ export default {
                         uuid_livro: this.$route.params.id
                     }
 
-                    const capitulo = await axios.post("http://localhost:3000/capitulos", body, {
+                    const capitulo = await axios.post("https://inkforge-api.onrender.com/capitulos", body, {
                         headers: {
                             "Content-Type": "application/json",
                             "Authorization": `Bearer ${this.auth.token}`,

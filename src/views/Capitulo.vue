@@ -90,7 +90,7 @@ export default {
     },
     async mounted() {
         try {
-            const capitulos = await axios.get(`https://inkforge-be.onrender.com/capitulos/${this.$route.query.livro}`);
+            const capitulos = await axios.get(`https://inkforge-api.onrender.com/capitulos/${this.$route.query.livro}`);
             this.capitulos = capitulos.data;
             this.capitulo = capitulos.data.find(c => c.uuid_capitulo === this.$route.query.capitulo);
             // this.opcaoSelecionada = this.capitulos.length > 0 ? this.capitulos[0].uuid_capitulo : ''; 
@@ -108,7 +108,7 @@ export default {
             if (newCapitulo !== oldCapitulo) {
                 this.loading = true;
                 try {
-                    const capitulos = await axios.get(`https://inkforge-be.onrender.com/capitulos/${this.$route.query.livro}`);
+                    const capitulos = await axios.get(`https://inkforge-api.onrender.com/capitulos/${this.$route.query.livro}`);
                     this.capitulos = capitulos.data;
                     this.capitulo = capitulos.data.find(c => c.uuid_capitulo === newCapitulo);
                 } 
