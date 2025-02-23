@@ -175,10 +175,10 @@ export default {
     },
     async mounted() {
         try {
-            const response = await axios.get(`https://inkforge-be.onrender.com/generos`);
+            const response = await axios.get(`https://inkforge-api.onrender.com/generos`);
             this.generos = response.data;
 
-            const interesses = await axios.get(`http://localhost:3000/interesses`);
+            const interesses = await axios.get(`https://inkforge-api.onrender.com/interesses`);
             this.interesses = interesses.data;
         }
         catch (error) {

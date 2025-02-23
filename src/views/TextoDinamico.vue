@@ -231,13 +231,13 @@ export default {
             if (newCapitulo !== oldCapitulo) {
                 this.loading = true;
                 try {
-                    const capitulos = await axios.get(`http://localhost:3000/capitulos/${this.$route.query.livro}`);
+                    const capitulos = await axios.get(`https://inkforge-api.onrender.com/capitulos/${this.$route.query.livro}`);
                     this.capitulos = capitulos.data;
                     this.capitulo = capitulos.data.find(c => c.uuid_capitulo === newCapitulo);
                     this.text = this.capitulo.conteudo
 
                     try{
-                        const escolhas = await axios.get(`http://localhost:3000/votacao/capitulo/${this.$route.query.capitulo}`);
+                        const escolhas = await axios.get(`https://inkforge-api.onrender.com/votacao/capitulo/${this.$route.query.capitulo}`);
                         this.escolhas = escolhas.data
                     }
                     catch (error) {
