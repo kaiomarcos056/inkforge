@@ -43,6 +43,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: end;
+    padding: 20px;
 }
 .item{
     display: flex;
