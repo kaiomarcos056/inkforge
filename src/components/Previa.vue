@@ -6,32 +6,27 @@
         ></v-card>
         <div style="flex: 1; display: flex; flex-direction: column;">
             <div style="margin-bottom: 8px;">
-                <previa-titulo :titulo="livro.nome" :tags="tags" />
+                <previa-titulo :titulo="livro.nome" :tags="livro.generos" />
             </div>
 
             <div style="flex: 1; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical; text-overflow: ellipsis;">
-                <previa-corpo :texto="texto" />
+                <previa-corpo :texto="livro.descricao" />
             </div>
             
-            <div class="ver-mais" style="display: flex; align-items: center;">
+            <div class="ver-mais" style="display: flex; align-items: center; " @click="golivro(livro.uuid_livro)">
                 <p>Ver mais</p>
                 <v-icon>mdi-chevron-right</v-icon>
             </div>
 
             <div style="display: flex; align-items: center;">
-                <div class="avatar">M</div>
+                <v-avatar style="height: 32px; width: 32px; margin-right: 5px;" v-if="livro.foto !== ''">
+                    <v-img :src="livro.foto" ></v-img>
+                </v-avatar>
+                <div class="avatar" v-else>M</div>
                 <label class="avatar-titulo"> {{ livro.autor }} </label>
             </div>
         </div>
     </div>
-
-    <!--
-    <v-card flat class="previa">
-        <previa-titulo :avatar="avatar" :titulo="titulo" :tags="tags" />
-        <previa-corpo :texto="texto" />
-        <previa-acoes />
-    </v-card>
-    -->
 </template>
 
 <script>
@@ -47,27 +42,17 @@ export default {
         PreviaAcoes,
     },
     props: {
-        livro:{
-            type: Object,
-            default: () => {}
-        },
-        avatar: {
-            type: String,
-            required: false,
-        },
-        titulo: {
-            type: String,
-            required: false,
-        },
-        tags: {
-            type: Array,
-            default: () => [],
-        },
-        texto: {
-            type: String,
-            required: false,
+        livro: {
+          type: Object,
+          default: () => ({})
         },
     },
+    methods: {
+        golivro(id) {
+            console.log(id)
+            this.$router.push(`/historia/${id}`);
+        }
+    }
 };
 </script>
 
@@ -83,7 +68,7 @@ export default {
 }
 
 .ver-mais{
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 500;
     margin-bottom: 5px;
     margin-top: 10px;

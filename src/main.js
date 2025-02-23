@@ -13,6 +13,10 @@ import * as directives from 'vuetify/directives';
 
 // PINIA
 import { createPinia } from 'pinia';
+import piniaPersist from 'pinia-plugin-persistedstate';
+
+const pinia = createPinia();
+pinia.use(piniaPersist);
 
 const vuetify = createVuetify({
   components,
@@ -29,5 +33,5 @@ const vuetify = createVuetify({
 createApp(App)
   .use(vuetify)
   .use(router)
-  .use(createPinia())
+  .use(pinia)
   .mount('#app');

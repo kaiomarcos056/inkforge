@@ -32,8 +32,11 @@
                         </div>
                     </div>
                     <div style="display: flex; align-items: center;">
-                            <div class="avatar">M</div>
-                            <label class="avatar-titulo">{{ livro.autor }}</label>
+                        <v-avatar style="height: 32px; width: 32px; margin-right: 5px;" v-if="livro.foto !== ''">
+                            <v-img :src="livro.foto" ></v-img>
+                        </v-avatar>
+                        <div class="avatar" v-else>M</div>
+                        <label class="avatar-titulo">{{ livro.autor }}</label>
                     </div>
                 </div>
             </div>
@@ -99,7 +102,7 @@ export default {
 
     data() {
         return {
-            activeIndex: 0, // Aba ativa inicialmente
+            activeIndex: 0,
             tabs: [
                 { name: 'Capitulos', content: 'Swipe', color: '#04a5c1', componente: Capitulos},
                 { name: 'Escolhas', content: 'Swipe', color: '#f298e7', componente: Escolhas }
@@ -154,18 +157,19 @@ export default {
 
     async mounted() { 
         try {
+            
             // INFORMAÇÕES DO LIVRO
-            const livro = await axios.get(`https://inkforge-be.onrender.com/livros/${this.$route.params.id}`);
+            const livro = await axios.get(`http://localhost:3000/livros/${this.$route.params.id}`);
             this.livro = livro.data;
             
             // CAPITULOS
-            const capitulos = await axios.get(`https://inkforge-be.onrender.com/capitulos/${this.$route.params.id}`);
+            const capitulos = await axios.get(`http://localhost:3000/capitulos/${this.$route.params.id}`);
             this.capitulos = capitulos.data;
 
             // ESCOLHAS
             for (const capitulo of this.capitulos) {
                 try {
-                    const escolha = await axios.get(`https://inkforge-be.onrender.com/votacao/capitulo/${capitulo.uuid_capitulo}`);
+                    const escolha = await axios.get(`http://localhost:3000/votacao/capitulo/${capitulo.uuid_capitulo}`);
 
                     let item = {
                         uuid_capitulo: capitulo.uuid_capitulo,
@@ -180,8 +184,8 @@ export default {
                 }
             }
         } 
-        catch (error) {
-            console.error("#ERRO AO BUSCAR LIVROS = ", error);
+        catch (e) {
+            console.error(e.message);
         }
         finally {
             this.loading = false;

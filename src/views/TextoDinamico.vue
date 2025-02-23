@@ -27,9 +27,11 @@
         </div>
 
         <div style="display: flex; flex: 1; background-color: #F7F7F7; box-sizing: border-box; padding: 15px;">
-            <div id="text-container" ref="textContainer">
+            <!-- <div id="text-container" ref="textContainer">
                 {{ currentText }}
-            </div>
+            </div> -->
+            <div id="text-container" ref="textContainer" v-html="currentText"></div>
+
         </div>
 
         <div style="display: flex; justify-content: center; align-items: center; gap: 20px; padding: 15px 5px;">
@@ -47,7 +49,7 @@
             
             <v-card max-width="400" class="rounded-lg">
                 <div style="padding: 20px; display: flex; flex-direction: column; gap: 10px;">
-                    <p style="font-size: 18px; font-weight: bold; font-family: 'Satoshi-Regular', sans-serif;" >Escolha</p>
+                    <!-- <p style="font-size: 18px; font-weight: bold; font-family: 'Satoshi-Regular', sans-serif;" >Escolha</p>
 
                     <p class="cap-text" style="border-left: 1px solid #d9d9d9; padding-left: 10px; line-height:19px; letter-spacing: -0.4px;">
                         {{ escolhas[0].titulo }}
@@ -85,7 +87,26 @@
                             <p class="mr-1">Escolher</p>
                             <img src="../assets/icons/chevron right.svg"> 
                         </v-btn>
-                    </div>
+                    </div> -->
+                    <p style="font-size: 18px; font-weight: bold; font-family: 'Satoshi-Regular', sans-serif; margin-bottom: 10px; text-align: center;" >
+                        Este capítulo está com uma votação aberta! Venha fazer parte da história e decidir os próximos passos dessa aventura!
+                    </p>
+                    
+                    <div style="display: flex; gap: 10px;">
+                        <v-btn class="btn-footer" rounded="xl" height="48"  flat @click="home"> Voltar para capítulos </v-btn>
+                        <v-btn class="btn-footer" rounded="xl" height="48" width="144" flat color="black" @click="votar"> Votar </v-btn>
+                    </div>        
+                </div>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="modal" width="auto">
+            <v-card max-width="400" class="rounded-lg">
+                <div style="padding: 20px; display: flex; flex-direction: column; gap: 10px;">
+                    <p style="font-size: 18px; font-weight: bold; font-family: 'Satoshi-Regular', sans-serif;" >
+                        Desculpe, este capítulo ainda não recebeu uma votação. Enquanto isso, que tal continuar explorando os próximos capítulos? Temos muitas histórias esperando por você!
+                    </p>
+                    <v-btn class="btn-footer" rounded="xl" height="48" flat color="black" @click="home"> Outros capítulos </v-btn>
                 </div>
             </v-card>
         </v-dialog>
@@ -109,15 +130,16 @@ import axios from "axios";
 export default {
     data() {
         return {
-            loading: false,
+            loading: true,
             capitulo: {},
             capitulos: [],
             escolhas: [],
 
             dialog: false,
+            modal: false,
             bottomSheet: false,
 
-            text: `Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.KAIO`,
+            text: ``,
             pages: [],
             selectedPage: 0,
             currentText: "",
@@ -145,12 +167,14 @@ export default {
             let currentText = "";
             words.forEach((word) => {
                 let testText = currentText ? currentText + " " + word : word;
-                tempDiv.textContent = testText;
+                // tempDiv.textContent = testText;
+                tempDiv.innerHTML = testText;
 
                 if (tempDiv.clientHeight > container.clientHeight) {
                     this.pages.push(currentText);
                     currentText = word;
-                } else {
+                } 
+                else {
                     currentText = testText;
                 }
             });
@@ -176,7 +200,12 @@ export default {
                 this.selectedPage++;
             }
             else{
-                this.dialog = true;
+                if(this.escolhas.length > 0){
+                    this.dialog = true;
+                }
+                else{
+                    this.modal = true
+                }
             }
         },
         abrirBottomSheet() {
@@ -188,6 +217,12 @@ export default {
         },
         escolherCapitulo(event){
             this.$router.push({ path: '/dinamico', query: { livro: this.$route.query.livro, capitulo: this.opcaoSelecionada } });
+        },
+        home(){
+            this.$router.push(`/historia/${this.$route.query.livro}`);
+        },
+        votar(){
+            this.$router.push(`/votacao/${this.$route.query.capitulo}`);
         }
     },
     watch: {
@@ -196,13 +231,18 @@ export default {
             if (newCapitulo !== oldCapitulo) {
                 this.loading = true;
                 try {
-                    const capitulos = await axios.get(`https://inkforge-be.onrender.com/capitulos/${this.$route.query.livro}`);
+                    const capitulos = await axios.get(`http://localhost:3000/capitulos/${this.$route.query.livro}`);
                     this.capitulos = capitulos.data;
                     this.capitulo = capitulos.data.find(c => c.uuid_capitulo === newCapitulo);
                     this.text = this.capitulo.conteudo
 
-                    const escolhas = await axios.get(`https://inkforge-be.onrender.com/votacao/capitulo/${this.$route.query.capitulo}`);
-                    this.escolhas = escolhas.data
+                    try{
+                        const escolhas = await axios.get(`http://localhost:3000/votacao/capitulo/${this.$route.query.capitulo}`);
+                        this.escolhas = escolhas.data
+                    }
+                    catch (error) {
+                     
+                    }
                 } 
                 catch (error) {
                     console.error(error);
@@ -219,7 +259,7 @@ export default {
     },
     async mounted() {
         try {
-            const capitulos = await axios.get(`https://inkforge-be.onrender.com/capitulos/${this.$route.query.livro}`);
+            const capitulos = await axios.get(`http://localhost:3000/capitulos/${this.$route.query.livro}`);
 
             this.capitulos = capitulos.data;
             this.capitulo = capitulos.data.find(c => c.uuid_capitulo === this.$route.query.capitulo);
@@ -227,8 +267,13 @@ export default {
             this.opcaoSelecionada = this.capitulo.uuid_capitulo; 
             this.text = this.capitulo.conteudo
 
-            const escolhas = await axios.get(`https://inkforge-be.onrender.com/votacao/capitulo/${this.$route.query.capitulo}`);
-            this.escolhas = escolhas.data
+            try{
+                const escolhas = await axios.get(`http://localhost:3000/votacao/capitulo/${this.$route.query.capitulo}`);
+                this.escolhas = escolhas.data
+            }
+            catch (error) {
+             
+            }
         } 
         catch (error) {
             console.error(error);
@@ -273,7 +318,7 @@ export default {
 #text-container {
     flex: 1;
     overflow: hidden;
-    /* font-family: 'Noto Serif', serif; */
+    font-family: 'Noto Serif', serif;
     /* font-weight: 400; */
     font-size: 14px;
     text-align: justify;
@@ -385,110 +430,3 @@ h2 {
     text-align: justify;
 }
 </style>
-
-
-<!-- <template>
-    <div id="app">
-        <div id="pagination-controls">
-            <label for="page-select">Página:</label>
-            <select id="page-select" v-model="selectedPage">
-                <option v-for="(page, index) in pages" :key="index" :value="index">
-                    Página {{ index + 1 }}
-                </option>
-            </select>
-        </div>
-
-        <div id="text-container" ref="textContainer">
-            {{ currentText }}
-        </div>
-    </div>
-</template>
-
-<script>
-export default {
-    data() {
-        return {
-            text: `Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.KAIO`, // Seu texto longo aqui
-            pages: [],
-            selectedPage: 0,
-            currentText: "",
-        };
-    },
-    methods: {
-        splitTextIntoPages() {
-            if (!this.$refs.textContainer) return;
-
-            this.pages = [];
-            let words = this.text.split(" ");
-            let tempDiv = document.createElement("div");
-            let container = this.$refs.textContainer;
-
-            Object.assign(tempDiv.style, {
-                position: "absolute",
-                visibility: "hidden",
-                width: `${container.clientWidth}px`,
-                fontSize: window.getComputedStyle(container).fontSize,
-                lineHeight: window.getComputedStyle(container).lineHeight,
-            });
-
-            document.body.appendChild(tempDiv);
-
-            let currentText = "";
-            words.forEach((word) => {
-                let testText = currentText ? currentText + " " + word : word;
-                tempDiv.textContent = testText;
-
-                if (tempDiv.clientHeight > container.clientHeight) {
-                    this.pages.push(currentText);
-                    currentText = word;
-                } else {
-                    currentText = testText;
-                }
-            });
-
-            if (currentText) this.pages.push(currentText);
-
-            document.body.removeChild(tempDiv);
-            this.updateText();
-        },
-        updateText() {
-            this.currentText = this.pages[this.selectedPage] || "";
-        },
-    },
-    watch: {
-        selectedPage: "updateText",
-    },
-    mounted() {
-        this.splitTextIntoPages();
-        window.addEventListener("resize", this.splitTextIntoPages);
-    },
-    beforeUnmount() {
-        window.removeEventListener("resize", this.splitTextIntoPages);
-    },
-};
-</script>
-
-<style scoped>
-#app {
-    border: 1px solid red;
-    height: calc(100vh - 64px);
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-}
-
-#pagination-controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-#text-container {
-    flex: 1;
-    overflow: hidden;
-    border: 1px solid #ccc;
-    font-size: 14px;
-    text-align: justify;
-}
-</style> -->

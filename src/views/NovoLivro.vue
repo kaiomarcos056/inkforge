@@ -56,7 +56,11 @@
                 
                 <div style="height: 60px;"></div>
 
-                <button type="submit" class="floating-btn">Salvar</button>
+                <div style="display: flex; align-items: center; justify-content: center;">
+                    <v-progress-circular indeterminate v-if="salvando"></v-progress-circular>
+                    <button type="submit" class="floating-btn" v-else>Salvar</button>
+                </div>
+                
             </form>
             
         </div>
@@ -68,7 +72,7 @@
 <script>
 import axios from "axios";
 import { useSnackbarStore } from '@/stores/snackbarStore';
-import { useTokenStore } from '@/stores/tokenStore';
+import { authStore } from '@/stores/authStore';
 
 export default {
     name: 'NovoLivro',
@@ -82,7 +86,8 @@ export default {
             generos: [],
             errors: {},
             snackbar: false,
-            snackbarMessage: ''
+            snackbarMessage: '',
+            salvando: false
         };
     },
     computed: {
@@ -95,6 +100,7 @@ export default {
                 backgroundColor: "none",
             };
         },
+        auth(){ return authStore().usuario }
     },
     methods: {
         voltar() {
@@ -136,19 +142,41 @@ export default {
                 cadastrar = false;
             }
 
-            const body = {
-                nome: this.titulo,
-                generos: this.generosSelecionados,
-                capa: this.imagePreview
+            let capa = '';
+            if (this.$refs.fileInput.files.length > 0) {
+                const file = this.$refs.fileInput.files[0];
+
+                const formData = new FormData();
+                formData.append('image', file);
+
+                const imagem = await axios.post(
+                    "https://api.imgbb.com/1/upload?key=0ce04a2dda81d85390146efdc2922070",
+                    formData,
+                    {
+                        headers: { "Content-Type": "multipart/form-data" }
+                    }
+                );
+
+                capa = imagem.data.data.url;
             }
 
+            const body = {
+                nome: this.titulo,
+                descricao: this.sinopse,
+                generos: this.generosSelecionados,
+                capa: capa
+            }
+
+            console.log(JSON.stringify(body))
+            console.log(this.auth.token)
+            
             if(cadastrar){
+                this.salvando = true
                 try {
-                    
-                    const response = await axios.post("https://inkforge-be.onrender.com/livros",body, {
+                    const response = await axios.post("http://localhost:3000/livros",body, {
                         headers: {
                             "Content-Type": "application/json",
-                            "Authorization": `Bearer ${useTokenStore().token}`,
+                            "Authorization": `Bearer ${this.auth.token}`,
                         }
                     });
 
@@ -157,21 +185,28 @@ export default {
                     
                     this.$router.push('/biblioteca');
                 } 
-                catch (error) {
-                    this.snackbarMessage = error.message;
-                    this.snackbar = true;
+                catch (e) {
+                    if(e.response.status === 401){
+                        console.log('Não autorizado')
+                    }
+                    else{
+                        this.snackbarMessage = e.message;
+                        this.snackbar = true;
+                    }
+                }
+                finally{
+                    this.salvando = false
                 }
             }
         }
     },
     async mounted() {
         try {
-            // LIVRO
-            const response = await axios.get(`https://inkforge-be.onrender.com/generos`);
-            this.generos = response.data;
+            const generos = await axios.get(`http://localhost:3000/generos`);
+            this.generos = generos.data;
         } 
-        catch (error) {
-            console.error("#ERRO AO BUSCAR LIVROS = ", error);
+        catch (e) {
+            console.error(e.message);
         }
         finally {
             this.isLoading = false;

@@ -3,7 +3,7 @@
         <div class="info">
             <h3 class="book-title">{{ titulo }}</h3>
             <div class="tags">
-                <span v-for="tag in tags" :key="tag" class="tag">{{ tag }}</span>
+                <span v-for="tag in tags" :key="tag" class="tag">{{ tag.nome }}</span>
             </div>
         </div>
     </div>
@@ -59,11 +59,14 @@ export default {
 
 .tag {
     font-family: 'Satoshi-Regular', sans-serif;
-    font-size: 10px;
     background-color: none;
     color: #505050;
     border: 1px solid #505050;
     border-radius: 20px;
     padding: 2px 6px;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 18px;
+    letter-spacing: -0.4px;
 }
 </style>

@@ -48,7 +48,7 @@
                                     <div class="votos">
                                         <h1>Escolha 2</h1>
                                         <div>
-                                            {{ escolhas[0].opcoes[1].qtd_votos }} voto(s) 
+                                            <span class="mdi mdi-arrow-up-thin"></span> {{ escolhas[0].opcoes[1].qtd_votos }} voto(s) 
                                         </div>
                                     </div>
                                     <div class="box-escolha"> 
@@ -102,8 +102,31 @@
                     </div>
                 </div>
             </div>
+
+            <div style="display: flex; justify-content: space-between; padding: 20px;">
+                <v-btn size="x-small" class="btn-bottom-sheet" flat>Cancelar</v-btn>
+                <v-btn size="x-small" class="btn-bottom-sheet" flat @click="abrirBottomSheet"> 
+                    <p class="mr-1">Sugerir</p>
+                    <img src="../assets/icons/star.svg" alt="Star Icon"> 
+                </v-btn>
+                <v-btn size="x-small" class="btn-bottom-sheet" flat> 
+                    <p class="mr-1">Escolher</p>
+                    <img src="../assets/icons/chevron right.svg"> 
+                </v-btn>
+            </div>
         </div>
-        <!-- <div class="item">2</div> -->
+        
+        <v-bottom-sheet v-model="bottomSheet" max-width="500">
+            <v-card>
+                <div style="padding: 25px 15px; display: flex; flex-direction: column; gap: 10px;">
+                    <h1 style="line-height: 0; margin:0; padding: 0; font-family: 'Satoshi-Regular', sans-serif; font-size: 20px; font-weight: 500;">Adicionar Sugestão</h1>
+                    <p></p>
+                    <h2 style="font-family: 'Satoshi-Regular', sans-serif; font-size: 14px; font-weight: 500;">Minha sugestão</h2>
+                    <textarea rows="4" name="" id="" style="resize: none; border: 2px solid #151515; padding: 10px; border-radius: 16px; font-family: 'Satoshi-Regular', sans-serif; font-weight: 500;" ></textarea>
+                    <v-btn class="btn-footer" rounded="xl" height="48"  flat color="black" @click="votar"> Cadastrar sugestão </v-btn>
+                </div>
+            </v-card>
+        </v-bottom-sheet>
     </div>
 </template>
 
@@ -119,12 +142,17 @@ export default {
         return {
             activeIndex: 0,
             loading: true,
-            escolhas: []
+            escolhas: [],
+            bottomSheet: false,
         };
     },
     methods: {
+        abrirBottomSheet() {
+            this.bottomSheet = true;
+            this.dialog = false;
+        },
         voltar() {
-            this.$router.push(window.history.length > 1 ? "/biblioteca" : "/");
+            this.$router.push(`/home`);
         },
         changeTab(index) {
             this.activeIndex = index;
@@ -179,6 +207,32 @@ export default {
 </script>
 
 <style scoped>
+
+.btn-footer{
+    font-family: 'Satoshi-Bold', sans-serif;
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: none;
+    letter-spacing: 0px
+}
+
+.btn-bottom-sheet{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Satoshi-Regular', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    gap: 10px;
+    text-transform: none;
+}
+
+.btn-bottom-sheet p{
+    font-family: 'Satoshi-Regular', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+}
+
 .container{
     height: calc(100vh - 64px);
     box-sizing: border-box;
@@ -188,7 +242,7 @@ export default {
 }
 
 .tab {
-    flex: 1;
+    /* flex: 1; */
     width: 100%;
     overflow-x: hidden;
     background-color: #f7f7f7;
@@ -233,13 +287,12 @@ export default {
 }
 
 .tab .tab-content {
-    flex: 1;
+    /* flex: 1; */
     width: 100%;
-    height: 100%;
 }
 
 .tab-content .swiper-slide {
-    height: calc(100vh - 150px);
+    /* height: calc(100vh - 150px); */
     width: 100%;
     display: flex;
     background-color: #f7f7f7;

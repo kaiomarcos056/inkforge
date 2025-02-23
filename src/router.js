@@ -13,9 +13,28 @@ import NovoCapitulo from "@/views/NovoCapitulo.vue";
 import NovaPagina from "@/views/NovaPagina.vue";
 import ListaEscolha from "@/views/ListaEscolha.vue";
 import TextoDinamico from "@/views/TextoDinamico.vue";
+import Inicio from "@/views/Inicio.vue";
+import NovoUsuario from "@/views/NovoUsuario.vue";
+import NovoPerfil from "@/views/NovoPerfil.vue";
+import Login from "@/views/Login.vue";
+import Historico from "@/views/Historico.vue";
+import CkEditor from "@/views/CkEditor.vue";
+import Votacao from "@/views/Votacao.vue";
 
 const routes = [
-  { path: "/", name: "Home", component: Home },
+  { path: "/ckeditor", name: "CkEditor", component: CkEditor },
+
+  { path: "/votacao/:id", name: "Votacao", component: Votacao },
+
+  { path: "/", name: "Inicio", component: Inicio },
+
+  { path: "/home", name: "Home", component: Home },
+
+  { path: "/login", name: "Login", component: Login },
+
+  { path: "/novousuario", name: "NovoUsuario", component: NovoUsuario },
+
+  { path: "/novoperfil", name: "NovoPerfil", component: NovoPerfil },
 
   { path: "/homelivro/:id", name: "HomeLivros", component: HomeLivros },
 
@@ -29,7 +48,7 @@ const routes = [
 
   { path: "/edicaolivro", name: "EdicaoLivro", component: EdicaoLivro },
 
-  { path: "/new-book", name: "NovoLivro", component: NovoLivro },
+  { path: "/novolivro", name: "NovoLivro", component: NovoLivro },
 
   { path: "/biblioteca", name: "MinhaBiblioteca", component: MinhaBiblioteca },
 
@@ -39,6 +58,7 @@ const routes = [
 
   { path: "/dinamico", name: "TextoDinamico", component: TextoDinamico },
 
+  { path: "/historico", name: "Historico", component: Historico },
 ];
 
 // Crie o roteador

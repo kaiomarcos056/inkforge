@@ -1,7 +1,13 @@
 <template>
-  <!--<v-container style="background-color: #F7F7F5; height: 100vh;">-->
+
   <div
     style="background-color: #F7F7F5; display: flex; flex-direction: column; gap: 15px; height: 100%; padding: 10px;">
+    <v-snackbar v-model="snackbar.show" :timeout="2000" color="success" style="bottom: 70px;">
+      {{ snackbar.message }}
+      <template v-slot:actions>
+        <v-btn color="white" text @click="snackbar.closeSnackbar">Fechar</v-btn>
+      </template>
+    </v-snackbar>
 
     <div class="top">
       <v-icon @click="voltar" style="font-size: 35px; margin-left: -8px;">mdi-chevron-left</v-icon>
@@ -10,31 +16,9 @@
 
     <h1>Páginas</h1>
 
-    <div id="toolbar">
-      <select class="ql-font"></select>
-      <select class="ql-size"></select>
-      <button class="ql-bold"></button>
-      <button class="ql-italic"></button>
-      <button class="ql-underline"></button>
-      <button class="ql-strike"></button>
-      <button class="ql-blockquote"></button>
-      <button class="ql-code-block"></button>
-      <button class="ql-list" value="ordered"></button>
-      <button class="ql-list" value="bullet"></button>
-      <button class="ql-indent" value="-1"></button>
-      <button class="ql-indent" value="+1"></button>
-      <button class="ql-align" value=""></button>
-      <button class="ql-align" value="center"></button>
-      <button class="ql-align" value="right"></button>
-      <button class="ql-image"></button>
-      <button class="ql-video"></button>
-      <button class="ql-link"></button>
-    </div>
+    <textarea ref="editor" style="flex: 1"></textarea>
 
-
-    <div ref="editorContainer" id="editor-container"></div>
-
-    <button class="floating-btn" @click="onClick">Salvar</button>
+    <button class="floating-btn" @click="salvar">Salvar</button>
 
     <v-bottom-sheet v-model="bottomSheet" max-width="500">
       <v-card>
@@ -54,56 +38,98 @@
         </div>
       </v-card>
     </v-bottom-sheet>
-
-    <!--</v-container>-->
   </div>
 
 </template>
 
 <script>
+import axios from "axios";
+
+import { authStore } from '@/stores/authStore';
+import { useSnackbarStore } from '@/stores/snackbarStore';
+
 export default {
-  name: 'QuillEditor',
+  name: 'NovaPagina',
   data() {
     return {
+      editorInstance: null,
+      editorContent: "<p>Este é o texto inicial do editor!</p>",
+
       bottomSheet: false,
-      quill: null,
+      capitulo: {},
     };
   },
-  mounted() {
-    // Inicializando o Quill após o componente ser montado
-    this.initQuill();
-  },
+
   methods: {
-    initQuill() {
-      if (!this.$refs.editorContainer) {
-      console.error("Erro: editorContainer não encontrado!");
-      return;
-    }
+    voltar() { this.$router.push(`/homelivro/${this.$route.query.livro}`); },
 
-    this.quill = new Quill(this.$refs.editorContainer, {
-      modules: {
-        toolbar: '#toolbar',
-      },
-      theme: 'snow',
-    });
-
-      // Adiciona a borda vermelha quando o usuário clica no editor
-    this.quill.on('selection-change', (range) => {
-      if (range) {
-        this.$refs.editorContainer.classList.add('active-border');
-      } else {
-        this.$refs.editorContainer.classList.remove('active-border');
-      }
-    });
-    },
     finalizar: function (event) {
       this.bottomSheet = true;
     },
+
     goEscolha: function (event) {
-      //this.$router.push(`/novaescolha/${this.$route.params.id}`);
       this.$router.push({ path: '/novaescolha', query: { livro: this.$route.query.livro, capitulo: this.$route.query.capitulo } });
+    },
+
+    async salvar() {
+      try {
+        const body = {
+          conteudo: this.capitulo.conteudo,
+        }
+
+        const capitulo = await axios.put(`http://localhost:3000/capitulos/conteudo/${this.$route.query.capitulo}`, body, {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${this.auth.token}`,
+          }
+        });
+
+        // const snackbarStore = useSnackbarStore();
+        // snackbarStore.triggerSnackbar('Capitulo cadastrado com sucesso.');
+
+        this.voltar()
+      }
+      catch (error) {
+        console.log(error.message)
+      }
     }
-  }
+  },
+
+  computed: {
+    snackbar() { return useSnackbarStore(); },
+    auth(){ return authStore().usuario }
+  },
+
+  async mounted() {
+    try {
+      const capitulos = await axios.get(`http://localhost:3000/capitulos/${this.$route.query.livro}`);
+      this.capitulo = capitulos.data.find(capitulo => capitulo.uuid_capitulo === this.$route.query.capitulo);
+
+      if (window.ClassicEditor) {
+        window.ClassicEditor.create(this.$refs.editor)
+          .then(editor => {
+            this.editorInstance = editor;
+            editor.setData(this.capitulo.conteudo);
+            
+            editor.model.document.on("change:data", () => {
+              this.capitulo.conteudo = editor.getData();
+            });
+          })
+          .catch(error => {
+            console.error("Erro ao carregar o CKEditor:", error);
+          });
+      } 
+      else {
+        console.error("CKEditor não foi carregado corretamente pelo CDN.");
+      }
+    }
+    catch (e) {
+      console.error(e.message);
+    }
+    finally {
+      this.loading = false;
+    }
+  },
 };
 </script>
 

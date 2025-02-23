@@ -22,7 +22,10 @@
                         </div>
                     </div>
                     <div style="display: flex; align-items: center;">
-                            <div class="avatar">M</div>
+                        <v-avatar style="height: 32px; width: 32px; margin-right: 5px;" v-if="livro.foto !== ''">
+                            <v-img :src="livro.foto" ></v-img>
+                        </v-avatar>
+                        <div class="avatar" v-else>M</div>
                             <label class="avatar-titulo">{{livro.autor}}</label>
                     </div>
                 </div>
@@ -39,7 +42,7 @@
 
                 <v-card-title class="cap-titulo"> Cap. {{index+1}}: {{ capitulo.titulo }} </v-card-title>
 
-                <v-card-text class="cap-text"> {{ capitulo.conteudo }} </v-card-text>
+                <v-card-text class="cap-text"> {{ capitulo.descricao }} </v-card-text>
 
                 <v-card-actions class="cap-actions">
                     <v-btn class="cap-btn">
@@ -56,6 +59,7 @@
 <script>
 import axios from "axios";
 import PreviaAcoes from "@/components/PreviaAcoes.vue";
+import { authStore } from '@/stores/authStore';
 
 export default {
     name: 'Historia',
@@ -69,23 +73,39 @@ export default {
             isLoading: true,
         };
     },
+    computed: {
+        auth(){ return authStore().usuario }
+    },
     methods: {
         voltar() {
-            this.$router.push("/");
+            this.$router.push("/home");
         },
-        navegarParaCapitulo(id) {
-            // this.$router.push({ path: '/capitulo', query: { livro: this.$route.params.id, capitulo: id } });
-            this.$router.push({ path: '/dinamico', query: { livro: this.$route.params.id, capitulo: id } });
+        async navegarParaCapitulo(id) {
+            try{
+                let body = {
+                    uuid_usuario: this.auth.usuario.uuid_usuario,
+                    uuid_capitulo: id
+                }
+                console.log(body)
+                const response = await axios.post("http://localhost:3000/historico",body, {
+                    headers: { "Content-Type": "application/json" }
+                });
+                this.$router.push({ path: '/dinamico', query: { livro: this.$route.params.id, capitulo: id } });
+            }
+            catch(e){
+                console.error(e)
+            }
+            
         },
     },
     async mounted() {
         try {
             // LIVRO
-            const response = await axios.get(`https://inkforge-be.onrender.com/livros/${this.$route.params.id}`);
+            const response = await axios.get(`http://localhost:3000/livros/${this.$route.params.id}`);
             this.livro = response.data;
 
             // CAPITULO
-            const capitulo = await axios.get(`https://inkforge-be.onrender.com/capitulos/${this.$route.params.id}`);
+            const capitulo = await axios.get(`http://localhost:3000/capitulos/${this.$route.params.id}`);
             this.capitulos = capitulo.data;
         } 
         catch (error) {

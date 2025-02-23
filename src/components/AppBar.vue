@@ -3,14 +3,17 @@
     <v-app-bar app flat>
         
         <v-app-bar-nav-icon @click="toggleDrawer"> 
-            <v-avatar color="grey-darken-1">M</v-avatar> 
+            <v-avatar style="height: 44px; width: 44px; margin-left: 10px;" v-if="auth.usuario.foto !== ''">
+                <v-img :src="auth.usuario.foto" ></v-img>
+            </v-avatar>
+            <v-avatar color="grey-darken-1" v-else>M</v-avatar>
         </v-app-bar-nav-icon>
         
         <v-app-bar-title class="text-center" @click="home"> 
             <img src="@/assets/logo.svg"> 
         </v-app-bar-title>
 
-        <v-app-bar-nav-icon @click="navigate('new-book')"> 
+        <v-app-bar-nav-icon @click="navigate('novolivro')"> 
             <img src="@/assets/icons/plus.svg"> 
         </v-app-bar-nav-icon>
 
@@ -21,25 +24,40 @@
         <v-list>
 
             <v-list-item class="mt-3">
-                <v-avatar color="grey-darken-1">M</v-avatar>
-                <v-list-item-title class="h2">Marcos Kaio</v-list-item-title>
-                <v-list-item-title class="h3">@Jujubaferoz</v-list-item-title>
+                <v-avatar style="height: 44px; width: 44px; margin-right: 10px;" v-if="auth.usuario.foto !== ''">
+                    <v-img :src="auth.usuario.foto" ></v-img>
+                </v-avatar>
+                <v-avatar color="grey-darken-1" v-else>M</v-avatar>
+                <v-list-item-title class="h2"> {{ auth.usuario.nome }} </v-list-item-title>
+                <v-list-item-title class="h3">{{ auth.usuario.email }}</v-list-item-title>
             </v-list-item>
 
-            <v-list-item v-for="item in menuItems" :key="item.title" @click="navigate(item.route)">
-
+            <v-list-item @click="navigate('biblioteca')">
                 <div style="display: flex; gap: 8px;">
-                    <img :src="icons[item.icon]" alt="icone">
-                    <h4>{{ item.title }}</h4>
+                    <img :src="icons.bookIcon" alt="icone">
+                    <h4>Minha Biblioteca</h4>
                 </div>
+            </v-list-item>
 
+            <v-list-item @click="navigate('historico')">
+                <div style="display: flex; gap: 8px;">
+                    <img :src="icons.rewindIcon" alt="icone">
+                    <h4>Histórico de Leitura</h4>
+                </div>
+            </v-list-item>
+
+            <v-list-item>
+                <div style="display: flex; gap: 8px;">
+                    <img :src="icons.textArrowIcon" alt="icone">
+                    <h4>Continue de Onde Parou</h4>
+                </div>
             </v-list-item>
 
             <v-list-item>
                 <v-card variant="outlined" class="px-2 rounded-xl">
 
-                    <div v-for="i in historico" :key="i.id" @click="navigate(i.route)">
-                        <v-list-item :title="i.title" :subtitle="i.subtitle"></v-list-item>
+                    <div v-for="(historico, index) in historicos" :key="index" @click="navigate(historico.rota)">
+                        <v-list-item :title="historico.livro" :subtitle="historico.capitulo"></v-list-item>
                         <v-divider></v-divider>
                     </div>
                     
@@ -51,9 +69,13 @@
 </template>
 
 <script>
+import axios from "axios";
+
 import bookIcon from "@/assets/icons/book.svg";
 import rewindIcon from "@/assets/icons/rewind.svg";
 import textArrowIcon from "@/assets/icons/textarrow.svg";
+
+import { authStore } from '@/stores/authStore';
 
 export default {
     name: "AppBar",
@@ -62,7 +84,7 @@ export default {
             drawer: false, // ESTADO INICIAL DO DRAWER
             menuItems: [
                 { title: "Minha Biblioteca", icon: "bookIcon", route: "biblioteca" },
-                { title: "Histórico de Leitura", icon: "rewindIcon", route: "edicaolivro" },
+                { title: "Histórico de Leitura", icon: "rewindIcon", route: "historico" },
                 { title: "Continue de Onde Parou", icon: "textArrowIcon", route: "settings" },
             ],
             icons: {
@@ -70,12 +92,7 @@ export default {
                 rewindIcon,
                 textArrowIcon
             },
-            historico: [
-                { id: 1, title: "Um viciado nas estrelas", subtitle: "Cap 2: Tomada de marte", route: "/" },
-                { id: 2, title: "No cair das árvores", subtitle: "Cap 1: Decisão Forte", route: "/" },
-                { id: 3, title: "Fagulhas Impetuosas", subtitle: "Cap 1: Carne e Osso", route: "/" },
-                { id: 4, title: "Império Hemácio", subtitle: "Cap 3: transfução", route: "/" },
-            ]
+            historicos: []
         };
     },
     methods: {
@@ -83,12 +100,35 @@ export default {
             this.drawer = !this.drawer; // ALTERANDO O ESTADO DO DRAWER
         },
         navigate(route) {
-            this.$router.push(`/${route}`); // NAVEGANDO PARA ROTA ESPECIFICA
+            this.$router.push(`${route}`); // NAVEGANDO PARA ROTA ESPECIFICA
             this.drawer = false; // FECHANDO O DRAWER DEPOIS DE CLICAR NO ITEM DO MENU
         },
         home(){
-            this.$router.push("/"); // NAVEGANDO PARA ROTA ESPECIFICA
+            this.$router.push("/home"); // NAVEGANDO PARA ROTA ESPECIFICA
             this.drawer = false; // FECHANDO O DRAWER DEPOIS DE CLICAR NO ITEM DO MENU
+        }
+    },
+    computed: {
+        auth(){ return authStore().usuario }
+    },
+    async mounted() {
+        try {
+            const historicos = await axios.get(`http://localhost:3000/historico/leituras/${this.auth.usuario.uuid_usuario}`);
+            
+            for(let i = 0; i < historicos.data.length; i++){
+                let item = {
+                    livro: historicos.data[i].nome, 
+                    capitulo: historicos.data[i].titulo, 
+                    rota: `/dinamico?livro=${historicos.data[i].uuid_livro}&capitulo=${historicos.data[i].uuid_capitulo}`
+                }
+                this.historicos.push(item)
+            }
+        } 
+        catch (e) {
+            console.error(e.message);
+        }
+        finally {
+            
         }
     },
 };

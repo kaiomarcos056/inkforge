@@ -12,8 +12,8 @@
             <div style="flex: 1;">
                 <div v-for="(capitulo, index) in data" :key="capitulo.id" class="capitulo">
                     <h1> Cap. {{index+1}}: {{capitulo.titulo}} </h1>
-                    <p> {{capitulo.conteudo}} </p>
-                    <div style="align-self: end; display: flex; align-items: center;" @click="escolha(capitulo.uuid_capitulo)">
+                    <p> {{capitulo.descricao}} </p>
+                    <div style="align-self: end; display: flex; align-items: center;" @click="escolha(capitulo.uuid_capitulo)" v-show="!capitulo.finalizado">
                         <label style="line-height: 1px;">Editar</label>
                         <v-icon class="arrow-icon elevation-0" style="font-size: 26px;">mdi-chevron-right</v-icon> 
                     </div>

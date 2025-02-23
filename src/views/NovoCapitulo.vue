@@ -7,7 +7,7 @@
             <div class="grupo-formulario"> 
                 <h1>Novo Capitulo</h1>
                 <p>Como o capitulo vai se chamar</p>
-                <input type="text" placeholder="Digite o noe do capitulo" v-model="capitulo" :class="{ 'input-error': errors.capitulo }">
+                <input type="text" placeholder="Digite o nome do capitulo" v-model="capitulo" :class="{ 'input-error': errors.capitulo }">
                 <span v-if="errors.capitulo" class="error">{{ errors.capitulo }}</span>
             </div>
             
@@ -27,7 +27,9 @@
   
 <script>
 import axios from "axios";
-import { useTokenStore } from '@/stores/tokenStore';
+
+import { authStore } from '@/stores/authStore';
+import { useSnackbarStore } from '@/stores/snackbarStore';
 
 export default {
     name: 'NovoLivro',
@@ -39,7 +41,7 @@ export default {
         };
     },
     computed: {
-
+        auth(){ return authStore().usuario }
     },
     props: {
         uuidLivro: {
@@ -49,12 +51,7 @@ export default {
     },
     methods: {
         voltar() {
-            if (window.history.length > 1) {
-                this.$router.back();
-            } 
-            else {
-                this.$router.push("/");
-            }
+            this.$router.push(`/homelivro/${this.$route.params.id}`);
         },
         async onClick(id) {
             let cadastrar = true;
@@ -72,18 +69,22 @@ export default {
                 try {
                     const body = {
                         titulo: this.capitulo,
-                        conteudo: this.sinopse,
+                        descricao: this.sinopse,
+                        conteudo: '',
                         uuid_livro: this.$route.params.id
                     }
 
-                    const response = await axios.post("https://inkforge-be.onrender.com/capitulos", body, {
+                    const capitulo = await axios.post("http://localhost:3000/capitulos", body, {
                         headers: {
                             "Content-Type": "application/json",
-                            "Authorization": `Bearer ${useTokenStore().token}`,
+                            "Authorization": `Bearer ${this.auth.token}`,
                         }
                     });
+                    
+                    const snackbarStore = useSnackbarStore();
+                    snackbarStore.triggerSnackbar('Capitulo cadastrado com sucesso.');
 
-                    this.$router.push(`/novapagina/${this.$route.params.id}`);
+                    this.$router.push({ path: '/novapagina', query: { livro: this.$route.params.id, capitulo: capitulo.data.uuid_capitulo } });
                 } 
                 catch (error) {
                     console.log(error.message)

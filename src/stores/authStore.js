@@ -1,15 +1,32 @@
+// import { defineStore } from 'pinia';
+
+// export const authStore = defineStore('auth', {
+//   state: () => ({
+//     usuario: {},
+//   }),
+//   actions: {
+//     setUsuario(usuario) {
+//       this.usuario = usuario;
+//     },
+//     limparUsuario() {
+//       this.usuario = {};
+//     },
+//   },
+// });
 import { defineStore } from 'pinia';
 
-export const useAuthStore = defineStore('auth', {
+export const authStore = defineStore('auth', {
   state: () => ({
-    userUuid: null, // Armazena o UUID do usuário
+    usuario: JSON.parse(localStorage.getItem('usuario')) || {},
   }),
   actions: {
-    setUserUuid(uuid) {
-      this.userUuid = uuid; // Define o UUID do usuário
+    setUsuario(usuario) {
+      this.usuario = usuario;
+      localStorage.setItem('usuario', JSON.stringify(usuario));
     },
-    clearUser() {
-      this.userUuid = null; // Limpa o UUID quando o usuário faz logout
+    limparUsuario() {
+      this.usuario = {};
+      localStorage.removeItem('usuario');
     },
   },
 });

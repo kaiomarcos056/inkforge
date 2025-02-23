@@ -37,7 +37,7 @@
 <script>
 import axios from "axios";
 import { useSnackbarStore } from '@/stores/snackbarStore';
-import { useTokenStore } from '@/stores/tokenStore';
+import { authStore } from '@/stores/authStore';
 
 export default {
     name: 'NovoLivro',
@@ -52,16 +52,11 @@ export default {
         };
     },
     computed: {
-
+        auth(){ return authStore().usuario }
     },
     methods: {
         voltar() {
-            if (window.history.length > 1) {
-                this.$router.back();
-            } 
-            else {
-                this.$router.push("/");
-            }
+            this.$router.push(`/homelivro/${this.$route.query.livro}`);
         },
         async onClick() {
             let cadastrar = true;
@@ -92,10 +87,17 @@ export default {
                         ]
                     }
 
-                    const response = await axios.post("https://inkforge-be.onrender.com/votacao", body, {
+                    const response = await axios.post("http://localhost:3000/votacao", body, {
                         headers: {
                             "Content-Type": "application/json",
-                            "Authorization": `Bearer ${useTokenStore().token}`,
+                            "Authorization": `Bearer ${this.auth.token}`,
+                        }
+                    });
+
+                    const update = await axios.put(`http://localhost:3000/capitulos/finalizar/${this.$route.query.capitulo}`, {}, {
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${this.auth.token}`,
                         }
                     });
 

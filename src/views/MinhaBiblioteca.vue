@@ -15,19 +15,24 @@
         <!-- INFORMAÇÕES DO USUARIO LOGADO -->
         <div style="padding: 15px;">
             <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                <div class="avatar">M</div>
+
+                <v-avatar style="height: 44px; width: 44px; margin-right: 10px;" v-if="auth.usuario.foto !== ''">
+                    <v-img :src="auth.usuario.foto" ></v-img>
+                </v-avatar>
+                <div class="avatar" v-else>M</div>
+
                 <div>
-                    <h3>{{usuario.nome}}</h3>
+                    <h3><b>{{ auth.usuario.nome }}</b></h3>
                     <div class="grupo-tags">
-                        <span>Escritor nato</span>
-                        <span>Aventura</span>
-                        <span>Mistério</span>
+                        <span v-for="interesse in auth.usuario.interesses" :key="interesse.uuid_interesse">
+                            {{ interesse.nome }}
+                        </span>
                     </div>
                 </div>
             </div>
             <div>
                 <p>
-                    Apaixonado por histórias que transportam para outros mundos e exploram as complexidades do coração humano. Cada palavra é uma peça de um quebra-cabeça narrativo onde você é parte essencial da jornada. Vamos escrever juntos a próxima grande aventura?"
+                    {{ auth.usuario.descricao }}
                 </p>
             </div>
         </div>
@@ -68,7 +73,7 @@
 import axios from "axios";
 
 import { useSnackbarStore } from '@/stores/snackbarStore';
-import { useAuthStore } from '@/stores/authStore';
+import { authStore } from '@/stores/authStore';
 
 import Swiper from "swiper";
 import "swiper/css";
@@ -122,22 +127,17 @@ export default {
         },
     },
     computed: {
-        snackbar() { 
-            console.log('TOAST MENSAGEM = '+useSnackbarStore().message)
-            return useSnackbarStore(); 
-        },
-        userUuid() {  return useAuthStore().userUuid; }
+        snackbar() { return useSnackbarStore(); },
+        auth(){ return authStore().usuario }
     },
     async mounted() { 
+        console.log(this.auth)
         try {
-            const livros = await axios.get(`https://inkforge-be.onrender.com/usuarios/livros/${this.userUuid}`);
-            const usuario = await axios.get(`https://inkforge-be.onrender.com/usuarios/${this.userUuid}`);
-            
+            const livros = await axios.get(`http://localhost:3000/usuarios/livros/${this.auth.usuario.uuid_usuario}`);
             this.meusLivros = livros.data;
-            this.usuario = usuario.data;
         } 
-        catch (error) {
-            console.error("#ERRO AO BUSCAR LIVROS = ", error);
+        catch (e) {
+            console.error(e.message);
         }
         finally {
             this.loading = false;
@@ -193,10 +193,10 @@ p{
 
 .grupo-tags{
     display: flex;
-    gap: 8px;
+    flex-wrap: wrap;
+    gap: 5px;
 }
 
-/* Wrapper for tabs and slider */
 .tabs-slider-wrapper {
     display: flex;
     flex-direction: column;
@@ -204,13 +204,11 @@ p{
     min-height: 0;
 }
 
-/* Tabs container */
 .tabs {
     display: flex;
     justify-content: space-between;
 }
 
-/* Individual tab styles */
 .tab {
     flex: 1;
     text-align: center;
@@ -222,7 +220,6 @@ p{
     transition: color 0.3s ease-in-out;
 }
 
-/* Active tab styles with pseudo-element */
 .tab.active {
     color: #000;
     font-weight: bold;
@@ -242,7 +239,6 @@ p{
     transition: all 0.3s ease-in-out;
 }
 
-/* Swiper styles */
 .slider {
     background-color: #f7f7f7;
     flex: 1;
@@ -261,7 +257,6 @@ p{
 
 .swiper-slide component {
     flex: 1;
-    /* height: 100%; */
 }
 
 .swiper.swiper-initialized.swiper-horizontal.swiper-ios.swiper-backface-hidden{
