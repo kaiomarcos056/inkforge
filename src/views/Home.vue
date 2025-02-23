@@ -72,11 +72,12 @@
             },
 
             initializeSwiper() {
-                this.tabNavSwiper = new Swiper('.tab-nav', {
-                    slidesPerView: 'auto'
-                });
+                //this.tabNavSwiper = new Swiper('.tab-nav', {
+                    //slidesPerView: 'auto'
+                //});
 
                 this.tabContentSwiper = new Swiper('.tab-content', {
+                    simulateTouch: false,
                     on: {
                         slideChange: () => {
                             this.activeIndex = this.tabContentSwiper.activeIndex;
