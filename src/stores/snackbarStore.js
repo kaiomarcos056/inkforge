@@ -4,6 +4,7 @@ export const useSnackbarStore = defineStore("snackbar", {
   state: () => ({
     show: false,
     message: "",
+    status: "success",
   }),
   actions: {
     triggerSnackbar(message) {
@@ -13,5 +14,10 @@ export const useSnackbarStore = defineStore("snackbar", {
     closeSnackbar() {
       this.show = false;
     },
+    abrirSnackbar(message, status){
+      this.message = message;
+      this.status = status;
+      this.show = true;
+    }
   },
 });

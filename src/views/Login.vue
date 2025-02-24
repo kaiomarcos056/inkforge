@@ -23,10 +23,11 @@
         </div>
 
         <div style="flex: 1; display: flex; justify-content: end; flex-direction: column; padding: 10px; gap: 10px;">
-            <button @click="onClick()" class="button-float">Logar</button>
+            <v-progress-linear indeterminate style="margin: 10px 0px;" v-if="logando"></v-progress-linear>
+            <button @click="onClick()" class="button-float" v-else>Logar</button>
         </div>
 
-        <v-snackbar v-model="snackbar.show" :timeout="5000" color="success" style="bottom: 12%;">
+        <v-snackbar v-model="snackbar.show" :timeout="5000" :color="snackbar.status" style="bottom: 12%;">
             {{ snackbar.message }}
             <template v-slot:actions>
                 <v-btn color="white" text @click="snackbar.closeSnackbar">Fechar</v-btn>
@@ -49,6 +50,7 @@ export default {
             email: '',
             senha: '',
             errors: {},
+            logando: false
         };
     },
     computed: {
@@ -75,6 +77,8 @@ export default {
             }
 
             if (cadastrar) {
+                this.logando = true;
+
                 try {
                     let body = {
 	                email: this.email,
@@ -93,7 +97,10 @@ export default {
                     this.$router.push('/home');
                 }
                 catch (error) {
-                    console.error(error.message);
+                    this.snackbar.abrirSnackbar("Usuário não encontrado.", "error")
+                }
+                finally{
+                    this.logando = false
                 }
             }
         },

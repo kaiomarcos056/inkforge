@@ -54,12 +54,13 @@
                     </div>
                 </div>
                 
-                <div style="height: 60px;"></div>
-
-                <div style="display: flex; align-items: center; justify-content: center;">
-                    <v-progress-circular indeterminate v-if="salvando"></v-progress-circular>
+                <!-- <div style="height: 60px;"></div> -->
+                <br>
+                <div>
+                    <v-progress-linear indeterminate style="margin: 10px 0px;" v-if="salvando"></v-progress-linear>
                     <button type="submit" class="floating-btn" v-else>Salvar</button>
                 </div>
+                <br>
                 
             </form>
             
@@ -322,14 +323,11 @@ input[type="checkbox"]:checked + label {
 }
 
 .floating-btn {
-  position: fixed; /* Fixa o botão na tela */
-  bottom: 20px; /* Distância do fundo da janela */
-  right: 10px; /* Distância da lateral direita */
   background-color: #151515; /* Cor do botão */
   color: white;
   border: none;
   border-radius: 50px; /* Botão redondo */
-  width: 95%;
+  width: 100%;
   height: 48px;
   padding: 8px 16px;
   font-size: 12px;

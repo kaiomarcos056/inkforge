@@ -1,7 +1,8 @@
 <template>
-
-  <div
-    style="background-color: #F7F7F5; display: flex; flex-direction: column; gap: 15px; height: 100%; padding: 10px;">
+  <div v-if="loading" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
+        <v-progress-circular indeterminate ></v-progress-circular>
+  </div>
+  <div v-else style="background-color: #F7F7F5; display: flex; flex-direction: column; gap: 15px; height: 100%; padding: 10px;">
     <v-snackbar v-model="snackbar.show" :timeout="2000" color="success" style="bottom: 70px;">
       {{ snackbar.message }}
       <template v-slot:actions>
@@ -16,26 +17,38 @@
 
     <h1>Páginas</h1>
 
-    <textarea ref="editor" style="flex: 1"></textarea>
+    <div style="height: 100%;">
+      <textarea ref="editor" style="flex: 1"></textarea>
+    </div>
+    
 
-    <button class="floating-btn" @click="salvar">Salvar</button>
+    <button class="floating-btn" @click="salvar" style="align-self: flex-end;" v-if="!salvando">Salvar</button>
+    <v-progress-linear indeterminate v-else></v-progress-linear>
 
     <v-bottom-sheet v-model="bottomSheet" max-width="500">
       <v-card>
+
         <div style="padding: 25px 15px; display: flex; flex-direction: column; gap: 10px;">
-          <h2>Finalizar Capítulo?</h2>
-          <p class="bottom-p">
-            Ao finalizar este capítulo, você será direcionado para a tela de sugestões,
-            onde poderá adicionar opções de interação para os leitores. Depois de finalizar,
-            não será mais possível editar o capítulo. Se ainda deseja continuar escrevendo,
-            escolha <b>"Continuar escrevendo".</b> Caso tenha terminado, toque em <b>"Finalizar".</b>
-          </p>
-          <div style="display: flex; justify-content: space-evenly;">
-            <button class="bottom-button">Continuar escrevendo</button>
-            <button @click="goEscolha" class="bottom-button"
-              style="color: #fff; background-color: black;">Finalizar</button>
+          <div v-if="finalizando" style="display: flex; align-items: center; justify-content: center; margin: 30px;">
+            <v-progress-circular indeterminate ></v-progress-circular>
           </div>
+          <div v-else>
+            <h2>Finalizar Capítulo?</h2>
+            <p class="bottom-p" style="margin-bottom: 20px;">
+              Ao finalizar este capítulo, você será direcionado para a tela de sugestões,
+              onde poderá adicionar opções de interação para os leitores. Depois de finalizar,
+              não será mais possível editar o capítulo. Se ainda deseja continuar escrevendo,
+              escolha <b>"Continuar escrevendo".</b> Caso tenha terminado, toque em <b>"Finalizar".</b>
+            </p>
+            <div style="display: flex; justify-content: space-evenly;">
+              <button class="bottom-button">Continuar escrevendo</button>
+              <button @click="goEscolha" class="bottom-button"
+                style="color: #fff; background-color: black;">Finalizar</button>
+            </div>
+          </div>
+          
         </div>
+
       </v-card>
     </v-bottom-sheet>
   </div>
@@ -54,17 +67,39 @@ export default {
     return {
       editorInstance: null,
       editorContent: "<p>Este é o texto inicial do editor!</p>",
-
+      loading: true,
       bottomSheet: false,
       capitulo: {},
+      salvando: false,
+      finalizando: true
     };
   },
 
   methods: {
     voltar() { this.$router.push(`/homelivro/${this.$route.query.livro}`); },
 
-    finalizar: function (event) {
-      this.bottomSheet = true;
+    async finalizar() {
+      try{
+        this.bottomSheet = true;
+        this.finalizando = true;
+        const body = {
+          conteudo: this.capitulo.conteudo,
+        }
+
+        const capitulo = await axios.put(`https://inkforge-api.onrender.com/capitulos/conteudo/${this.$route.query.capitulo}`, body, {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${this.auth.token}`,
+          }
+        });
+        console.log('salvo')
+        this.finalizando = false;
+        
+      }
+      catch(e){
+
+      }
+      
     },
 
     goEscolha: function (event) {
@@ -73,6 +108,8 @@ export default {
 
     async salvar() {
       try {
+        this.salvando = true;
+        
         const body = {
           conteudo: this.capitulo.conteudo,
         }
@@ -84,15 +121,40 @@ export default {
           }
         });
 
-        // const snackbarStore = useSnackbarStore();
-        // snackbarStore.triggerSnackbar('Capitulo cadastrado com sucesso.');
-
         this.voltar()
       }
       catch (error) {
         console.log(error.message)
       }
-    }
+    },
+
+    inicializarEditor() {
+      if (!this.$refs.editor) {
+        console.error("Elemento do editor não encontrado.");
+        return;
+      }
+
+      if (window.ClassicEditor) {
+        window.ClassicEditor.create(this.$refs.editor)
+          .then(editor => {
+            this.editorInstance = editor;
+
+            // Define o conteúdo do CKEditor apenas se existir
+            if (this.capitulo?.conteudo) {
+              editor.setData(this.capitulo.conteudo);
+            }
+
+            editor.model.document.on("change:data", () => {
+              this.capitulo.conteudo = editor.getData();
+            });
+          })
+          .catch(error => {
+            console.error("Erro ao carregar o CKEditor:", error);
+          });
+      } else {
+        console.error("CKEditor não foi carregado corretamente pelo CDN.");
+      }
+    },
   },
 
   computed: {
@@ -105,29 +167,17 @@ export default {
       const capitulos = await axios.get(`https://inkforge-api.onrender.com/capitulos/${this.$route.query.livro}`);
       this.capitulo = capitulos.data.find(capitulo => capitulo.uuid_capitulo === this.$route.query.capitulo);
 
-      if (window.ClassicEditor) {
-        window.ClassicEditor.create(this.$refs.editor)
-          .then(editor => {
-            this.editorInstance = editor;
-            editor.setData(this.capitulo.conteudo);
-            
-            editor.model.document.on("change:data", () => {
-              this.capitulo.conteudo = editor.getData();
-            });
-          })
-          .catch(error => {
-            console.error("Erro ao carregar o CKEditor:", error);
-          });
-      } 
-      else {
-        console.error("CKEditor não foi carregado corretamente pelo CDN.");
-      }
+      console.log(this.capitulo.conteudo)
     }
     catch (e) {
       console.error(e.message);
     }
     finally {
       this.loading = false;
+      this.$nextTick(() => {
+        this.inicializarEditor();
+            });
+      
     }
   },
 };

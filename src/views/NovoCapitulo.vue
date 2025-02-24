@@ -1,27 +1,28 @@
 <template>
-    <v-container style="background-color: #F7F7F5; height: 90vh;">
+    <v-container style="background-color: #F7F7F5; height: calc(100vh - 64px); display: flex; flex-direction: column;">
 
-        <div style="display: flex; flex-flow: column;">
-            <v-icon @click="voltar" style="font-size: 35px; margin-left: -8px;">mdi-chevron-left</v-icon>
+        <v-icon @click="voltar" style="font-size: 35px; margin-left: -8px;">mdi-chevron-left</v-icon>
             
+        <div style="flex: 1;">
             <div class="grupo-formulario"> 
                 <h1>Novo Capitulo</h1>
                 <p>Como o capitulo vai se chamar</p>
                 <input type="text" placeholder="Digite o nome do capitulo" v-model="capitulo" :class="{ 'input-error': errors.capitulo }">
                 <span v-if="errors.capitulo" class="error">{{ errors.capitulo }}</span>
             </div>
-            
             <div class="grupo-formulario">
                 <h1>Do que esse capitulo se trata?</h1>
                 <p>Escreva um pequeno resumo do capitulo</p>
                 <textarea placeholder="O que acontece na história?" rows="6" v-model="sinopse" :class="{ 'input-error': errors.sinopse }"></textarea>
                 <span v-if="errors.sinopse" class="error">{{ errors.sinopse }}</span>
             </div>
-
-            <button class="floating-btn" @click="onClick(uuidLivro)">Próximo</button>
-
         </div>
 
+        <div style="width: 100%;">
+            <button class="floating-btn" @click="onClick(uuidLivro)" v-if="!proximo">Próximo</button>
+            <v-progress-linear indeterminate style="margin: 10px 0px;" v-else></v-progress-linear>
+        </div>
+        
     </v-container>
 </template>
   
@@ -38,6 +39,7 @@ export default {
             capitulo: '',
             sinopse: '',
             errors: {},
+            proximo: false,
         };
     },
     computed: {
@@ -67,6 +69,8 @@ export default {
             
             if(cadastrar){
                 try {
+                    this.proximo = true;
+
                     const body = {
                         titulo: this.capitulo,
                         descricao: this.sinopse,
@@ -88,6 +92,9 @@ export default {
                 } 
                 catch (error) {
                     console.log(error.message)
+                }
+                finally{
+                    this.proximo = false;
                 }
             }
         },
@@ -159,15 +166,12 @@ textarea:not(:placeholder-shown) {
 }
 
 .floating-btn {
-  position: fixed; /* Fixa o botão na tela */
-  bottom: 20px; /* Distância do fundo da janela */
-  right: 10px; /* Distância da lateral direita */
-  background-color: #151515; /* Cor do botão */
+  background-color: #151515;
   color: white;
   border: none;
-  border-radius: 50px; /* Botão redondo */
-  width: 95%;
+  border-radius: 50px;
   height: 48px;
+  width: 100%;
   padding: 8px 16px;
   font-size: 12px;
   cursor: pointer;

@@ -24,11 +24,13 @@
                 <textarea placeholder="O que acontece na história?" rows="6" :class="{ 'input-error': errors.escolhaDois }" v-model="escolhaDois"></textarea>
                 <span v-if="errors.escolhaDois" class="error">{{ errors.escolhaDois }}</span>
             </div>
+
+            <div>
+                <v-progress-linear indeterminate style="margin: 10px 0px;" v-if="finalizando"></v-progress-linear>
+                <button class="floating-btn" @click="onClick" v-else>Finalizar</button>
+            </div>
             
-            <div style="height: 60px;"></div>
-
-            <button class="floating-btn" @click="onClick">Finalizar</button>
-
+            <br>
         </div>
 
     </v-container>
@@ -48,7 +50,8 @@ export default {
             escolhaDois: '',
             errors: {},
             snackbar: false,
-            snackbarMessage: ''
+            snackbarMessage: '',
+            finalizando: false
         };
     },
     computed: {
@@ -76,7 +79,9 @@ export default {
 
             if(cadastrar){
                 try {
-                    const body = {
+                    this.finalizando = true;
+
+                    let body = {
                         uuid_capitulo: this.$route.query.capitulo,
                         titulo: this.titulo,
                         data_inicio: "2025-02-16T00:00:00Z",
@@ -88,6 +93,34 @@ export default {
                     }
 
                     const response = await axios.post("https://inkforge-api.onrender.com/votacao", body, {
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${this.auth.token}`,
+                        }
+                    });
+
+                    let idVotacao = response.data.uuid_votacao;
+                    
+                    body = {
+                        uuid_votacao: idVotacao,
+                        uuid_usuario: this.auth.usuario.uuid_usuario,
+                        descricao: this.escolhaUm
+                    }
+
+                    await axios.post("https://inkforge-api.onrender.com/item-votacao", body, {
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${this.auth.token}`,
+                        }
+                    });
+
+                    body = {
+                        uuid_votacao: idVotacao,
+                        uuid_usuario: this.auth.usuario.uuid_usuario,
+                        descricao: this.escolhaDois
+                    }
+
+                    await axios.post("https://inkforge-api.onrender.com/item-votacao", body, {
                         headers: {
                             "Content-Type": "application/json",
                             "Authorization": `Bearer ${this.auth.token}`,
@@ -108,6 +141,9 @@ export default {
                 } 
                 catch (error) {
                     console.log(error.message)
+                }
+                finally{
+                    this.finalizando = false;
                 }
             }
 
@@ -181,14 +217,11 @@ textarea:not(:placeholder-shown) {
 }
 
 .floating-btn {
-  position: fixed; /* Fixa o botão na tela */
-  bottom: 20px; /* Distância do fundo da janela */
-  right: 10px; /* Distância da lateral direita */
-  background-color: #151515; /* Cor do botão */
+  background-color: #151515;
   color: white;
   border: none;
-  border-radius: 50px; /* Botão redondo */
-  width: 95%;
+  border-radius: 50px;
+  width: 100%;
   height: 48px;
   padding: 8px 16px;
   font-size: 12px;

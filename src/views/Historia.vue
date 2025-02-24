@@ -6,32 +6,32 @@
 
         <v-icon @click="voltar" style="font-size: 38px;">mdi-chevron-left</v-icon>
 
-        <div>
-            <div style="display: flex; justify-content: center;">
-                <v-card
-                    :image="livro.capa"
-                    width="90"
-                    height="130"
-                    class="mr-4"
-                ></v-card>
-                <div style="display: flex; flex-direction: column; justify-content: space-between;">
-                    <div>
-                        <h3 class="mb-1">{{livro.nome}}</h3>
-                        <div style="display: flex; gap: 5px;">
-                            <p v-for="(genero, index) in livro.generos" :key="index" class="tag">{{ genero.nome }}</p>
-                        </div>
+        <div style="">
+            <div style="display: flex;">
+                <div style="flex: 1; display: flex; justify-content: end; margin-left: 40px;">
+                    <v-card :image="livro.capa" width="90" height="130" class="mr-4" style=""></v-card>
+                </div>
+
+                <div style="flex: 1; margin-right: 40px;">
+                    <h3 class="mb-2">{{livro.nome}}</h3>
+
+                    <div style="display: flex; gap: 5px; margin-bottom: 10px;">
+                        <p v-for="(genero, index) in livro.generos" :key="index" class="tag">{{ genero.nome }}</p>
                     </div>
+                    
                     <div style="display: flex; align-items: center;">
                         <v-avatar style="height: 32px; width: 32px; margin-right: 5px;" v-if="livro.foto !== ''">
                             <v-img :src="livro.foto" ></v-img>
                         </v-avatar>
-                        <div class="avatar" v-else>M</div>
-                            <label class="avatar-titulo">{{livro.autor}}</label>
+                        <div class="avatar" v-else>{{livro.autor.charAt(0)}}</div>
+                        <label class="avatar-titulo">{{livro.autor}}</label>
                     </div>
                 </div>
             </div>
-            <hr style="margin: 15px 30px 10px 30px">
-            <div style="padding: 0px 30px;">
+            
+            <hr style="margin: 10px 20px;">
+            
+            <div style="">
                 <previa-acoes />
             </div>
         </div>
@@ -60,6 +60,7 @@
                 <v-btn color="white" text @click="snackbar.closeSnackbar">Fechar</v-btn>
             </template>
         </v-snackbar>
+
     </div>
 </template>
 

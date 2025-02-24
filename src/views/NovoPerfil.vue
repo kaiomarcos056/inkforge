@@ -55,7 +55,8 @@
         </div>
         <br>
         <div style="flex: 1; display: flex; justify-content: end; flex-direction: column;">
-            <button @click="onClick()">Cadastrar</button>
+            <v-progress-linear indeterminate style="margin: 10px 0px;" v-if="cadastrando"></v-progress-linear>
+            <button @click="onClick()" v-else>Cadastrar</button>
             <br>
         </div>
 
@@ -86,6 +87,7 @@ export default {
             generosSelecionados: [],
             interessesSelecionados: [],
             store,
+            cadastrando: false
         };
     },
     computed: {
@@ -109,12 +111,8 @@ export default {
         }
     },
     methods: {
-        voltar() {
-            this.$router.push(`/`);
-        },
-        selectImage() {
-            this.$refs.fileInput.click();
-        },
+        voltar() { this.$router.push(`/`); },
+        selectImage() {  this.$refs.fileInput.click(); },
         handleImageUpload(event) {
             const file = event.target.files[0];
             if (file) {
@@ -127,6 +125,8 @@ export default {
         },
         async onClick(id) {
             try {
+                this.cadastrando = true;
+
                 let foto = '';
 
                 if (this.$refs.fileInput.files.length > 0) {
@@ -164,12 +164,15 @@ export default {
                     });
 
                 const snackbarStore = useSnackbarStore();
-                snackbarStore.triggerSnackbar('Usuário cadastrado com sucesso.');
+                snackbarStore.abrirSnackbar('Usuário cadastrado com sucesso.', 'success');
                     
                 this.$router.push('/login');
             }
             catch (e) {
                 console.log(e.message)
+            }
+            finally{
+                this.cadastrando = false;
             }
         },
     },
