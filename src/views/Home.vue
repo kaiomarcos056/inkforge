@@ -78,6 +78,8 @@
 
                 this.tabContentSwiper = new Swiper('.tab-content', {
                     simulateTouch: false,
+                    touchMove: false,
+                    touchRatio: 0,
                     on: {
                         slideChange: () => {
                             this.activeIndex = this.tabContentSwiper.activeIndex;
