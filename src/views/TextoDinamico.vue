@@ -36,58 +36,13 @@
 
         <div style="display: flex; justify-content: center; align-items: center; gap: 20px; padding: 15px 5px;">
             <v-btn class="btn-footer" rounded="xl" height="48" width="144" flat @click="previousPage"> Página anterior </v-btn>
-
-            <!-- <v-btn class="btn-footer" rounded="xl" height="48" width="144" flat color="black" @click="dialog = true"> Próxima página</v-btn> -->
-
             <v-btn class="btn-footer" rounded="xl" height="48" width="144" flat color="black" @click="nextPage"> Próxima página</v-btn>
-
-            <!-- <button @click="previousPage" :disabled="selectedPage === 0">Anterior</button>
-            <button @click="nextPage" :disabled="selectedPage === pages.length - 1">Próximo</button> -->
         </div>
 
         <v-dialog v-model="dialog" width="auto">
             
             <v-card max-width="400" class="rounded-lg">
                 <div style="padding: 20px; display: flex; flex-direction: column; gap: 10px;">
-                    <!-- <p style="font-size: 18px; font-weight: bold; font-family: 'Satoshi-Regular', sans-serif;" >Escolha</p>
-
-                    <p class="cap-text" style="border-left: 1px solid #d9d9d9; padding-left: 10px; line-height:19px; letter-spacing: -0.4px;">
-                        {{ escolhas[0].titulo }}
-                    </p>
-
-                    <div class="radio-group">
-                        <label>
-                            <input type="radio" name="customRadio" value="op1" />
-                            <div class="radio-button">
-                                <p style="font-family: 'Noto Serif', serif; font-weight: 400; font-size: 14px; line-height:19px; letter-spacing: -0.4px;">    
-                                    {{ escolhas[0].opcoes[0].descricao }}
-                                </p>
-                            </div>
-                        </label>
-
-                        <p style="text-align: center; font-size: 14px; font-weight: 700; font-family: 'Satoshi-Regular', sans-serif;">Ou</p>
-
-                        <label>
-                            <input type="radio" name="customRadio" value="op2" />
-                            <div class="radio-button">
-                                <p style="font-family: 'Noto Serif', serif; font-weight: 400; font-size: 14px; line-height:19px; letter-spacing: -0.4px;">
-                                    {{ escolhas[0].opcoes[1].descricao }}
-                                </p>
-                            </div>
-                        </label>
-                    </div>
-
-                    <div style="display: flex; justify-content: space-between;">
-                        <v-btn size="x-small" class="btn-bottom-sheet" flat style="color: #747474;">Cancelar</v-btn>
-                        <v-btn size="x-small" class="btn-bottom-sheet" flat @click="abrirBottomSheet"> 
-                            <p class="mr-1">Sugerir</p>
-                            <img src="../assets/icons/star.svg" alt="Star Icon"> 
-                        </v-btn>
-                        <v-btn size="x-small" class="btn-bottom-sheet" flat> 
-                            <p class="mr-1">Escolher</p>
-                            <img src="../assets/icons/chevron right.svg"> 
-                        </v-btn>
-                    </div> -->
                     <p style="font-size: 18px; font-weight: bold; font-family: 'Satoshi-Regular', sans-serif; margin-bottom: 10px; text-align: center;" >
                         Este capítulo está com uma votação aberta! Venha fazer parte da história e decidir os próximos passos dessa aventura!
                     </p>
@@ -222,7 +177,8 @@ export default {
             this.$router.push(`/historia/${this.$route.query.livro}`);
         },
         votar(){
-            this.$router.push(`/votacao/${this.$route.query.capitulo}`);
+            this.$router.push({ path: '/votacao', query: { livro: this.$route.query.livro, capitulo: this.$route.query.capitulo } });
+            //this.$router.push(`/votacao/${this.$route.query.capitulo}`);
         }
     },
     watch: {

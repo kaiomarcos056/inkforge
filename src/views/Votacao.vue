@@ -1,137 +1,150 @@
 <template>
     <div v-if="loading" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
-        <v-progress-circular indeterminate ></v-progress-circular>
+        <v-progress-circular indeterminate></v-progress-circular>
     </div>
     <div class="container" v-else>
-        <div>
-            <v-icon @click="voltar" style="font-size: 38px;">mdi-chevron-left</v-icon>
 
-            <div class="tab">
-                <div class="tab-nav" id="tabNav">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide" :class="{ active: activeIndex === 0 }" @click="changeTab(0)">
-                            Suas escolhas
-                        </div>
+        <v-icon @click="voltar" style="font-size: 38px;">mdi-chevron-left</v-icon>
+        <h1 class="perfil" style="margin-left: 15px;">Sugestões</h1>
 
-                        <div style="height: 20px; border: 1.5px solid #d9d9d9; align-self: center;"></div>
-
-                        <div class="swiper-slide" :class="{ active: activeIndex === 1 }" @click="changeTab(1)">
-                            Sugestões
-                        </div>
+        <div class="tab">
+            <div class="tab-nav" id="tabNav">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" :class="{ active: activeIndex === 0 }" @click="changeTab(0)">
+                        Autor
                     </div>
-                </div>
-                <div class="tab-content">
-                    <div class="swiper-wrapper">
-                        
-                        <div class="swiper-slide">
-                            <div style="padding: 20px; display: flex; flex-direction: column; gap: 10px; width: 100%; box-sizing: border-box;">
-                                <p style="font-size: 18px; margin-bottom: 15px; margin-top: 15px;">
-                                    {{ escolhas[0].titulo }}
-                                </p>
-
-                                <div class="escolha">
-
-                                    <div class="votos">
-                                        <h1>Escolha 1</h1>
-                                        <div>
-                                            <span class="mdi mdi-arrow-up-thin"></span> {{ escolhas[0].opcoes[0].qtd_votos }} voto(s) 
-                                        </div>
-                                    </div>
-                                    <div class="box-escolha">
-                                        <p>{{ escolhas[0].opcoes[0].descricao }}</p>
-                                    </div>
-                                    
-                                </div>
-
-                                <div class="escolha">
-
-                                    <div class="votos">
-                                        <h1>Escolha 2</h1>
-                                        <div>
-                                            <span class="mdi mdi-arrow-up-thin"></span> {{ escolhas[0].opcoes[1].qtd_votos }} voto(s) 
-                                        </div>
-                                    </div>
-                                    <div class="box-escolha"> 
-                                        <p>{{ escolhas[0].opcoes[1].descricao }}</p>
-                                    </div>
-
-                                </div>
-
-                                <br>
-                            </div>
-                        </div>
-                        
-                        <div class="swiper-slide">
-                            <div style="padding: 20px; display: flex; flex-direction: column; gap: 20px; width: 100%; box-sizing: border-box;">
-                                <div class="escolha">
-
-                                    <div class="votos">
-                                        <div style="display: flex; align-items: center;">
-                                            <div class="avatar">M</div>
-                                            <label class="avatar-titulo">Marcos Kaio</label>
-                                        </div>
-                                        <div>
-                                            <span class="mdi mdi-arrow-up-thin"></span> {{ escolhas[0].opcoes[0].qtd_votos }} voto(s) 
-                                        </div>
-                                    </div>
-                                    <div class="box-escolha">
-                                        <p>{{ escolhas[0].opcoes[0].descricao }}</p>
-                                    </div>
-                                    
-                                </div>
-
-                                <div class="escolha">
-
-                                    <div class="votos">
-                                        <div style="display: flex; align-items: center;">
-                                            <div class="avatar">P</div>
-                                            <label class="avatar-titulo">Pedro Henrique</label>
-                                        </div>
-                                        <div>
-                                            {{ escolhas[0].opcoes[1].qtd_votos }} voto(s) 
-                                        </div>
-                                    </div>
-                                    <div class="box-escolha"> 
-                                        <p>{{ escolhas[0].opcoes[1].descricao }}</p>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        
+                    <div style="height: 20px; border: 1.5px solid #d9d9d9; align-self: center;"></div>
+                    <div class="swiper-slide" :class="{ active: activeIndex === 1 }" @click="changeTab(1)">
+                        Comunidade
                     </div>
                 </div>
             </div>
 
-            <div style="display: flex; justify-content: space-between; padding: 20px;">
-                <v-btn size="x-small" class="btn-bottom-sheet" flat>Cancelar</v-btn>
-                <v-btn size="x-small" class="btn-bottom-sheet" flat @click="abrirBottomSheet"> 
-                    <p class="mr-1">Sugerir</p>
-                    <img src="../assets/icons/star.svg" alt="Star Icon"> 
-                </v-btn>
-                <v-btn size="x-small" class="btn-bottom-sheet" flat> 
-                    <p class="mr-1">Escolher</p>
-                    <img src="../assets/icons/chevron right.svg"> 
-                </v-btn>
+            <div class="tab-content">
+                <div class="swiper-wrapper">
+
+                    <div class="swiper-slide">
+                        <div
+                            style="padding: 20px; display: flex; flex-direction: column; gap: 10px; width: 100%; box-sizing: border-box;">
+                            <p style="font-size: 18px; margin-bottom: 15px; margin-top: 15px;"> {{ votacao.titulo }}
+                            </p>
+
+                            <div class="radio-group">
+                                <div class="votos">
+                                    <h1>Escolha 1</h1>
+                                    <div> <span class="mdi mdi-arrow-up-thin"></span> {{ itensVotacao[0].votos }} voto(s) </div>
+                                </div>
+
+                                <label>
+                                    <input type="radio" name="customRadio" :value="itensVotacao[0].uuid_item_votacao" v-model="voto" />
+                                    <div class="radio-button">
+                                        <p style="font-family: 'Noto Serif', serif; font-weight: 400; font-size: 14px; line-height:19px; letter-spacing: -0.4px;">
+                                            {{ itensVotacao[0].descricao }}
+                                        </p>
+                                    </div>
+                                </label>
+
+                                <p></p>
+
+                                <div class="votos">
+                                    <h1>Escolha 2</h1>
+                                    <div> <span class="mdi mdi-arrow-up-thin"></span> {{ itensVotacao[1].votos }} voto(s) </div>
+                                </div>
+                                <label>
+                                    <input type="radio" name="customRadio" :value="itensVotacao[1].uuid_item_votacao" v-model="voto" />
+                                    <div class="radio-button">
+                                        <p style="font-family: 'Noto Serif', serif; font-weight: 400; font-size: 14px; line-height:19px; letter-spacing: -0.4px;">
+                                            {{ itensVotacao[1].descricao }}
+                                        </p>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <br>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div style="padding: 20px; display: flex; flex-direction: column; gap: 20px; width: 100%; box-sizing: border-box;">
+                            <div class="radio-group" v-for="sugestao in itensSugestao" :key="sugestao.uuid_item_votacao"> 
+
+                                <div class="votos">
+                                    <div style="display: flex; align-items: center;">
+                                        <v-avatar style="height: 32px; width: 32px; margin-right: 10px;" v-if="auth.usuario.foto !== ''">
+                                            <v-img :src="sugestao.foto" ></v-img>
+                                        </v-avatar>
+                                        <div class="avatar" v-else>{{ sugestao.nome.charAt(0) }}</div>
+                                        <label class="avatar-titulo">{{ sugestao.nome }}</label>
+                                    </div>
+                                    <div>
+                                        <span class="mdi mdi-arrow-up-thin"></span> {{ sugestao.votos }} voto(s)
+                                    </div>
+                                </div>
+
+                                <label>
+                                    <input type="radio" name="customRadio" :value="sugestao.uuid_item_votacao" v-model="voto"/>
+                                    <div class="radio-button">
+                                        <p style="font-family: 'Noto Serif', serif; font-weight: 400; font-size: 14px; line-height:19px; letter-spacing: -0.4px;">
+                                            {{ sugestao.descricao }}
+                                        </p>
+                                    </div>
+                                </label>
+                            
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-        
+
+
+        <div style="display: flex; justify-content: space-evenly; padding-bottom: 10px; padding-top: 10px;" v-if="!votando">
+            <v-btn size="x-small" class="btn-bottom-sheet" flat @click="abrirBottomSheet">
+                <p class="mr-1">Sugerir</p>
+                <img src="../assets/icons/star.svg" alt="Star Icon">
+            </v-btn>
+            <v-btn size="x-small" class="btn-bottom-sheet" flat @click="votar">
+                <p class="mr-1">Votar</p>
+                <img src="../assets/icons/chevron right.svg">
+            </v-btn>
+        </div>
+        <v-progress-linear indeterminate v-else></v-progress-linear>
+
+
         <v-bottom-sheet v-model="bottomSheet" max-width="500">
             <v-card>
                 <div style="padding: 25px 15px; display: flex; flex-direction: column; gap: 10px;">
-                    <h1 style="line-height: 0; margin:0; padding: 0; font-family: 'Satoshi-Regular', sans-serif; font-size: 20px; font-weight: 500;">Adicionar Sugestão</h1>
+                    <h1
+                        style="line-height: 0; margin:0; padding: 0; font-family: 'Satoshi-Regular', sans-serif; font-size: 20px; font-weight: 500;">
+                        Adicionar Sugestão</h1>
                     <p></p>
-                    <h2 style="font-family: 'Satoshi-Regular', sans-serif; font-size: 14px; font-weight: 500;">Minha sugestão</h2>
-                    <textarea rows="4" name="" id="" style="resize: none; border: 2px solid #151515; padding: 10px; border-radius: 16px; font-family: 'Satoshi-Regular', sans-serif; font-weight: 500;" ></textarea>
-                    <v-btn class="btn-footer" rounded="xl" height="48"  flat color="black" @click="votar"> Cadastrar sugestão </v-btn>
+                    <h2 style="font-family: 'Satoshi-Regular', sans-serif; font-size: 14px; font-weight: 500;">Minha
+                        sugestão</h2>
+                    <textarea v-model="sugestao" rows="4" name="" id=""
+                        style="resize: none; border: 2px solid #151515; padding: 10px; border-radius: 16px; font-family: 'Satoshi-Regular', sans-serif; font-weight: 500;"></textarea>
+                    <v-btn v-if="!salvandoSugestao" class="btn-footer" rounded="xl" height="48" flat color="black"
+                        @click="inserirSugestao" :disabled="!sugestao"> Cadastrar sugestão </v-btn>
+                    <v-progress-linear indeterminate v-else></v-progress-linear>
                 </div>
             </v-card>
         </v-bottom-sheet>
+
+        <v-snackbar v-model="snackbar" :timeout="9000" :color="snackbarStatus" style="bottom: 0px;">
+            {{ snackbarTexto }}
+            <template v-slot:actions>
+                <v-btn color="white" text @click="snackbar = false">Fechar</v-btn>
+            </template>
+        </v-snackbar>
+
     </div>
 </template>
 
 <script>
 import axios from "axios";
+
+import { authStore } from '@/stores/authStore';
+import { useSnackbarStore } from '@/stores/snackbarStore';
 
 import Swiper from 'swiper';
 import 'swiper/css';
@@ -142,8 +155,18 @@ export default {
         return {
             activeIndex: 0,
             loading: true,
-            escolhas: [],
+            votacao: {},
+            itensVotacao: [],
             bottomSheet: false,
+            sugestao: '',
+            itensSugestao: [],
+            salvandoSugestao: false,
+            voto: '',
+            votando: false,
+
+            snackbar: false,
+            snackbarTexto: 'Escolha alguma sugestão',
+            snackbarStatus: 'error'
         };
     },
     methods: {
@@ -152,11 +175,64 @@ export default {
             this.dialog = false;
         },
         voltar() {
-            this.$router.push(`/home`);
+            this.$router.push(`/historia/${this.$route.query.livro}`);
         },
         changeTab(index) {
             this.activeIndex = index;
             this.tabContentSwiper.slideTo(index);
+        },
+        async votar(){
+            try {
+                if(this.voto !== ''){
+                    this.votando = true
+
+                    const item = await axios.put(`https://inkforge-api.onrender.com/item-votacao/votar/${this.voto}`, {}, {
+                        headers: { "Content-Type": "application/json" }
+                    });
+
+                    const snackbarStore = useSnackbarStore();
+                    snackbarStore.triggerSnackbar('Voto computado com sucesso.');
+
+                    this.$router.push(`/historia/${this.$route.query.livro}`);
+                }
+                else{
+                    this.snackbar = true
+                }
+            }
+            catch (e) {
+                console.log(e)
+            }
+            finally {
+                this.bottomSheet = false
+                this.voto = ''
+                this.votando = false
+            }
+        },
+
+        async inserirSugestao() {
+            try {
+                this.salvandoSugestao = true
+
+                const body = {
+                    uuid_votacao: this.votacao.uuid_votacao,
+                    uuid_usuario: this.auth.usuario.uuid_usuario,
+                    descricao: this.sugestao,
+                }
+
+                const item = await axios.post("https://inkforge-api.onrender.com/item-votacao", body, {
+                    headers: { "Content-Type": "application/json" }
+                });
+
+                this.$router.push(`/votacao/${this.$route.params.id}`);
+            }
+            catch (e) {
+
+            }
+            finally {
+                this.bottomSheet = false
+                this.sugestao = ''
+                this.salvandoSugestao = false
+            }
         },
 
         initializeSwiper() {
@@ -176,13 +252,19 @@ export default {
         }
     },
     props: {
-        
+
     },
-    async mounted() { 
+    async mounted() {
         try {
-            const escolhas = await axios.get(`https://inkforge-api.onrender.com/votacao/capitulo/${this.$route.params.id}`);
-            this.escolhas = escolhas.data;
-        } 
+            const votacao = await axios.get(`https://inkforge-api.onrender.com/votacao/capitulo/${this.$route.query.capitulo}`);
+            this.votacao = votacao.data[0];
+
+            const itensvotacao = await axios.get(`https://inkforge-api.onrender.com/item-votacao/${this.votacao.uuid_votacao}`);
+            this.itensVotacao = itensvotacao.data;
+
+            const sugestaovotacao = await axios.get(`https://inkforge-api.onrender.com/item-votacao/sugestao/${this.votacao.uuid_votacao}`);
+            this.itensSugestao = sugestaovotacao.data;
+        }
         catch (error) {
             console.error("#ERRO AO BUSCAR ESCOLHAS = ", error);
         }
@@ -194,6 +276,8 @@ export default {
         }
     },
     computed: {
+        auth() { return authStore().usuario },
+
         activeBarStyle() {
             return {
                 left: `${this.btnW * this.activeIndex}px`,
@@ -207,33 +291,65 @@ export default {
 </script>
 
 <style scoped>
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
-.btn-footer{
+.radio-button {
+    font-family: 'Noto Serif', serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f7f7f5;
+    border: 2px solid #d9d9d9;
+    border-radius: 16px;
+    padding: 16px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: #151515;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+input[type="radio"]:checked+.radio-button {
+    border: 2px solid #4caf50;
+}
+
+.btn-footer {
     font-family: 'Satoshi-Bold', sans-serif;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 14px;
     text-transform: none;
     letter-spacing: 0px
 }
 
-.btn-bottom-sheet{
+.btn-bottom-sheet {
+    /* border: 1px solid red; */
+    padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Satoshi-Regular', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
     gap: 10px;
     text-transform: none;
 }
 
-.btn-bottom-sheet p{
+.btn-bottom-sheet p {
     font-family: 'Satoshi-Regular', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
 }
 
-.container{
+.container {
     height: calc(100vh - 64px);
     box-sizing: border-box;
     background-color: white;
@@ -242,12 +358,13 @@ export default {
 }
 
 .tab {
-    /* flex: 1; */
+    flex: 1;
     width: 100%;
     overflow-x: hidden;
     background-color: #f7f7f7;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .tab-nav {
@@ -256,6 +373,7 @@ export default {
     justify-content: center;
     width: 100%;
     background-color: #fff;
+    overflow-x: hidden;
     overflow-x: hidden;
 }
 
@@ -277,7 +395,7 @@ export default {
 .tab-nav .swiper-slide.active::after {
     content: "";
     position: absolute;
-    bottom: 0px;
+    bottom: 8px;
     left: 50%;
     transform: translateX(-50%);
     width: 50%;
@@ -287,8 +405,9 @@ export default {
 }
 
 .tab .tab-content {
-    /* flex: 1; */
+    flex: 1;
     width: 100%;
+    overflow-x: auto;
 }
 
 .tab-content .swiper-slide {
@@ -299,7 +418,7 @@ export default {
 }
 
 
-h1{
+h1 {
     font-family: 'Satoshi-Regular', sans-serif;
     font-weight: 700;
     font-size: 20px;
@@ -307,7 +426,7 @@ h1{
     letter-spacing: 0%;
 }
 
-.box-escolha{
+.box-escolha {
     background-color: white;
     border: 1px solid #D9D9D9;
     border-radius: 16px;
@@ -315,7 +434,7 @@ h1{
     width: 100%;
 }
 
-p{
+p {
     font-family: 'Noto Serif', serif;
     font-weight: 400;
     font-size: 14px;
@@ -323,14 +442,14 @@ p{
     letter-spacing: -0.4px;
 }
 
-.escolha{
+.escolha {
     display: flex;
     flex-direction: column;
     gap: 5px;
     width: 100%;
 }
 
-.votos{
+.votos {
     display: flex;
     justify-content: space-between;
     align-items: center;

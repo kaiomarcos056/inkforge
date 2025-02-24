@@ -53,6 +53,13 @@
 
             <div style="height: 20px;"></div>
         </div>
+
+        <v-snackbar v-model="snackbar.show" :timeout="3000" color="success">
+            {{ snackbar.message }}
+            <template v-slot:actions>
+                <v-btn color="white" text @click="snackbar.closeSnackbar">Fechar</v-btn>
+            </template>
+        </v-snackbar>
     </div>
 </template>
 
@@ -60,6 +67,7 @@
 import axios from "axios";
 import PreviaAcoes from "@/components/PreviaAcoes.vue";
 import { authStore } from '@/stores/authStore';
+import { useSnackbarStore } from '@/stores/snackbarStore';
 
 export default {
     name: 'Historia',
@@ -74,6 +82,7 @@ export default {
         };
     },
     computed: {
+        snackbar() { return useSnackbarStore(); },
         auth(){ return authStore().usuario }
     },
     methods: {

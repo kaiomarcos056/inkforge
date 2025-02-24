@@ -24,7 +24,8 @@ import Votacao from "@/views/Votacao.vue";
 const routes = [
   { path: "/ckeditor", name: "CkEditor", component: CkEditor },
 
-  { path: "/votacao/:id", name: "Votacao", component: Votacao },
+  //{ path: "/votacao/:id", name: "Votacao", component: Votacao },
+  { path: "/votacao", name: "Votacao", component: Votacao },
 
   { path: "/", name: "Inicio", component: Inicio },
 
