@@ -6,7 +6,7 @@
             <v-avatar style="height: 44px; width: 44px; margin-left: 10px;" v-if="auth.usuario.foto !== ''">
                 <v-img :src="auth.usuario.foto" ></v-img>
             </v-avatar>
-            <v-avatar color="grey-darken-1" v-else>M</v-avatar>
+            <v-avatar color="grey-darken-1" v-else>{{ auth.usuario.nome.charAt(0) }}</v-avatar>
         </v-app-bar-nav-icon>
         
         <v-app-bar-title class="text-center" @click="home"> 
@@ -27,19 +27,19 @@
                 <v-avatar style="height: 44px; width: 44px; margin-right: 10px;" v-if="auth.usuario.foto !== ''">
                     <v-img :src="auth.usuario.foto" ></v-img>
                 </v-avatar>
-                <v-avatar color="grey-darken-1" v-else>M</v-avatar>
+                <v-avatar color="grey-darken-1" v-else>{{ auth.usuario.nome.charAt(0) }}</v-avatar>
                 <v-list-item-title class="h2"> {{ auth.usuario.nome }} </v-list-item-title>
                 <v-list-item-title class="h3">{{ auth.usuario.email }}</v-list-item-title>
             </v-list-item>
 
-            <v-list-item @click="navigate('biblioteca')">
+            <v-list-item @click="navigate('/biblioteca')">
                 <div style="display: flex; gap: 8px;">
                     <img :src="icons.bookIcon" alt="icone">
                     <h4>Minha Biblioteca</h4>
                 </div>
             </v-list-item>
 
-            <v-list-item @click="navigate('historico')">
+            <v-list-item @click="navigate('/historico')">
                 <div style="display: flex; gap: 8px;">
                     <img :src="icons.rewindIcon" alt="icone">
                     <h4>Histórico de Leitura</h4>
@@ -83,9 +83,9 @@ export default {
         return {
             drawer: false, // ESTADO INICIAL DO DRAWER
             menuItems: [
-                { title: "Minha Biblioteca", icon: "bookIcon", route: "biblioteca" },
-                { title: "Histórico de Leitura", icon: "rewindIcon", route: "historico" },
-                { title: "Continue de Onde Parou", icon: "textArrowIcon", route: "settings" },
+                { title: "Minha Biblioteca", icon: "bookIcon", route: "/biblioteca" },
+                { title: "Histórico de Leitura", icon: "rewindIcon", route: "/historico" },
+                { title: "Continue de Onde Parou", icon: "textArrowIcon", route: "/settings" },
             ],
             icons: {
                 bookIcon,

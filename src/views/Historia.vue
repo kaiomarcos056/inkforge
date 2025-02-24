@@ -32,7 +32,7 @@
             <hr style="margin: 10px 20px;">
             
             <div style="">
-                <previa-acoes />
+                <previa-acoes  :uuid_livro="$route.params.id" :uuid_usuario="auth.usuario.uuid_usuario" :salvo="salvo" :favorito="favorito"/>
             </div>
         </div>
 
@@ -80,6 +80,8 @@ export default {
             livro: {},
             capitulos: [],
             isLoading: true,
+            salvo: false,
+            favorito: {}
         };
     },
     computed: {
@@ -117,6 +119,14 @@ export default {
             // CAPITULO
             const capitulo = await axios.get(`https://inkforge-api.onrender.com/capitulos/${this.$route.params.id}`);
             this.capitulos = capitulo.data;
+
+            // FAVORITOS
+            const favoritos = await axios.get(`https://inkforge-api.onrender.com/favoritos/${this.auth.usuario.uuid_usuario}`);
+            this.favorito = favoritos.data.find(favorito => favorito.uuid_livro === this.$route.params.id);
+        
+            if(this.favorito != null){
+                this.salvo = true;
+            }
         } 
         catch (error) {
             console.error("#ERRO AO BUSCAR LIVROS = ", error);

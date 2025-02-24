@@ -1,27 +1,91 @@
 <template>
     <div class="acoes">
         <div class="d-flex ga-1">
-            <img src="../assets/icons/comment.svg" alt="Ícone" width="16" />
+            <img src="../assets/icons/comment.svg" alt="Ícone" width="24" />
             <p>20</p>
         </div>
         <div class="d-flex ga-1">
-            <img src="../assets/icons/heart.svg" alt="Ícone" width="16" />
+            <img src="../assets/icons/heart.svg" alt="Ícone" width="24" />
             <p>2.2K</p>
         </div>
         <div class="d-flex ga-1">
-            <img src="../assets/icons/chart.svg" alt="Ícone" width="16" class="g4"/>
+            <img src="../assets/icons/chart.svg" alt="Ícone" width="24" class="g4"/>
             <p>8.6K</p>
         </div>
-        <div class="d-flex ga-3 align-center">
-            <img src="../assets/icons/bookmark.svg" alt="Ícone"  height="17"/>
-            <img src="../assets/icons/share.svg" alt="Ícone" height="17"/>
+        <div class="d-flex ga-5 align-center">
+            <img src="../assets/icons/bookmark.svg" alt="Ícone"  height="24" v-if="!salvo" @click="salvar" />
+            <img src="../assets/icons/bookmark-selected.svg" alt="Ícone"  height="24" v-else @click="remover" />
+            <img src="../assets/icons/share.svg" alt="Ícone" height="24"/>
         </div>
     </div>
 </template>
 
 <script>
+import axios from "axios";
+import { useSnackbarStore } from '@/stores/snackbarStore';
+
 export default {
     name: "PreviaAcoes",
+    props: {
+        salvo: {
+            type: Boolean,
+            default: false
+        },
+        uuid_livro: {
+            type: String,
+            default: ''
+        },
+        uuid_usuario: {
+            type: String,
+            default: ''
+        },
+        favorito: {
+            type: Object,
+            default: {}
+        }
+    },
+    methods: {
+        async salvar(){
+            //this.$emit('update:salvo', true);
+            try{
+                let body = {
+                    uuid_usuario: this.uuid_usuario,
+                    uuid_livro: this.uuid_livro
+                }
+                
+                const response = await axios.post("https://inkforge-api.onrender.com/favoritos",body, {
+                    headers: { "Content-Type": "application/json" }
+                });
+
+                //console.log(this.$route.path)
+
+                //this.$router.replace({ path: this.$route.path, query: { t: Date.now() } });
+                this.$router.go(0);
+            }
+            catch(e){
+                console.error(e)
+            }
+        },
+
+        async remover(){
+            try{
+                let body = {
+                    uuid_usuario: this.uuid_usuario,
+                    uuid_livro: this.uuid_livro
+                }
+                
+                const response = await axios.delete(`https://inkforge-api.onrender.com/favoritos/${this.favorito.uuid_favorito}`, {
+                    headers: { "Content-Type": "application/json" }
+                });
+
+                this.$router.go(0);
+                console.log(this.favorito)
+            }
+            catch(e){
+                console.error(e)
+            }
+        }
+    }
 };
 </script>
 

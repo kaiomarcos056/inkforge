@@ -35,14 +35,14 @@
                         <v-avatar style="height: 32px; width: 32px; margin-right: 5px;" v-if="livro.foto !== ''">
                             <v-img :src="livro.foto" ></v-img>
                         </v-avatar>
-                        <div class="avatar" v-else>M</div>
+                        <div class="avatar" v-else>{{ livro.autor.charAt(0) }}</div>
                         <label class="avatar-titulo">{{ livro.autor }}</label>
                     </div>
                 </div>
             </div>
             <hr style="margin: 15px 30px 10px 30px">
             <div style="padding: 0px 30px;">
-                <previa-acoes />
+                <previa-acoes :uuid_livro="$route.params.id" :uuid_usuario="auth.usuario.uuid_usuario" :salvo="salvo" :favorito="favorito"/>
             </div>
         </div>
         
@@ -90,6 +90,7 @@ import Escolhas from "@/components/Escolhas.vue";
 import Swiper from 'swiper';
 import 'swiper/css';
 
+import { authStore } from '@/stores/authStore';
 import { useSnackbarStore } from '@/stores/snackbarStore';
 
 export default {
@@ -114,6 +115,8 @@ export default {
             loading: true,
             uuiLivro: '',
             votacao: [],
+            salvo: false,
+            favorito: {},
         };
     },
 
@@ -166,6 +169,13 @@ export default {
             const capitulos = await axios.get(`https://inkforge-api.onrender.com/capitulos/${this.$route.params.id}`);
             this.capitulos = capitulos.data;
 
+            // FAVORITOS
+            const favoritos = await axios.get(`https://inkforge-api.onrender.com/favoritos/${this.auth.usuario.uuid_usuario}`);
+            this.favorito = favoritos.data.find(favorito => favorito.uuid_livro === this.$route.params.id);
+            if(this.favorito != null){
+                this.salvo = true;
+            }
+
             // ESCOLHAS
             for (const capitulo of this.capitulos) {
                 try {
@@ -210,6 +220,9 @@ export default {
             console.log('TOAST MENSAGEM = '+useSnackbarStore().message)
             return useSnackbarStore(); 
         },
+
+        auth(){ return authStore().usuario }
+    
     },
 };
 </script>

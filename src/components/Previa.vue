@@ -22,7 +22,7 @@
                 <v-avatar style="height: 32px; width: 32px; margin-right: 5px;" v-if="livro.foto !== ''">
                     <v-img :src="livro.foto" ></v-img>
                 </v-avatar>
-                <div class="avatar" v-else>M</div>
+                <div class="avatar" v-else>{{ livro.autor.charAt(0) }}</div>
                 <label class="avatar-titulo"> {{ livro.autor }} </label>
             </div>
         </div>

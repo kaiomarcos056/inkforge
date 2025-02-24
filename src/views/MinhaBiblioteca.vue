@@ -19,7 +19,7 @@
                 <v-avatar style="height: 44px; width: 44px; margin-right: 10px;" v-if="auth.usuario.foto !== ''">
                     <v-img :src="auth.usuario.foto" ></v-img>
                 </v-avatar>
-                <div class="avatar" v-else>M</div>
+                <div class="avatar" v-else>{{ auth.usuario.nome.charAt(0) }}</div>
 
                 <div>
                     <h3><b>{{ auth.usuario.nome }}</b></h3>
@@ -60,7 +60,7 @@
                             <component :is="slides[1].componente" style="height: 100%; width: 100%; box-sizing: border-box;" />
                         </div>
                         <div class="swiper-slide">
-                            <component :is="slides[2].componente" style="height: 100%;" />
+                            <component :is="slides[2].componente" style="height: 100%;" :data="meusFavoritos"/>
                         </div>
                     </div>
                 </div>
@@ -80,6 +80,7 @@ import "swiper/css";
 
 import ListaLivro from '@/components/ListaLivro.vue';
 import Votacoes from "@/components/Votacoes.vue";
+import Salvos from "@/components/Salvos.vue";
 
 export default {
     name: "TabsSlider",
@@ -89,17 +90,19 @@ export default {
             slides: [
                 { title: "Slide 1", description: "Content of Slide 1", componente: ListaLivro },
                 { title: "Slide 2", description: "Content of Slide 2", componente: Votacoes  },
-                { title: "Slide 3", description: "Content of Slide 3", componente: ListaLivro  },
+                { title: "Slide 3", description: "Content of Slide 3", componente: Salvos  },
             ],
             activeIndex: 0,
             swiperInstance: null,
             loading: true,
-            meusLivros: []
+            meusLivros: [],
+            meusFavoritos: [],
         };
     },
     components: {
         ListaLivro,
-        Votacoes
+        Votacoes,
+        Salvos
     },
     methods: {
         initializeSwiper() {
@@ -137,6 +140,9 @@ export default {
         try {
             const livros = await axios.get(`https://inkforge-api.onrender.com/usuarios/livros/${this.auth.usuario.uuid_usuario}`);
             this.meusLivros = livros.data;
+
+            const favoritos = await axios.get(`https://inkforge-api.onrender.com/favoritos/${this.auth.usuario.uuid_usuario}`)
+            this.meusFavoritos = favoritos.data;
         } 
         catch (e) {
             console.error(e.message);
