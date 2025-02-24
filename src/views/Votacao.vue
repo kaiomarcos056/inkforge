@@ -36,9 +36,9 @@
                                 </div>
 
                                 <label>
-                                    <input type="radio" name="customRadio" :value="itensVotacao[0].uuid_item_votacao" v-model="voto" />
+                                    <input type="radio" name="customRadio" :value="itensVotacao[0].uuid_item_votacao" v-model="voto" :checked="itensVotacao[0].uuid_item_votacao == itemVotado" :disabled="!podevotar && itensVotacao[0].uuid_item_votacao != itemVotado"/>
                                     <div class="radio-button">
-                                        <p style="font-family: 'Noto Serif', serif; font-weight: 400; font-size: 14px; line-height:19px; letter-spacing: -0.4px;">
+                                        <p style="font-family: 'Noto Serif', serif; font-weight: 600; font-size: 14px; line-height:19px; letter-spacing: -0.4px;">
                                             {{ itensVotacao[0].descricao }}
                                         </p>
                                     </div>
@@ -51,9 +51,9 @@
                                     <div> <span class="mdi mdi-arrow-up-thin"></span> {{ itensVotacao[1].votos }} voto(s) </div>
                                 </div>
                                 <label>
-                                    <input type="radio" name="customRadio" :value="itensVotacao[1].uuid_item_votacao" v-model="voto" />
+                                    <input type="radio" name="customRadio" :value="itensVotacao[1].uuid_item_votacao" v-model="voto" :checked="itensVotacao[1].uuid_item_votacao == itemVotado" :disabled="!podevotar && itensVotacao[1].uuid_item_votacao != itemVotado"/>
                                     <div class="radio-button">
-                                        <p style="font-family: 'Noto Serif', serif; font-weight: 400; font-size: 14px; line-height:19px; letter-spacing: -0.4px;">
+                                        <p style="font-family: 'Noto Serif', serif; font-weight: 600; font-size: 14px; line-height:19px; letter-spacing: -0.4px;">
                                             {{ itensVotacao[1].descricao }}
                                         </p>
                                     </div>
@@ -82,9 +82,9 @@
                                 </div>
 
                                 <label>
-                                    <input type="radio" name="customRadio" :value="sugestao.uuid_item_votacao" v-model="voto"/>
+                                    <input type="radio" name="customRadio" :value="sugestao.uuid_item_votacao" v-model="voto" :checked="sugestao.uuid_item_votacao == itemVotado" :disabled="!podevotar && sugestao.uuid_item_votacao != itemVotado" />
                                     <div class="radio-button">
-                                        <p style="font-family: 'Noto Serif', serif; font-weight: 400; font-size: 14px; line-height:19px; letter-spacing: -0.4px;">
+                                        <p style="font-family: 'Noto Serif', serif; font-weight: 500; font-size: 14px; line-height:19px; letter-spacing: -0.4px;">
                                             {{ sugestao.descricao }}
                                         </p>
                                     </div>
@@ -98,7 +98,7 @@
             </div>
         </div>
 
-
+        <div v-show="podevotar">
         <div style="display: flex; justify-content: space-evenly; padding-bottom: 10px; padding-top: 10px;" v-if="!votando">
             <v-btn size="x-small" class="btn-bottom-sheet" flat @click="abrirBottomSheet">
                 <p class="mr-1">Sugerir</p>
@@ -110,7 +110,7 @@
             </v-btn>
         </div>
         <v-progress-linear indeterminate v-else></v-progress-linear>
-
+        </div>
 
         <v-bottom-sheet v-model="bottomSheet" max-width="500">
             <v-card>
@@ -166,7 +166,9 @@ export default {
 
             snackbar: false,
             snackbarTexto: 'Escolha alguma sugestão',
-            snackbarStatus: 'error'
+            snackbarStatus: 'error',
+            podevotar: true,
+            itemVotado:'',
         };
     },
     methods: {
@@ -185,6 +187,15 @@ export default {
             try {
                 if(this.voto !== ''){
                     this.votando = true
+                    
+                    let body = {
+                        uuid_usuario: this.auth.usuario.uuid_usuario,
+                        uuid_votacao: this.votacao.uuid_votacao,
+                        uuid_item_votacao: this.voto
+                    }
+                    await axios.post(`https://inkforge-api.onrender.com/votacao/usuario-votacao`, body, {
+                        headers: { "Content-Type": "application/json" }
+                    });
 
                     const item = await axios.put(`https://inkforge-api.onrender.com/item-votacao/votar/${this.voto}`, {}, {
                         headers: { "Content-Type": "application/json" }
@@ -264,6 +275,16 @@ export default {
 
             const sugestaovotacao = await axios.get(`https://inkforge-api.onrender.com/item-votacao/sugestao/${this.votacao.uuid_votacao}`);
             this.itensSugestao = sugestaovotacao.data;
+            
+            const votos = await axios.get(`https://inkforge-api.onrender.com/votacao/usuario?uuid_usuario=${this.auth.usuario.uuid_usuario}&uuid_votacao=${this.votacao.uuid_votacao}`)
+            console.log(votos.data)
+            if(votos.data.length > 0) {
+                this.podevotar = false
+                this.itemVotado = votos.data[0].uuid_item_votacao;
+                console.log(this.itemVotado)
+            }
+
+            console.log()
         }
         catch (error) {
             console.error("#ERRO AO BUSCAR ESCOLHAS = ", error);
@@ -302,13 +323,13 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f7f7f5;
+    background-color: white;
     border: 2px solid #d9d9d9;
     border-radius: 16px;
     padding: 16px;
     cursor: pointer;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     color: #151515;
     transition: all 0.3s ease;
     box-sizing: border-box;
@@ -320,6 +341,13 @@ input[type="radio"] {
 
 input[type="radio"]:checked+.radio-button {
     border: 2px solid #4caf50;
+    background-color: #adefad;
+}
+
+input[type="radio"]:disabled + .radio-button {
+  background-color: #ccc; /* Cor cinza para indicar desabilitado */
+  border-color: #aaa;
+  color: #666;
 }
 
 .btn-footer {

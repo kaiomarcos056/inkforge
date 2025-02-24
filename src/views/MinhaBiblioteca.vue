@@ -57,7 +57,7 @@
                             <component :is="slides[0].componente" style="height: 100%;" :data="meusLivros"/>
                         </div>
                         <div class="swiper-slide">
-                            <component :is="slides[1].componente" style="height: 100%;" />
+                            <component :is="slides[1].componente" style="height: 100%; width: 100%; box-sizing: border-box;" />
                         </div>
                         <div class="swiper-slide">
                             <component :is="slides[2].componente" style="height: 100%;" />
@@ -79,15 +79,16 @@ import Swiper from "swiper";
 import "swiper/css";
 
 import ListaLivro from '@/components/ListaLivro.vue';
+import Votacoes from "@/components/Votacoes.vue";
 
 export default {
     name: "TabsSlider",
     data() {
         return {
-            tabs: ["Meus Livros", "Histórico", "Salvos"],
+            tabs: ["Meus Livros", "Votações", "Salvos"],
             slides: [
                 { title: "Slide 1", description: "Content of Slide 1", componente: ListaLivro },
-                { title: "Slide 2", description: "Content of Slide 2", componente: ListaLivro  },
+                { title: "Slide 2", description: "Content of Slide 2", componente: Votacoes  },
                 { title: "Slide 3", description: "Content of Slide 3", componente: ListaLivro  },
             ],
             activeIndex: 0,
@@ -98,6 +99,7 @@ export default {
     },
     components: {
         ListaLivro,
+        Votacoes
     },
     methods: {
         initializeSwiper() {
@@ -150,6 +152,7 @@ export default {
 </script>
 
 <style scoped>
+
 section{
     height: 100vh;
     display: flex;
@@ -178,6 +181,7 @@ p{
     font-weight: 400;
     line-height: 16px;
 }
+
 .avatar{
     background-color: #DFDFDF;
     color: #878787;
@@ -201,7 +205,6 @@ p{
     display: flex;
     flex-direction: column;
     flex: 1;
-    min-height: 0;
 }
 
 .tabs {
@@ -232,7 +235,6 @@ p{
     left: 50%;
     transform: translateX(-50%);
     width: calc(100% - 20px);
-    /* Tamanho ajustado automaticamente ao texto */
     height: 4px;
     background-color: #000;
     border-radius: 10px;
@@ -241,7 +243,7 @@ p{
 
 .slider {
     background-color: #f7f7f7;
-    flex: 1;
+    height: 100%;
 }
 
 .swiper-wrapper {
@@ -261,5 +263,6 @@ p{
 
 .swiper.swiper-initialized.swiper-horizontal.swiper-ios.swiper-backface-hidden{
     height: 100%;
+    width: 100%;
 }
 </style>
