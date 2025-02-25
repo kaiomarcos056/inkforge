@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 20px;">
+        <div style="display: flex; flex-wrap: wrap; gap: 20px;">
             <div 
                 v-for="(i, index) in data"
                 :key="index"
@@ -51,5 +51,8 @@ export default {
     flex-wrap: wrap;
     padding: 20px;
     gap: 25px;
+    justify-content: start;
+    align-items: start;
+    background-color: #F7F7F7;
 }
 </style>
