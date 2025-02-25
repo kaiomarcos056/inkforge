@@ -343,15 +343,15 @@ p{
 }
 
 .tab-content {
-    /* flex: 1; */
+    flex: 1;
     width: 100%;
-    /* height: 85%; */
+    height: 100%;
 }
 
 
 .tab-content .swiper-slide {
     width: 100%;
+    height: 100%;
     background-color: #f7f7f7;
-    /* height: 100%; */
 }
 </style>

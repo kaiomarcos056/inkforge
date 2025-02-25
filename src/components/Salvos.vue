@@ -48,6 +48,8 @@ export default {
 .container{    
     box-sizing: border-box;
     display: flex;
+    justify-content: start;
+    align-items: start;
     flex-wrap: wrap;
     padding: 20px;
     gap: 25px;
