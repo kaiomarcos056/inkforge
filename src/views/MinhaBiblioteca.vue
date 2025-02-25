@@ -187,9 +187,10 @@ export default {
 <style scoped>
 
 section{
-    height: 100vh;
+    height: calc(100vh - 64px);
     display: flex;
     flex-direction: column;
+    border: 1px solid red;
 }
 
 h3{
@@ -300,7 +301,7 @@ p{
 } */
 
 .tab {
-    /* flex: 1; */
+    flex: 1;
     width: 100%;
     overflow-x: hidden;
     background-color: #f7f7f7;
