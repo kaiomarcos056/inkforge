@@ -1,15 +1,18 @@
 <template>
     <div style="display: flex;">
         <v-card
-            class="elevation-5 mr-3" width="150" height="225"
-            :image="livro.capa"
+            class="elevation-5 mr-3" 
+            width="150" 
+            height="225"
+            :image="livro.capa" 
+            @click="golivro(livro.uuid_livro)"
         ></v-card>
         <div style="flex: 1; display: flex; flex-direction: column;">
             <div style="margin-bottom: 8px;">
                 <previa-titulo :titulo="livro.nome" :tags="livro.generos" />
             </div>
 
-            <div style="flex: 1; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical; text-overflow: ellipsis;">
+            <div @click="golivro(livro.uuid_livro)" style="flex: 1; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical; text-overflow: ellipsis;">
                 <previa-corpo :texto="livro.descricao" />
             </div>
             

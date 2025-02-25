@@ -211,9 +211,9 @@ p{
     overflow-x: hidden; */
 
     position: sticky;
-    top: 0; /* Fixa no topo */
-    background-color: white; /* Para evitar sobreposição de fundo */
-    z-index: 1000; /* Para garantir que fique acima do conteúdo */
+    top: 0;
+    background-color: white; 
+    z-index: 1000;
 }
 
 .tab-nav .swiper-slide {
@@ -234,7 +234,7 @@ p{
 .tab-nav .swiper-slide.active::after {
     content: "";
     position: absolute;
-    bottom: 0px;
+    bottom: 5px;
     left: 50%;
     transform: translateX(-50%);
     width: 40%;
