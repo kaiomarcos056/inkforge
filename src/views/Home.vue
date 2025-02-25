@@ -19,13 +19,9 @@
             <div class="tab-content">
                 <div class="swiper-wrapper">
             
-                    <div class="swiper-slide">
-                        <component :is="tabs[0].componente"/>
-                    </div>
+                    <div class="swiper-slide"> <component :is="tabs[0].componente"/> </div>
                     
-                    <div class="swiper-slide">
-                        <component :is="tabs[1].componente"/>
-                    </div>
+                    <div class="swiper-slide">  <component :is="tabs[1].componente"/> </div>
                     
                 </div>
             </div>
@@ -35,9 +31,6 @@
 
 <script>
     import axios from "axios";
-    import previas from '@/previas.json'; // JSON
-
-    //import jwt from 'jsonwebtoken';
 
     // COMPONENTES
     import Previa from '../components/Previa.vue'

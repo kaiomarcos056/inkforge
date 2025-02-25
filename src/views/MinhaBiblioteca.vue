@@ -4,7 +4,6 @@
     </div>
 
     <section v-else>
-        <!-- TOAST NOTIFICAÇÃO -->
         <v-snackbar v-model="snackbar.show" :timeout="3000" color="success">
             {{ snackbar.message }}
             <template v-slot:actions>
@@ -12,7 +11,7 @@
             </template>
         </v-snackbar>
 
-        <!-- INFORMAÇÕES DO USUARIO LOGADO -->
+
         <div style="padding: 15px;">
             <div style="display: flex; align-items: center; margin-bottom: 10px;">
 
@@ -31,41 +30,44 @@
                 </div>
             </div>
             <div>
-                <p>
-                    {{ auth.usuario.descricao }}
-                </p>
+                <p> {{ auth.usuario.descricao }} </p>
             </div>
         </div>
-
-        <!-- TABS SLIDE -->
-        <div class="tabs-slider-wrapper">
-            <!-- Tabs -->
-            <div class="tabs">
-                <div v-for="(tab, index) in tabs" :key="index" :class="['tab', { active: activeIndex === index }]" @click="changeTab(index)">
-                    {{ tab }}
+        
+        <div class="tab">
+            <div class="tab-nav" id="tabNav">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" :class="{ active: activeIndex === 0 }" @click="changeTab(0)">
+                        Meus Livros
+                    </div>
+                    <div style="height: 20px; border: 1.5px solid #d9d9d9; align-self: center;"></div>
+                    <div class="swiper-slide" :class="{ active: activeIndex === 1 }" @click="changeTab(1)">
+                        Votações
+                    </div>
+                    <div style="height: 20px; border: 1.5px solid #d9d9d9; align-self: center;"></div>
+                    <div class="swiper-slide" :class="{ active: activeIndex === 2 }" @click="changeTab(2)">
+                        Salvos
+                    </div>
                 </div>
             </div>
-
-            <!-- Swiper Slider -->
-            <div class="slider">
-                <div class="swiper" ref="swiperContainer">
-                    <div class="swiper-wrapper">
-                        <!-- <div v-for="(content, index) in slides" :key="index" class="swiper-slide">
-                            <component :is="content.componente" style="height: 100%;"/>
-                        </div> -->
-                        <div class="swiper-slide">
-                            <component :is="slides[0].componente" style="height: 100%;" :data="meusLivros"/>
-                        </div>
-                        <div class="swiper-slide">
-                            <component :is="slides[1].componente" style="height: 100%; width: 100%; box-sizing: border-box;" />
-                        </div>
-                        <div class="swiper-slide">
-                            <component :is="slides[2].componente" style="height: 100%;" :data="meusFavoritos"/>
-                        </div>
+            <div class="tab-content">
+                <div class="swiper-wrapper">
+            
+                    <div class="swiper-slide"> 
+                        <component :is="tabs[0].componente" :data="meusLivros" style="height: 100%; width: 100%; box-sizing: border-box;"/> 
+                    </div>
+                    
+                    <div class="swiper-slide">  
+                        <component :is="tabs[1].componente" style="height: 100%; width: 100%; box-sizing: border-box;"/> 
+                    </div>
+                    
+                    <div class="swiper-slide">
+                        <component :is="tabs[2].componente" :data="meusFavoritos" style="height: 100%; width: 100%; box-sizing: border-box;"/>
                     </div>
                 </div>
             </div>
         </div>
+
     </section>
 </template>
 
@@ -86,14 +88,21 @@ export default {
     name: "TabsSlider",
     data() {
         return {
-            tabs: ["Meus Livros", "Votações", "Salvos"],
-            slides: [
-                { title: "Slide 1", description: "Content of Slide 1", componente: ListaLivro },
-                { title: "Slide 2", description: "Content of Slide 2", componente: Votacoes  },
-                { title: "Slide 3", description: "Content of Slide 3", componente: Salvos  },
-            ],
             activeIndex: 0,
-            swiperInstance: null,
+            tabs: [
+                { name: 'Meus Livros', content: 'Swipe', color: '#04a5c1', componente: ListaLivro },
+                { name: 'Votações', content: 'Swipe', color: '#f298e7', componente: Votacoes },
+                { name: 'Salvos', content: 'Swipe', color: '#f298e7', componente: Salvos }
+            ],
+
+            // tabs: ["Meus Livros", "Votações", "Salvos"],
+            // slides: [
+            //     { title: "Slide 1", description: "Content of Slide 1", componente: ListaLivro },
+            //     { title: "Slide 2", description: "Content of Slide 2", componente: Votacoes  },
+            //     { title: "Slide 3", description: "Content of Slide 3", componente: Salvos  },
+            // ],
+            // activeIndex: 0,
+            // swiperInstance: null,
             loading: true,
             meusLivros: [],
             meusFavoritos: [],
@@ -105,38 +114,53 @@ export default {
         Salvos
     },
     methods: {
-        initializeSwiper() {
-            const swiperElement = this.$refs.swiperContainer;
-            if (!swiperElement) {
-                console.error("Swiper container not found!");
-                return;
-            }
+        // initializeSwiper() {
+        //     const swiperElement = this.$refs.swiperContainer;
+        //     if (!swiperElement) {
+        //         console.error("Swiper container not found!");
+        //         return;
+        //     }
 
-            this.swiperInstance = new Swiper(swiperElement, {
-                slidesPerView: 1,
-                on: {
-                    slideChange: () => {
-                        this.activeIndex = this.swiperInstance.activeIndex;
-                    },
-                },
-            });
-        },
+        //     this.swiperInstance = new Swiper(swiperElement, {
+        //         slidesPerView: 1,
+        //         on: {
+        //             slideChange: () => {
+        //                 this.activeIndex = this.swiperInstance.activeIndex;
+        //             },
+        //         },
+        //     });
+        // },
+        // changeTab(index) {
+        //     this.activeIndex = index;
+        //     if (this.swiperInstance) {
+        //         this.swiperInstance.slideTo(index);
+        //     } 
+        //     else {
+        //         console.error("Swiper instance not initialized yet.");
+        //     }
+        // },
         changeTab(index) {
             this.activeIndex = index;
-            if (this.swiperInstance) {
-                this.swiperInstance.slideTo(index);
-            } 
-            else {
-                console.error("Swiper instance not initialized yet.");
-            }
+            this.tabContentSwiper.slideTo(index);
         },
+
+        initializeSwiper() {
+            this.tabContentSwiper = new Swiper('.tab-content', {
+                noSwiping: true,
+                on: {
+                    slideChange: () => {
+                        this.activeIndex = this.tabContentSwiper.activeIndex;
+                        this.tabNavSwiper.slideTo(this.activeIndex - 1);
+                    }
+                }
+            });
+        }
     },
     computed: {
         snackbar() { return useSnackbarStore(); },
         auth(){ return authStore().usuario }
     },
     async mounted() { 
-        console.log(this.auth)
         try {
             const livros = await axios.get(`https://inkforge-api.onrender.com/usuarios/livros/${this.auth.usuario.uuid_usuario}`);
             this.meusLivros = livros.data;
@@ -149,6 +173,9 @@ export default {
         }
         finally {
             this.loading = false;
+            // this.$nextTick(() => {
+            //     this.initializeSwiper();
+            // });
             this.$nextTick(() => {
                 this.initializeSwiper();
             });
@@ -207,7 +234,7 @@ p{
     gap: 5px;
 }
 
-.tabs-slider-wrapper {
+/* .tabs-slider-wrapper {
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -270,5 +297,61 @@ p{
 .swiper.swiper-initialized.swiper-horizontal.swiper-ios.swiper-backface-hidden{
     height: 100%;
     width: 100%;
+} */
+
+.tab {
+    /* flex: 1; */
+    width: 100%;
+    overflow-x: hidden;
+    background-color: #f7f7f7;
+}
+
+.tab-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: #fff;
+    overflow-x: hidden;
+}
+
+.tab-nav .swiper-slide {
+    font-family: 'Satoshi-Regular', sans-serif;
+    width: 33%;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+    line-height: 50px;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+}
+
+.tab-nav .swiper-slide.active {
+    color: black;
+}
+
+.tab-nav .swiper-slide.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 4px;
+    background-color: black;
+    border-radius: 5px;
+}
+
+.tab-content {
+    /* flex: 1; */
+    width: 100%;
+    /* height: 85%; */
+}
+
+
+.tab-content .swiper-slide {
+    width: 100%;
+    background-color: #f7f7f7;
+    /* height: 100%; */
 }
 </style>
