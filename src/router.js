@@ -1,3 +1,5 @@
+import { authStore } from '@/stores/authStore';
+
 import { createRouter, createWebHistory } from "vue-router";
 
 // Defina os componentes das rotas
@@ -22,50 +24,61 @@ import CkEditor from "@/views/CkEditor.vue";
 import Votacao from "@/views/Votacao.vue";
 
 const routes = [
-  { path: "/ckeditor", name: "CkEditor", component: CkEditor },
+  { path: "/ckeditor", name: "CkEditor", component: CkEditor, meta: { requiresAuth: true } },
 
-  //{ path: "/votacao/:id", name: "Votacao", component: Votacao },
-  { path: "/votacao", name: "Votacao", component: Votacao },
+  { path: "/votacao", name: "Votacao", component: Votacao, meta: { requiresAuth: true } },
 
-  { path: "/", name: "Inicio", component: Inicio },
+  { path: "/", name: "Inicio", component: Inicio, meta: { requiresAuth: false } },
 
-  { path: "/home", name: "Home", component: Home },
+  { path: "/home", name: "Home", component: Home, meta: { requiresAuth: true } },
 
-  { path: "/login", name: "Login", component: Login },
+  { path: "/login", name: "Login", component: Login, meta: { requiresAuth: false } },
 
-  { path: "/novousuario", name: "NovoUsuario", component: NovoUsuario },
+  { path: "/novousuario", name: "NovoUsuario", component: NovoUsuario, meta: { requiresAuth: false } },
 
-  { path: "/novoperfil", name: "NovoPerfil", component: NovoPerfil },
+  { path: "/novoperfil", name: "NovoPerfil", component: NovoPerfil, meta: { requiresAuth: false } },
 
-  { path: "/homelivro/:id", name: "HomeLivros", component: HomeLivros },
+  { path: "/homelivro/:id", name: "HomeLivros", component: HomeLivros, meta: { requiresAuth: true } },
 
-  { path: "/novaescolha", name: "NovaEscolha", component: NovaEscolha },
+  { path: "/novaescolha", name: "NovaEscolha", component: NovaEscolha, meta: { requiresAuth: true } },
   
-  { path: "/novapagina", name: "NovaPagina", component: NovaPagina },
+  { path: "/novapagina", name: "NovaPagina", component: NovaPagina, meta: { requiresAuth: true } },
 
-  { path: "/novocapitulo/:id", name: "NovoCapitulo", component: NovoCapitulo },
+  { path: "/novocapitulo/:id", name: "NovoCapitulo", component: NovoCapitulo, meta: { requiresAuth: true } },
 
-  { path: "/listaescolha/:id", name: "ListaEscolha", component: ListaEscolha },
+  { path: "/listaescolha/:id", name: "ListaEscolha", component: ListaEscolha, meta: { requiresAuth: true } },
 
-  { path: "/edicaolivro", name: "EdicaoLivro", component: EdicaoLivro },
+  { path: "/edicaolivro", name: "EdicaoLivro", component: EdicaoLivro, meta: { requiresAuth: true } },
 
-  { path: "/novolivro", name: "NovoLivro", component: NovoLivro },
+  { path: "/novolivro", name: "NovoLivro", component: NovoLivro, meta: { requiresAuth: true } },
 
-  { path: "/biblioteca", name: "MinhaBiblioteca", component: MinhaBiblioteca },
+  { path: "/biblioteca", name: "MinhaBiblioteca", component: MinhaBiblioteca, meta: { requiresAuth: true } },
 
-  { path: "/historia/:id", name: "Historia", component: Historia },
+  { path: "/historia/:id", name: "Historia", component: Historia, meta: { requiresAuth: true } },
 
-  { path: "/capitulo", name: "Capitulo", component: Capitulo },
+  { path: "/capitulo", name: "Capitulo", component: Capitulo, meta: { requiresAuth: true } },
 
-  { path: "/dinamico", name: "TextoDinamico", component: TextoDinamico },
+  { path: "/dinamico", name: "TextoDinamico", component: TextoDinamico, meta: { requiresAuth: true } },
 
-  { path: "/historico", name: "Historico", component: Historico },
+  { path: "/historico", name: "Historico", component: Historico, meta: { requiresAuth: true } },
 ];
 
-// Crie o roteador
+
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach(async (to, from, next) => {
+  const exp = authStore().usuario.exp || 0;
+  const unix = Math.floor(Date.now() / 1000);
+
+  if (to.meta.requiresAuth && unix > exp) {
+    next('/');
+  } 
+  else {
+    next();
+  }
 });
 
 export default router;

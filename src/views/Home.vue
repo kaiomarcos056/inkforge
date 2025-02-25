@@ -37,6 +37,8 @@
     import axios from "axios";
     import previas from '@/previas.json'; // JSON
 
+    //import jwt from 'jsonwebtoken';
+
     // COMPONENTES
     import Previa from '../components/Previa.vue'
     import Carousel from '../components/Carousel.vue';
@@ -46,6 +48,8 @@
 
     import Swiper from 'swiper';
     import 'swiper/css';
+
+    import { authStore } from '@/stores/authStore';
 
     export default {
         name: 'Home',
@@ -64,6 +68,9 @@
             Previa,
             Carousel,
             Batata
+        },
+        computed: {
+            auth(){ return authStore().usuario }
         },
         methods: {
             changeTab(index) {
@@ -92,6 +99,9 @@
         },
         async mounted() {
             try {
+                
+                //console.log(this.auth)
+
                 const response = await axios.get("https://inkforge-api.onrender.com/livros");
                 this.data = response.data;
             } 

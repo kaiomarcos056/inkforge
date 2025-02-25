@@ -16,6 +16,7 @@
     "@tiptap/starter-kit": "^2.11.5",
     "@tiptap/vue-3": "^2.11.5",
     "axios": "^1.7.9",
+    "jsonwebtoken": "^9.0.2",
     "paginatejs": "^0.1.0",
     "pinia": "^3.0.1",
     "pinia-plugin-persistedstate": "^4.2.0",
