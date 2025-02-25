@@ -34,34 +34,32 @@
             </div>
         </div>
         
-        <div class="tab">
+        <div class="tab" style="display: flex; flex-direction: column;">
             <div class="tab-nav" id="tabNav">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide" :class="{ active: activeIndex === 0 }" @click="changeTab(0)">
-                        Meus Livros
-                    </div>
+                    <div class="swiper-slide" :class="{ active: activeIndex === 0 }" @click="changeTab(0)"> Meus Livros </div>
+
                     <div style="height: 20px; border: 1.5px solid #d9d9d9; align-self: center;"></div>
-                    <div class="swiper-slide" :class="{ active: activeIndex === 1 }" @click="changeTab(1)">
-                        Votações
-                    </div>
+
+                    <div class="swiper-slide" :class="{ active: activeIndex === 1 }" @click="changeTab(1)"> Votações </div>
+
                     <div style="height: 20px; border: 1.5px solid #d9d9d9; align-self: center;"></div>
-                    <div class="swiper-slide" :class="{ active: activeIndex === 2 }" @click="changeTab(2)">
-                        Salvos
-                    </div>
+
+                    <div class="swiper-slide" :class="{ active: activeIndex === 2 }" @click="changeTab(2)"> Salvos </div>
                 </div>
             </div>
-            <div class="tab-content">
-                <div class="swiper-wrapper">
+            <div class="tab-content" style="height: 100%; flex: 1;">
+                <div class="swiper-wrapper" style="height: 100%;">
             
-                    <div class="swiper-slide"> 
+                    <div class="swiper-slide" style="height: 100%;"> 
                         <component :is="tabs[0].componente" :data="meusLivros" style="height: 100%; width: 100%; box-sizing: border-box;"/> 
                     </div>
                     
-                    <div class="swiper-slide">  
+                    <div class="swiper-slide" style="height: 100%;">  
                         <component :is="tabs[1].componente" style="height: 100%; width: 100%; box-sizing: border-box;"/> 
                     </div>
                     
-                    <div class="swiper-slide">
+                    <div class="swiper-slide" style="height: 100%;">
                         <component :is="tabs[2].componente" :data="meusFavoritos" style="height: 100%; width: 100%; box-sizing: border-box;"/>
                     </div>
                 </div>
@@ -90,19 +88,10 @@ export default {
         return {
             activeIndex: 0,
             tabs: [
-                { name: 'Meus Livros', content: 'Swipe', color: '#04a5c1', componente: ListaLivro },
-                { name: 'Votações', content: 'Swipe', color: '#f298e7', componente: Votacoes },
-                { name: 'Salvos', content: 'Swipe', color: '#f298e7', componente: Salvos }
+                { name: 'Meus Livros', componente: ListaLivro },
+                { name: 'Votações', componente: Votacoes },
+                { name: 'Salvos', componente: Salvos }
             ],
-
-            // tabs: ["Meus Livros", "Votações", "Salvos"],
-            // slides: [
-            //     { title: "Slide 1", description: "Content of Slide 1", componente: ListaLivro },
-            //     { title: "Slide 2", description: "Content of Slide 2", componente: Votacoes  },
-            //     { title: "Slide 3", description: "Content of Slide 3", componente: Salvos  },
-            // ],
-            // activeIndex: 0,
-            // swiperInstance: null,
             loading: true,
             meusLivros: [],
             meusFavoritos: [],
@@ -114,31 +103,6 @@ export default {
         Salvos
     },
     methods: {
-        // initializeSwiper() {
-        //     const swiperElement = this.$refs.swiperContainer;
-        //     if (!swiperElement) {
-        //         console.error("Swiper container not found!");
-        //         return;
-        //     }
-
-        //     this.swiperInstance = new Swiper(swiperElement, {
-        //         slidesPerView: 1,
-        //         on: {
-        //             slideChange: () => {
-        //                 this.activeIndex = this.swiperInstance.activeIndex;
-        //             },
-        //         },
-        //     });
-        // },
-        // changeTab(index) {
-        //     this.activeIndex = index;
-        //     if (this.swiperInstance) {
-        //         this.swiperInstance.slideTo(index);
-        //     } 
-        //     else {
-        //         console.error("Swiper instance not initialized yet.");
-        //     }
-        // },
         changeTab(index) {
             this.activeIndex = index;
             this.tabContentSwiper.slideTo(index);
@@ -173,9 +137,6 @@ export default {
         }
         finally {
             this.loading = false;
-            // this.$nextTick(() => {
-            //     this.initializeSwiper();
-            // });
             this.$nextTick(() => {
                 this.initializeSwiper();
             });
@@ -190,7 +151,6 @@ section{
     height: calc(100vh - 64px);
     display: flex;
     flex-direction: column;
-    border: 1px solid red;
 }
 
 h3{
@@ -235,71 +195,6 @@ p{
     gap: 5px;
 }
 
-/* .tabs-slider-wrapper {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-
-.tabs {
-    display: flex;
-    justify-content: space-between;
-}
-
-.tab {
-    flex: 1;
-    text-align: center;
-    padding: 10px 0;
-    cursor: pointer;
-    font-size: 16px;
-    color: #757575;
-    position: relative;
-    transition: color 0.3s ease-in-out;
-}
-
-.tab.active {
-    color: #000;
-    font-weight: bold;
-}
-
-.tab.active::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 20px);
-    height: 4px;
-    background-color: #000;
-    border-radius: 10px;
-    transition: all 0.3s ease-in-out;
-}
-
-.slider {
-    background-color: #f7f7f7;
-    height: 100%;
-}
-
-.swiper-wrapper {
-    height: 100%;
-}
-
-.swiper-slide {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.swiper-slide component {
-    flex: 1;
-}
-
-.swiper.swiper-initialized.swiper-horizontal.swiper-ios.swiper-backface-hidden{
-    height: 100%;
-    width: 100%;
-} */
-
 .tab {
     flex: 1;
     width: 100%;
@@ -308,12 +203,17 @@ p{
 }
 
 .tab-nav {
-    display: flex;
+    /* display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     background-color: #fff;
-    overflow-x: hidden;
+    overflow-x: hidden; */
+
+    position: sticky;
+    top: 0; /* Fixa no topo */
+    background-color: white; /* Para evitar sobreposição de fundo */
+    z-index: 1000; /* Para garantir que fique acima do conteúdo */
 }
 
 .tab-nav .swiper-slide {
@@ -348,7 +248,6 @@ p{
     width: 100%;
     height: 100%;
 }
-
 
 .tab-content .swiper-slide {
     width: 100%;
