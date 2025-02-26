@@ -187,6 +187,7 @@ export default {
                 { property: "og:title", content: this.livro.titulo },
                 { property: "og:description", content: this.livro.descricao },
                 { property: "og:url", content: this.livro.url },
+                { property: "og:image", content: this.livro.imagem },
                 { property: "og:type", content: "website" },
                 ],
             });
