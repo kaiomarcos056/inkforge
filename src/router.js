@@ -23,8 +23,11 @@ import Historico from "@/views/Historico.vue";
 import CkEditor from "@/views/CkEditor.vue";
 import Votacao from "@/views/Votacao.vue";
 import Generos from '@/views/Generos.vue';
+import Share from './views/Share.vue';
 
 const routes = [
+  { path: "/share", name: "Share", component: Share, meta: { requiresAuth: false } },
+
   { path: "/ckeditor", name: "CkEditor", component: CkEditor, meta: { requiresAuth: true } },
 
   { path: "/genero/:id", name: "Generos", component: Generos, meta: { requiresAuth: true } },
