@@ -62,6 +62,8 @@
 
 <script>
 import { authStore } from '@/stores/authStore';
+import { useHead } from "@vueuse/head";
+
 import axios from "axios";
 
 export default {
@@ -178,15 +180,21 @@ export default {
 
 
         async compartilhar() {
+            // Alterando as meta tags dinamicamente antes de compartilhar
+            useHead({
+                title: this.livro.titulo,
+                meta: [
+                { property: "og:title", content: this.livro.titulo },
+                { property: "og:description", content: this.livro.descricao },
+                { property: "og:url", content: this.livro.url },
+                { property: "og:type", content: "website" },
+                ],
+            });
             if (navigator.share) {
-                const response = await fetch(this.livro.capa);
-                const blob = await response.blob();
-                const arquivo = new File([blob], "capa.jpg", { type: blob.type });
 
                 navigator.share({
                     title: "Confira essa história!",
                     text: "Dá uma olhada nesse conteúdo incrível!",
-                    files: [arquivo],
                     url: window.location.href
                 })
                 .then(() => console.log("Compartilhado com sucesso"))
