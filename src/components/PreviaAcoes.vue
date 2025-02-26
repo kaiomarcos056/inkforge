@@ -105,29 +105,37 @@ export default {
         //     }
         // },
 
-        async compartilhar() {
-  if (navigator.share && navigator.canShare) {
-    try {
-      const response = await fetch(this.livro.capa); // Baixa a imagem
-      const blob = await response.blob(); // Converte em Blob
-      const arquivo = new File([blob], "capa.jpg", { type: blob.type });
+        compartilhar(){
+            navigator.share({
+  title: "Confira essa história!",
+  text: `Dá uma olhada nesse conteúdo incrível!\n\n📖 ${this.livro.nome}\n${this.livro.descricao}\n🖼️ Capa: ${this.livro.capa}`,
+  url: window.location.href
+});
+        }
 
-      if (navigator.canShare({ files: [arquivo] })) {
-        await navigator.share({
-          title: "Confira essa história!",
-          text: `📖 ${this.livro.nome}\n\n${this.livro.descricao}\n🔗 Veja mais: ${window.location.href}`,
-          files: [arquivo] // Mantém a imagem anexada
-        });
-      } else {
-        console.log("Compartilhamento de arquivos não suportado");
-      }
-    } catch (error) {
-      console.error("Erro ao compartilhar:", error);
-    }
-  } else {
-    alert("Seu navegador não suporta compartilhamento de imagens.");
-  }
-}
+//         async compartilhar() {
+//   if (navigator.share && navigator.canShare) {
+//     try {
+//       const response = await fetch(this.livro.capa); // Baixa a imagem
+//       const blob = await response.blob(); // Converte em Blob
+//       const arquivo = new File([blob], "capa.jpg", { type: blob.type });
+
+//       if (navigator.canShare({ files: [arquivo] })) {
+//         await navigator.share({
+//           title: "Confira essa história!",
+//           text: `📖 ${this.livro.nome}\n\n${this.livro.descricao}\n🔗 Veja mais: ${window.location.href}`,
+//           files: [arquivo] // Mantém a imagem anexada
+//         });
+//       } else {
+//         console.log("Compartilhamento de arquivos não suportado");
+//       }
+//     } catch (error) {
+//       console.error("Erro ao compartilhar:", error);
+//     }
+//   } else {
+//     alert("Seu navegador não suporta compartilhamento de imagens.");
+//   }
+// }
     },
 };
 </script>
