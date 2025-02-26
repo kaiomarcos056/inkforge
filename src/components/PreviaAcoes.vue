@@ -115,8 +115,8 @@ export default {
       if (navigator.canShare({ files: [arquivo] })) {
         await navigator.share({
           title: "Confira essa história!",
-          text: `📖 ${this.livro.nome}\n\n${this.livro.descricao}`,
-          files: [arquivo]
+          text: `📖 ${this.livro.nome}\n\n${this.livro.descricao}\n🔗 Veja mais: ${window.location.href}`,
+          files: [arquivo] // Mantém a imagem anexada
         });
       } else {
         console.log("Compartilhamento de arquivos não suportado");
