@@ -15,7 +15,7 @@
         <div class="d-flex ga-5 align-center">
             <img src="../assets/icons/bookmark.svg" alt="Ícone"  height="24" v-if="!salvo" @click="salvar" />
             <img src="../assets/icons/bookmark-selected.svg" alt="Ícone"  height="24" v-else @click="remover" />
-            <img src="../assets/icons/share.svg" alt="Ícone" height="24" @click="compartilhar"/>
+            <img src="../assets/icons/share.svg" alt="Ícone" height="24" @click="compartilharWhatsApp"/>
         </div>
     </div>
 </template>
@@ -99,8 +99,26 @@ export default {
             else {
                 alert("Seu navegador não suporta compartilhamento nativo.");
             }
+        },
+        compartilharWhatsApp() {
+            const mensagem = `📖 *${this.titulo}*\n\n_${this.titulo}_\n\n🔗 ${this.url}`;
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(mensagem)}`, "_blank");
         }
-    }
+    },
+    computed: {
+        url() {
+            return encodeURIComponent(window.location.href);
+        },
+        titulo() {
+            return encodeURIComponent("titulo");
+        },
+        sinopse() {
+            return encodeURIComponent("sinopse");
+        },
+        imagem() {
+            return encodeURIComponent("https://i.ibb.co/h1Tqpfn8/1000291900.jpg"); // URL da capa do livro
+        }
+    },
 };
 </script>
 
