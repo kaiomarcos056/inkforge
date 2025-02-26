@@ -1,4 +1,6 @@
 <template>
+    <Carousel/>
+
     <div v-if="loading" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
         <v-progress-circular indeterminate ></v-progress-circular>
     </div>
@@ -23,6 +25,7 @@
     // COMPONENTES
     import Previa from '../components/Previa.vue'
     import Batata from '../components/Batata.vue';
+    import Carousel from "./Carousel.vue";
 
     export default {
         name: 'Home',
@@ -34,7 +37,8 @@
         },
         components: {
             Previa,
-            Batata
+            Batata,
+            Carousel
         },
         methods: {
             

@@ -15,6 +15,8 @@ import 'tiny-slider/dist/tiny-slider.css';
 
 import Card from "@/components/Card.vue";
 
+
+
 export default {
     name: 'Carousel',
     data() {
