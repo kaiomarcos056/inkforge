@@ -28,7 +28,7 @@
                     <div style="flex-direction: column; min-height: 80vh; display: flex; gap: 10px;" v-else>
                         <h3>Comentários</h3>
 
-                        <div style="flex: 1;">
+                        <div style="flex: 1;" class="coment">
                             <div style="margin-bottom: 20px; display: flex; align-items: center; gap: 5px;" v-for="comentario in comentarios" :key="comentario.uuid_comentario">
                                 <v-avatar style="height: 40px; width: 40px; margin-right: 5px;" v-if="livro.foto !== ''">
                                     <v-img :src="comentario.foto" ></v-img>
@@ -42,10 +42,10 @@
                         </div>
                         
                         <div style="display: flex; align-items: center; gap: 10px;" v-if="!comentando">
-                            <v-avatar style="height: 40px; width: 40px; margin-right: 5px;" v-if="livro.foto !== ''">
+                            <v-avatar style="height: 40px; width: 40px; margin-right: 5px;" v-if="auth.usuario.foto !== ''">
                                 <v-img :src="auth.usuario.foto" ></v-img>
                             </v-avatar>
-                            <div class="avatar" v-else>{{livro.autor.charAt(0)}}</div>
+                            <div class="avatar" v-else>{{auth.usuario.nome.charAt(0)}}</div>
                             <input type="text" placeholder="Adicione um comentário" v-model="comentario" style="flex: 1;" >
                             <button @click="comentar" class="bottom-button" style="color: #fff; background-color: black;" :disabled="!comentario">
                                 <span class="mdi mdi-arrow-up"></span>
@@ -258,11 +258,24 @@ input[type="text"]:not(:placeholder-shown) {
     border-color: #151515; /* Muda a borda quando o input tem algum valor */
 }
 
-p {
+.coment p {
     font-family: 'Noto Serif', serif;
     font-weight: 400;
     font-size: 14px;
     line-height: 19.07px;
     letter-spacing: -0.4px;
+}
+
+.avatar{
+    background-color: #DFDFDF;
+    color: #878787;
+    width: 40px;
+    height:40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 14px;
+    margin-right: 5px;
 }
 </style>
