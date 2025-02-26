@@ -3,13 +3,14 @@
         <div class="info">
             <h3 class="book-title">{{ titulo }}</h3>
             <div class="tags">
-                <span v-for="tag in tags" :key="tag" class="tag">{{ tag.nome }}</span>
+                <span v-for="tag in tags" :key="tag" class="tag" @click="goGenero(tag.uuid_genero)">{{ tag.nome }}</span>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+
 export default {
     name: "PreviaTitulo",
     props: {
@@ -26,6 +27,11 @@ export default {
             default: () => [],
         },
     },
+    methods: {
+        goGenero(id){
+            this.$router.push(`/genero/${id}`);
+        }
+    }
 };
 </script>
 

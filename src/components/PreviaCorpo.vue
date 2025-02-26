@@ -24,7 +24,7 @@ export default {
     font-weight: 400;
     line-height: 14.5px;
     letter-spacing: -0.4px;
-    width: 85%;
+    /* width: 85%; */
     text-align: justify;
 }
 </style>

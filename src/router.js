@@ -22,9 +22,12 @@ import Login from "@/views/Login.vue";
 import Historico from "@/views/Historico.vue";
 import CkEditor from "@/views/CkEditor.vue";
 import Votacao from "@/views/Votacao.vue";
+import Generos from '@/views/Generos.vue';
 
 const routes = [
   { path: "/ckeditor", name: "CkEditor", component: CkEditor, meta: { requiresAuth: true } },
+
+  { path: "/genero/:id", name: "Generos", component: Generos, meta: { requiresAuth: true } },
 
   { path: "/votacao", name: "Votacao", component: Votacao, meta: { requiresAuth: true } },
 

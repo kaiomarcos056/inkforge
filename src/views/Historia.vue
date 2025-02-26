@@ -16,7 +16,7 @@
                     <h3 class="mb-2">{{livro.nome}}</h3>
 
                     <div style="display: flex; gap: 5px; margin-bottom: 10px;">
-                        <p v-for="(genero, index) in livro.generos" :key="index" class="tag">{{ genero.nome }}</p>
+                        <p v-for="(genero, index) in livro.generos" :key="index" @click="goGenero(genero.uuid_genero)" class="tag">{{ genero.nome }}</p>
                     </div>
                     
                     <div style="display: flex; align-items: center;">
@@ -109,6 +109,9 @@ export default {
             }
             
         },
+        goGenero(id){
+            this.$router.push(`/genero/${id}`);
+        }
     },
     async mounted() {
         try {

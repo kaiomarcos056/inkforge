@@ -19,9 +19,9 @@
             <div class="tab-content">
                 <div class="swiper-wrapper">
             
-                    <div class="swiper-slide"> <component :is="tabs[0].componente"/> </div>
+                    <div class="swiper-slide"> <component :is="tabs[0].componente" style="box-sizing: border-box;"/> </div>
                     
-                    <div class="swiper-slide">  <component :is="tabs[1].componente"/> </div>
+                    <div class="swiper-slide">  <component :is="tabs[1].componente" style="box-sizing: border-box;"/> </div>
                     
                 </div>
             </div>

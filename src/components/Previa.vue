@@ -1,5 +1,5 @@
 <template>
-    <div style="display: flex;">
+    <div style="display: flex; align-items: center;">
         <v-card
             class="elevation-5 mr-3" 
             width="150" 
@@ -12,7 +12,7 @@
                 <previa-titulo :titulo="livro.nome" :tags="livro.generos" />
             </div>
 
-            <div @click="golivro(livro.uuid_livro)" style="flex: 1; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical; text-overflow: ellipsis;">
+            <div @click="golivro(livro.uuid_livro)" style="flex: 1; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; text-overflow: ellipsis;">
                 <previa-corpo :texto="livro.descricao" />
             </div>
             
