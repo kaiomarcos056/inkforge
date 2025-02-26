@@ -17,23 +17,25 @@
             <img src="../assets/icons/bookmark-selected.svg" alt="Ícone"  height="24" v-else @click="remover" />
             <img src="../assets/icons/share.svg" alt="Ícone" height="24" @click="compartilhar"/>
         </div>
-        <social-sharing
-      url="https://exemplo.com/livro/uuid-do-livro"
-      title="Confira esta história incrível!"
-      description="Dá uma olhada nesse livro interessante!"
-      image="https://i.ibb.co/h1Tqpfn8/1000291900.jpg"
-    >
-      <button>Compartilhar</button>
-    </social-sharing>
+        <ShareNetwork
+        url="https://exemplo.com/livro/uuid-do-livro"
+        title="Confira esta história incrível!"
+        description="Dá uma olhada nesse livro interessante!"
+        image="https://i.ibb.co/h1Tqpfn8/1000291900.jpg"
+      >
+        <button class="btn-compartilhar">Compartilhar</button>
+      </ShareNetwork>
     </div>
 </template>
 
 <script>
 import axios from "axios";
 import { useSnackbarStore } from '@/stores/snackbarStore';
+import { ShareNetwork } from 'vue3-social-sharing';
 
 export default {
     name: "PreviaAcoes",
+   
     props: {
         salvo: {
             type: Boolean,

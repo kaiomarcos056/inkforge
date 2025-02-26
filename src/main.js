@@ -15,7 +15,7 @@ import * as directives from 'vuetify/directives';
 import { createPinia } from 'pinia';
 import piniaPersist from 'pinia-plugin-persistedstate';
 
-import SocialSharing from 'vue3-social-sharing';
+import Vue3SocialSharingPlugin from "vue3-social-sharing";
 
 const pinia = createPinia();
 pinia.use(piniaPersist);
@@ -36,5 +36,5 @@ createApp(App)
   .use(vuetify)
   .use(router)
   .use(pinia)
-  .use(SocialSharing)
+  .use(Vue3SocialSharingPlugin)
   .mount('#app');
