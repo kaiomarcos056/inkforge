@@ -80,6 +80,7 @@
                     //simulateTouch: false,
                     //touchMove: false,
                     //touchRatio: 0,
+                    nested: true, // Permite Swipers dentro de Swipers
                     noSwiping: true,
                     on: {
                         slideChange: () => {
