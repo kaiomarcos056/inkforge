@@ -3,27 +3,18 @@
           <v-progress-circular indeterminate ></v-progress-circular>
       </div>
     <div class="tabs-container" v-else>
-      <!-- Navegação por Tabs -->
-      <!-- <div class="tabs">
-        <button 
-          v-for="(tab, index) in tabs" 
-          :key="index" 
-          :class="{ active: activeIndex === index }" 
-          @click="changeTab(index)">
-          {{ tab }}
-        </button>
-      </div> -->
-      <div class="tab-nav" id="tabNav">
-                  <div class="swiper-wrapper">
-                      <div class="swiper-slide" :class="{ active: activeIndex === 0 }" @click="changeTab(0)">
-                          Para você
-                      </div>
-                      <div style="height: 20px; border: 1.5px solid #d9d9d9; align-self: center;"></div>
-                      <div class="swiper-slide" :class="{ active: activeIndex === 1 }" @click="changeTab(1)">
-                          Seguindo
-                      </div>
-                  </div>
-              </div>
+
+        <div class="tab-nav" id="tabNav">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" :class="{ active: activeIndex === 0 }" @click="changeTab(0)">
+                    Para você
+                </div>
+                <div style="height: 20px; border: 1.5px solid #d9d9d9; align-self: center;"></div>
+                <div class="swiper-slide" :class="{ active: activeIndex === 1 }" @click="changeTab(1)">
+                    Seguindo
+                </div>
+            </div>
+        </div>
   
       <!-- Swiper -->
       <swiper 
@@ -43,13 +34,13 @@
               <div style="display: flex;">
                 <!-- CAPA -->
                 <div style="width: 30%;  display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                  <v-card class="mx-auto elevation-5" color="surface-variant" :image="livro.capa" width="80" height="120"></v-card>
+                  <v-card class="mx-auto elevation-5" color="surface-variant" :image="livro.capa" width="80" height="120" @click="goLivro(livro.uuid_livro)"></v-card>
                 </div>
                
                 <div style="flex: 1; display: flex; flex-direction: column; justify-content: start; align-items: start;">
-                  <p style="text-align: left;">{{ livro.nome }}</p>
+                  <p style="text-align: left;" @click="goLivro(livro.uuid_livro)" >{{ livro.nome }}</p>
                   <div class="tags" style="display: flex;">
-                    <span v-for="genero in livro.generos" :key="genero.uuid_genero" class="tag">{{ genero.nome }}</span>
+                    <span v-for="genero in livro.generos" :key="genero.uuid_genero" class="tag" @click="goGenero(genero.uuid_genero)" >{{ genero.nome }}</span>
                   </div>
                   <label class="autor">Autor: {{ livro.autor }}</label>
                 </div>
@@ -64,13 +55,13 @@
               <div style="display: flex;">
                 <!-- CAPA -->
                 <div style="width: 30%;  display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                  <v-card class="elevation-5" color="surface-variant" :image="livro.capa" width="80" height="120"></v-card>
+                  <v-card class="elevation-5" color="surface-variant" :image="livro.capa" width="80" height="120" @click="goLivro(livro.uuid_livro)"></v-card>
                 </div>
                
                 <div style="flex: 1; display: flex; flex-direction: column; justify-content: start; align-items: start;">
-                  <p style="text-align: left;">{{ livro.nome }}</p>
+                  <p style="text-align: left;" @click="goLivro(livro.uuid_livro)" >{{ livro.nome }}</p>
                   <div class="tags" style="display: flex;">
-                    <span v-for="genero in livro.generos" :key="genero.uuid_genero" class="tag">{{ genero.nome }}</span>
+                    <span v-for="genero in livro.generos" :key="genero.uuid_genero" class="tag" @click="goGenero(genero.uuid_genero)">{{ genero.nome }}</span>
                   </div>
                   <label class="autor">Autor: {{ livro.autor }}</label>
                 </div>
@@ -120,10 +111,14 @@
       changeTab(index) {
         this.activeIndex = index;
         if (this.swiperInstance) { this.swiperInstance.slideTo(index); }
-      }
+      },
+      goGenero(id){ this.$router.push(`/genero/${id}`); },
+      goLivro(id) { this.$router.push(`/historia/${id}`); }
     },
     async mounted() {
         try {
+            this.loading = true;
+
             const livros = await axios.get("https://inkforge-api.onrender.com/livros");
             this.livros = livros.data;
         } 
