@@ -111,7 +111,23 @@ export default {
         },
         goGenero(id){
             this.$router.push(`/genero/${id}`);
-        }
+        },
+        updateMetaTags() {
+            document.title = this.livro.nome; // Atualiza o título da página
+
+            this.setMetaTag("og:title", this.livro.nome);
+            this.setMetaTag("og:description", this.livro.descricao);
+            this.setMetaTag("og:image", this.livro.capa);
+            this.setMetaTag("og:url", window.location.href);
+            this.setMetaTag("og:type", "book");
+
+            // Twitter Cards
+            // this.setMetaTag("twitter:card", "summary_large_image");
+            // this.setMetaTag("twitter:title", this.bookTitle);
+            // this.setMetaTag("twitter:description", this.bookDescription);
+            // this.setMetaTag("twitter:image", this.bookCover);
+            // this.setMetaTag("twitter:url", this.bookUrl);
+        },
     },
     async mounted() {
         try {
