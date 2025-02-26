@@ -17,6 +17,14 @@
             <img src="../assets/icons/bookmark-selected.svg" alt="Ícone"  height="24" v-else @click="remover" />
             <img src="../assets/icons/share.svg" alt="Ícone" height="24" @click="compartilhar"/>
         </div>
+        <social-sharing
+      url="https://exemplo.com/livro/uuid-do-livro"
+      title="Confira esta história incrível!"
+      description="Dá uma olhada nesse livro interessante!"
+      image="https://i.ibb.co/h1Tqpfn8/1000291900.jpg"
+    >
+      <button>Compartilhar</button>
+    </social-sharing>
     </div>
 </template>
 
@@ -105,14 +113,6 @@ export default {
         //     }
         // },
 
-        compartilhar(){
-            navigator.share({
-  title: "Confira essa história!",
-  text: `Dá uma olhada nesse conteúdo incrível!\n\n📖 ${this.livro.nome}\n${this.livro.descricao}\n🖼️ Capa: ${this.livro.capa}\n`,
-  url: window.location.href
-});
-        }
-
 //         async compartilhar() {
 //   if (navigator.share && navigator.canShare) {
 //     try {
@@ -139,17 +139,6 @@ export default {
     },
 };
 </script>
-
-<head>
-    <meta property="og:type" content="book" />
-    <meta property="og:title" content="Confira essa história incrível!" />
-    <meta property="og:description" content="Dá uma olhada nesse livro interessante!" />
-    <meta property="og:image" content="https://i.ibb.co/h1Tqpfn8/1000291900.jpg" />
-    <meta property="og:url" content="http://localhost:5173/livro/uuid-do-livro" />
-    <meta property="og:site_name" content="Minha Plataforma de Livros" />
-    <meta property="og:locale" content="pt_BR" />
-    <meta property="og:author" content="Autor do Livro" />
-  </head>
 
 <style scoped>
 .acoes {
