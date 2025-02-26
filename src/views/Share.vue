@@ -18,7 +18,7 @@
       return {
         bookTitle: "O Senhor dos Anéis",
         bookDescription: "Uma aventura épica de J.R.R. Tolkien. Leia mais sobre essa incrível história!",
-        bookUrl: "https://meusite.com/livro/senhor-dos-aneis",
+        bookUrl: "https://inkforge.vercel.app/share",
         bookCover: "https://br.web.img3.acsta.net/medias/nmedia/18/92/91/32/20224832.jpg",
       };
     },
