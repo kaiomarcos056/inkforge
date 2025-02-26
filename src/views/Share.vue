@@ -19,7 +19,7 @@
         bookTitle: "O Senhor dos Anéis",
         bookDescription: "Uma aventura épica de J.R.R. Tolkien. Leia mais sobre essa incrível história!",
         bookUrl: "https://meusite.com/livro/senhor-dos-aneis",
-        bookCover: "https://meusite.com/imagens/senhor-dos-aneis.jpg",
+        bookCover: "https://br.web.img3.acsta.net/medias/nmedia/18/92/91/32/20224832.jpg",
       };
     },
     mounted() {
