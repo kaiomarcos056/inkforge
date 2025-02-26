@@ -1,6 +1,8 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 
+import { createHead } from "@vueuse/head"; // Substituto do vue-meta
+
 import router from "./router";
 
 import { createVuetify } from 'vuetify';
@@ -27,8 +29,11 @@ const vuetify = createVuetify({
   },
 });
 
+const head = createHead(); // Criando o head manager
+
 createApp(App)
   .use(vuetify)
   .use(router)
   .use(pinia)
+  .use(head) // Usando o head manager no Vue 3
   .mount('#app');
