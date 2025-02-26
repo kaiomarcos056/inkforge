@@ -27,7 +27,7 @@
       >
         <!-- PRIMEIRO SLIDE -->
         <swiper-slide>
-          <h1 class="h1 mb-2">Em destaque</h1>
+          <h1 class="h1 mb-2 mt-2">Em destaque</h1>
   
           <swiper class="mySwiper2 swiper-h" :direction="'horizontal'" :spaceBetween="2" :modules="modules" :slidesPerView="1.1">
             <swiper-slide v-for="livro in livros" :key="livro.uuid_livro">
