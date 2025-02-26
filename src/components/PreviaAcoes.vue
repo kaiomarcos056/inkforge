@@ -140,6 +140,17 @@ export default {
 };
 </script>
 
+<head>
+    <meta property="og:type" content="book" />
+    <meta property="og:title" content="Confira essa história incrível!" />
+    <meta property="og:description" content="Dá uma olhada nesse livro interessante!" />
+    <meta property="og:image" content="https://i.ibb.co/h1Tqpfn8/1000291900.jpg" />
+    <meta property="og:url" content="http://localhost:5173/livro/uuid-do-livro" />
+    <meta property="og:site_name" content="Minha Plataforma de Livros" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:author" content="Autor do Livro" />
+  </head>
+
 <style scoped>
 .acoes {
     font-family: 'Satoshi-Regular', sans-serif;
