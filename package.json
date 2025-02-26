@@ -22,6 +22,7 @@
     "pinia-plugin-persistedstate": "^4.2.0",
     "sass": "^1.83.0",
     "sass-loader": "^12.0.0",
+    "sharer.js": "^0.5.2",
     "split.js": "^1.6.5",
     "swiper": "^11.2.2",
     "tiny-slider": "^2.9.4",

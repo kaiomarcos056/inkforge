@@ -22,11 +22,13 @@
 
 <script>
 import axios from "axios";
-import { useSnackbarStore } from '@/stores/snackbarStore';
 
 export default {
     name: "PreviaAcoes",
-   
+    data() {
+        return {
+        };
+    },
     props: {
         salvo: {
             type: Boolean,
@@ -91,20 +93,26 @@ export default {
             }
         },
 
-        // compartilhar() {
-        //     if (navigator.share) {
-        //         navigator.share({
-        //         title: "Confira essa história!",
-        //         text: "Dá uma olhada nesse conteúdo incrível!",
-        //         url: window.location.href
-        //         })
-        //         .then(() => console.log("Compartilhado com sucesso"))
-        //         .catch((error) => console.error("Erro ao compartilhar:", error));
-        //     } 
-        //     else {
-        //         alert("Seu navegador não suporta compartilhamento nativo.");
-        //     }
-        // },
+
+        async compartilhar() {
+            if (navigator.share) {
+                const response = await fetch(this.livro.capa);
+                const blob = await response.blob();
+                const arquivo = new File([blob], "capa.jpg", { type: blob.type });
+
+                navigator.share({
+                    title: "Confira essa história!",
+                    text: "Dá uma olhada nesse conteúdo incrível!",
+                    files: [arquivo],
+                    url: window.location.href
+                })
+                .then(() => console.log("Compartilhado com sucesso"))
+                .catch((error) => console.error("Erro ao compartilhar:", error));
+            } 
+            else {
+                console.log("Seu navegador não suporta compartilhamento nativo.");
+            }
+        },
 
 //         async compartilhar() {
 //   if (navigator.share && navigator.canShare) {
@@ -130,6 +138,12 @@ export default {
 //   }
 // }
     },
+    mounted() {
+    // Verifica se o Sharer.js está disponível globalmente
+    if (typeof Sharer !== 'undefined') {
+      new Sharer('.sharer'); // Inicializa o Sharer.js para os botões de compartilhamento
+    }
+  }
 };
 </script>
 
