@@ -15,7 +15,7 @@
         <div class="d-flex ga-5 align-center">
             <img src="../assets/icons/bookmark.svg" alt="Ícone"  height="24" v-if="!salvo" @click="salvar" />
             <img src="../assets/icons/bookmark-selected.svg" alt="Ícone"  height="24" v-else @click="remover" />
-            <img src="../assets/icons/share.svg" alt="Ícone" height="24"/>
+            <img src="../assets/icons/share.svg" alt="Ícone" height="24" @click="compartilhar"/>
         </div>
     </div>
 </template>
@@ -83,6 +83,21 @@ export default {
             }
             catch(e){
                 console.error(e)
+            }
+        },
+
+        compartilhar() {
+            if (navigator.share) {
+                navigator.share({
+                title: "Confira essa história!",
+                text: "Dá uma olhada nesse conteúdo incrível!",
+                url: window.location.href
+                })
+                .then(() => console.log("Compartilhado com sucesso"))
+                .catch((error) => console.error("Erro ao compartilhar:", error));
+            } 
+            else {
+                alert("Seu navegador não suporta compartilhamento nativo.");
             }
         }
     }
