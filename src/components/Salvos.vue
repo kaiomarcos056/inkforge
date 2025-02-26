@@ -54,5 +54,6 @@ export default {
     flex-wrap: wrap;
     padding: 20px;
     gap: 25px;
+    /* min-height: 100%; */
 }
 </style>

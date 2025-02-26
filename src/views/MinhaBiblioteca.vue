@@ -60,7 +60,7 @@
                     </div>
                     
                     <div class="swiper-slide" style="height: 100%;">
-                        <component :is="tabs[2].componente" :data="meusFavoritos" style="height: 100%; width: 100%; box-sizing: border-box;"/>
+                        <component :is="tabs[2].componente" :data="meusFavoritos" style=" width: 100%; box-sizing: border-box;"/>
                     </div>
                 </div>
             </div>
