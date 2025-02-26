@@ -108,7 +108,7 @@ export default {
         compartilhar(){
             navigator.share({
   title: "Confira essa história!",
-  text: `Dá uma olhada nesse conteúdo incrível!\n\n📖 ${this.livro.nome}\n${this.livro.descricao}\n🖼️ Capa: ${this.livro.capa}`,
+  text: `Dá uma olhada nesse conteúdo incrível!\n\n📖 ${this.livro.nome}\n${this.livro.descricao}\n🖼️ Capa: ${this.livro.capa}\n`,
   url: window.location.href
 });
         }
