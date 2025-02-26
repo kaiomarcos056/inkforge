@@ -11,12 +11,12 @@ export default {
   data() {
     return {
       text: "Confira esta história interativa que eu criei!",
-      url: window.location.href,
+      shareUrl: "https://seusite.com/compartilhar.html", // Página estática
     };
   },
   methods: {
     shareOnWhatsApp() {
-      const message = `${this.text} ${this.url}`;
+      const message = `${this.text} ${this.shareUrl}`;
       const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, "_blank");
     },
