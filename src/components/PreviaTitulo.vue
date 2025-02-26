@@ -26,6 +26,10 @@ export default {
             type: Array,
             default: () => [],
         },
+        livro: {
+          type: Object,
+          default: () => ({})
+        },
     },
     methods: {
         goGenero(id){

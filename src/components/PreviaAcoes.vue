@@ -15,7 +15,7 @@
         <div class="d-flex ga-5 align-center">
             <img src="../assets/icons/bookmark.svg" alt="Ícone"  height="24" v-if="!salvo" @click="salvar" />
             <img src="../assets/icons/bookmark-selected.svg" alt="Ícone"  height="24" v-else @click="remover" />
-            <img src="../assets/icons/share.svg" alt="Ícone" height="24" @click="compartilharWhatsApp"/>
+            <img src="../assets/icons/share.svg" alt="Ícone" height="24" @click="compartilhar"/>
         </div>
     </div>
 </template>
@@ -42,7 +42,11 @@ export default {
         favorito: {
             type: Object,
             default: {}
-        }
+        },
+        livro: {
+          type: Object,
+          default: () => ({})
+        },
     },
     methods: {
         async salvar(){
@@ -86,38 +90,44 @@ export default {
             }
         },
 
-        compartilhar() {
-            if (navigator.share) {
-                navigator.share({
-                title: "Confira essa história!",
-                text: "Dá uma olhada nesse conteúdo incrível!",
-                url: window.location.href
-                })
-                .then(() => console.log("Compartilhado com sucesso"))
-                .catch((error) => console.error("Erro ao compartilhar:", error));
-            } 
-            else {
-                alert("Seu navegador não suporta compartilhamento nativo.");
-            }
-        },
-        compartilharWhatsApp() {
-            const mensagem = `📖 *${this.titulo}*\n\n_${this.titulo}_\n\n🔗 ${this.url}`;
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(mensagem)}`, "_blank");
-        }
-    },
-    computed: {
-        url() {
-            return encodeURIComponent(window.location.href);
-        },
-        titulo() {
-            return encodeURIComponent("titulo");
-        },
-        sinopse() {
-            return encodeURIComponent("sinopse");
-        },
-        imagem() {
-            return encodeURIComponent("https://i.ibb.co/h1Tqpfn8/1000291900.jpg"); // URL da capa do livro
-        }
+        // compartilhar() {
+        //     if (navigator.share) {
+        //         navigator.share({
+        //         title: "Confira essa história!",
+        //         text: "Dá uma olhada nesse conteúdo incrível!",
+        //         url: window.location.href
+        //         })
+        //         .then(() => console.log("Compartilhado com sucesso"))
+        //         .catch((error) => console.error("Erro ao compartilhar:", error));
+        //     } 
+        //     else {
+        //         alert("Seu navegador não suporta compartilhamento nativo.");
+        //     }
+        // },
+
+        async compartilhar() {
+  if (navigator.share && navigator.canShare) {
+    try {
+      const response = await fetch(this.livro.capa); // Baixa a imagem
+      const blob = await response.blob(); // Converte em Blob
+      const arquivo = new File([blob], "capa.jpg", { type: blob.type });
+
+      if (navigator.canShare({ files: [arquivo] })) {
+        await navigator.share({
+          title: "Confira essa história!",
+          text: `📖 ${this.livro.nome}\n\n${this.livro.descricao}`,
+          files: [arquivo]
+        });
+      } else {
+        console.log("Compartilhamento de arquivos não suportado");
+      }
+    } catch (error) {
+      console.error("Erro ao compartilhar:", error);
+    }
+  } else {
+    alert("Seu navegador não suporta compartilhamento de imagens.");
+  }
+}
     },
 };
 </script>

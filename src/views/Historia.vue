@@ -32,7 +32,7 @@
             <hr style="margin: 10px 20px;">
             
             <div style="">
-                <previa-acoes  :uuid_livro="$route.params.id" :uuid_usuario="auth.usuario.uuid_usuario" :salvo="salvo" :favorito="favorito"/>
+                <previa-acoes  :livro="livro" :uuid_livro="$route.params.id" :uuid_usuario="auth.usuario.uuid_usuario" :salvo="salvo" :favorito="favorito"/>
             </div>
         </div>
 
