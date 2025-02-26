@@ -30,7 +30,7 @@
 
                         <div style="flex: 1;" class="coment">
                             <div style="margin-bottom: 20px; display: flex; align-items: center; gap: 5px;" v-for="comentario in comentarios" :key="comentario.uuid_comentario">
-                                <v-avatar style="height: 40px; width: 40px; margin-right: 5px;" v-if="livro.foto !== ''">
+                                <v-avatar style="height: 40px; width: 40px; margin-right: 5px;" v-if="auth.usuario.foto !== ''">
                                     <v-img :src="comentario.foto" ></v-img>
                                 </v-avatar>
                                 <div class="avatar" v-else>{{comentario.usuario.charAt(0)}}</div>

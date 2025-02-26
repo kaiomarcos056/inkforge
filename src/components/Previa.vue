@@ -60,6 +60,10 @@ export default {
 </script>
 
 <style scoped>
+h3.book-title {
+    text-align: left;
+}
+
 .previa {
     width: 100%;
     max-width: 600px;

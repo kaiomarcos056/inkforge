@@ -59,6 +59,7 @@ export default {
     font-family: 'Satoshi-Regular', sans-serif;
     font-size: 16px;
     margin: 0;
+    text-align: left;
 }
 
 .tags {
