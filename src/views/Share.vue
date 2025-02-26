@@ -5,14 +5,17 @@
       <img :src="bookCover" :alt="bookTitle" width="300">
   
       <div class="share-buttons">
-        <button @click="share('whatsapp')">Compartilhar no WhatsApp</button>
-        <button @click="share('facebook')">Compartilhar no Facebook</button>
-        <button @click="share('twitter')">Compartilhar no Twitter</button>
+        <button @click="share('whatsapp')">📲 WhatsApp</button>
+        <button @click="share('facebook')">📘 Facebook</button>
+        <button @click="share('twitter')">🐦 Twitter</button>
+        <button @click="nativeShare">📢 Compartilhar</button>
       </div>
     </div>
   </template>
   
   <script>
+  import "share-api-polyfill"; // Garante compatibilidade
+  
   export default {
     data() {
       return {
@@ -22,41 +25,7 @@
         bookCover: "https://br.web.img3.acsta.net/medias/nmedia/18/92/91/32/20224832.jpg",
       };
     },
-    mounted() {
-      this.updateMetaTags();
-    },
     methods: {
-      updateMetaTags() {
-        document.title = this.bookTitle; // Atualiza o título da página
-  
-        this.setMetaTag("og:title", this.bookTitle);
-        this.setMetaTag("og:description", this.bookDescription);
-        this.setMetaTag("og:image", this.bookCover);
-        this.setMetaTag("og:url", this.bookUrl);
-        this.setMetaTag("og:type", "book");
-  
-        // Twitter Cards
-        this.setMetaTag("twitter:card", "summary_large_image");
-        this.setMetaTag("twitter:title", this.bookTitle);
-        this.setMetaTag("twitter:description", this.bookDescription);
-        this.setMetaTag("twitter:image", this.bookCover);
-        this.setMetaTag("twitter:url", this.bookUrl);
-      },
-      setMetaTag(property, content) {
-        let tag = document.querySelector(`meta[property='${property}'], meta[name='${property}']`);
-        if (tag) {
-          tag.setAttribute("content", content);
-        } else {
-          tag = document.createElement("meta");
-          if (property.startsWith("og:") || property.startsWith("twitter:")) {
-            tag.setAttribute("property", property);
-          } else {
-            tag.setAttribute("name", property);
-          }
-          tag.setAttribute("content", content);
-          document.head.appendChild(tag);
-        }
-      },
       share(platform) {
         const text = `Confira este livro: ${this.bookTitle}`;
         let shareUrl = "";
@@ -75,7 +44,18 @@
   
         window.open(shareUrl, "_blank");
       },
-    },
+      nativeShare() {
+        if (navigator.share) {
+          navigator.share({
+            title: this.bookTitle,
+            text: this.bookDescription,
+            url: this.bookUrl
+          }).catch(err => console.error("Erro ao compartilhar:", err));
+        } else {
+          alert("Seu navegador não suporta compartilhamento nativo.");
+        }
+      }
+    }
   };
   </script>
   
